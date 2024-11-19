@@ -1,9 +1,29 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [],
+  content: [
+    "./src/**/*.{html,js}", // This tells Tailwind to look for any HTML or JS files in src folder
+    "./src/index.html",     // Explicitly include the index.html
+  ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#4f6f52',  // Sage Green
+          light: '#739072'     // Lighter Sage
+        },
+        cta: '#D66853',        // Terracotta
+        neutral: {
+          100: '#FFFFFF',
+          200: '#F8FAF5',
+          300: '#E5E7E4',
+          900: '#2C3532',
+        }
+      },
+      fontFamily: {
+        lato: ['Lato', 'sans-serif'],
+        lora: ['Lora', 'serif'],
+      }
+    },
   },
   plugins: [],
 }
-
