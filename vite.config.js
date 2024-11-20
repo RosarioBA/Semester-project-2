@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: 'src',
@@ -7,6 +7,6 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
-    open: true
-  }
-})
+    open: true,
+  },
+});
