@@ -1,22 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BidLeaf Auction</title>
-    <link rel="stylesheet" href="/styles/main.css" />
-  </head>
-  <body class="bg-neutral-200 text-neutral-900">
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body class="bg-neutral-200 min-h-screen">
     <main class="container mx-auto px-4 py-8">
-      <h1 class="text-4xl font-bold text-primary mb-4">BidLeaf Auction</h1>
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-primary mb-4">BidLeaf Auction</h1>
+            <p class="text-lg text-neutral-900">Test Page - Making sure everything works</p>
+        </header>
 
-      <!-- Test buttons to verify styles -->
-      <div class="space-x-4">
-        <button class="btn btn-primary">Primary Button</button>
-        <button class="btn btn-secondary">Secondary Button</button>
-        <button class="btn btn-cta">CTA Button</button>
-      </div>
+        <!-- Test Section -->
+        <section class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold text-primary-light mb-4">Style Test</h2>
+            
+            <!-- Button Test -->
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg mb-2">Button Styles:</h3>
+                    <div class="space-x-2">
+                        <button class="btn btn-primary">Primary</button>
+                        <button class="btn btn-secondary">Secondary</button>
+                        <button class="btn btn-cta">CTA Button</button>
+                    </div>
+                </div>
+                
+                <!-- Color Test -->
+                <div>
+                    <h3 class="text-lg mb-2">Color Palette:</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="h-20 bg-primary rounded flex items-center justify-center text-white">Primary</div>
+                        <div class="h-20 bg-primary-light rounded flex items-center justify-center text-white">Primary Light</div>
+                        <div class="h-20 bg-cta rounded flex items-center justify-center text-white">CTA</div>
+                        <div class="h-20 bg-neutral-300 rounded flex items-center justify-center">Neutral</div>
+                    </div>
+                </div>
+
+                <!-- Typography Test -->
+                <div>
+                    <h3 class="text-lg mb-2">Typography:</h3>
+                    <h1 class="font-lato text-2xl font-extrabold">Lato Heading</h1>
+                    <p class="font-lora">Lora Paragraph Text</p>
+                </div>
+            </div>
+
+            <!-- JavaScript Test -->
+            <div class="mt-6 p-4 bg-neutral-100 rounded">
+                <h3 class="text-lg mb-2">JavaScript Test:</h3>
+                <button id="testButton" class="btn btn-primary">Click to Test JS</button>
+                <p id="testResult" class="mt-2 text-sm"></p>
+            </div>
+        </section>
     </main>
-    <script type="module" src="/js/main.js"></script>
-  </body>
+    <script type="module" src="./js/main.js"></script>
+</body>
 </html>
