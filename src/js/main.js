@@ -1,5 +1,5 @@
 // Main JavaScript entry point
-
+console.log('test')  // Missing semicolon to trigger ESLint
 function initializeApp() {
   const testButton = document.getElementById('testButton');
   const testResult = document.getElementById('testResult');
