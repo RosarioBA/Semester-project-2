@@ -1,0 +1,1 @@
+"#!/bin/sh\nnpm run lint && npm run format" 
