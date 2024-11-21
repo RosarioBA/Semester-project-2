@@ -1,4 +1,3 @@
-import { list } from 'postcss';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -13,8 +12,8 @@ export default defineConfig({
         profile: 'pages/profile.html',
         listing: 'pages/listing.html',
         singlelisting: 'pages/single-listing.html',
-        createlistings: 'pages/create-listing.html'
-      }
-    }
-  }
+        createlistings: 'pages/create-listing.html',
+      },
+    },
+  },
 });

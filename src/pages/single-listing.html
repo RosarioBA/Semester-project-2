@@ -1,81 +1,121 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Leather Sofa | BidLeaf</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;800&family=Lora:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;800&family=Lora:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-[#F8FAF5]">
+  </head>
+  <body class="bg-[#F8FAF5]">
     <!-- Header -->
     <header class="bg-white shadow-sm">
-        <nav class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/" class="text-2xl font-['Lora'] font-semibold text-[#4f6f52]">BidLeaf</a>
-            <div class="flex items-center gap-4">
-                <span>1000 credits</span>
-                <button class="text-[#2C3532]" title="Menu">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
-                    </svg>
-                </button>
-            </div>
-        </nav>
+      <nav class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="/" class="text-2xl font-['Lora'] font-semibold text-[#4f6f52]">BidLeaf</a>
+        <div class="flex items-center gap-4">
+          <span>1000 credits</span>
+          <button class="text-[#2C3532]" title="Menu">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
+        </div>
+      </nav>
     </header>
 
     <main class="max-w-3xl mx-auto px-4 py-8">
-        <!-- Back Button -->
-        <a href="/pages/listings.html" class="text-[#4f6f52] mb-6 inline-block">&larr; Back to Listing</a>
+      <!-- Back Button -->
+      <a href="/pages/listings.html" class="text-[#4f6f52] mb-6 inline-block"
+        >&larr; Back to Listing</a
+      >
 
-        <!-- Listing Content -->
-        <div class="bg-white rounded-lg shadow-sm p-6">
-            <img src="/api/placeholder/800/500" alt="Leather Sofa" class="w-full rounded-lg mb-6">
-            
-            <h1 class="text-2xl font-semibold mb-4">Leather Sofa</h1>
-            
-            <div class="mb-6">
-                <h2 class="text-lg font-medium mb-2">Description</h2>
-                <p class="text-gray-600">Beautiful beige leather 3-4 fully sofa meets. This leather sofa features a streamlined silhouette to balance its chunky cushions. Perfect for crafting casual spaces.</p>
-            </div>
+      <!-- Listing Content -->
+      <div class="bg-white rounded-lg shadow-sm p-6">
+        <img src="/api/placeholder/800/500" alt="Leather Sofa" class="w-full rounded-lg mb-6" />
 
-            <div class="space-y-4">
-                <div class="flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <span>Time left: 2 Days 4 Hours Remaining</span>
-                </div>
+        <h1 class="text-2xl font-semibold mb-4">Leather Sofa</h1>
 
-                <div class="p-4 bg-gray-50 rounded-lg">
-                    <p class="text-lg font-medium mb-4">550 Credits</p>
-                    <div class="flex gap-2">
-                        <input type="number" placeholder="Enter bid amount" class="flex-1 p-2 border rounded">
-                        <button class="px-4 py-2 bg-[#D66853] text-white rounded hover:bg-[#D66853]/90">Place Bid</button>
-                    </div>
-                </div>
-
-                <!-- Bid History -->
-                <div class="space-y-2">
-                    <h2 class="font-medium">Bid History</h2>
-                    <div class="space-y-2">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                            </svg>
-                            <span>John D. - Placed bid: 500 Credits</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                            </svg>
-                            <span>Sarah K. - Placed bid: 450 Credits</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="mb-6">
+          <h2 class="text-lg font-medium mb-2">Description</h2>
+          <p class="text-gray-600">
+            Beautiful beige leather 3-4 fully sofa meets. This leather sofa features a streamlined
+            silhouette to balance its chunky cushions. Perfect for crafting casual spaces.
+          </p>
         </div>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>Time left: 2 Days 4 Hours Remaining</span>
+          </div>
+
+          <div class="p-4 bg-gray-50 rounded-lg">
+            <p class="text-lg font-medium mb-4">550 Credits</p>
+            <div class="flex gap-2">
+              <input
+                type="number"
+                placeholder="Enter bid amount"
+                class="flex-1 p-2 border rounded"
+              />
+              <button class="px-4 py-2 bg-[#D66853] text-white rounded hover:bg-[#D66853]/90">
+                Place Bid
+              </button>
+            </div>
+          </div>
+
+          <!-- Bid History -->
+          <div class="space-y-2">
+            <h2 class="font-medium">Bid History</h2>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+                <span>John D. - Placed bid: 500 Credits</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+                <span>Sarah K. - Placed bid: 450 Credits</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
-</body>
+  </body>
 </html>
