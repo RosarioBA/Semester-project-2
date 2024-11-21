@@ -16,6 +16,9 @@
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Your JavaScript -->
+    <script src="../js/handlers/register.js" type="module"></script>
+
     <title>Register | BidLeaf</title>
   </head>
   <body class="bg-[#F8FAF5] min-h-screen flex flex-col">
@@ -27,14 +30,19 @@
 
         <h2 class="text-[#2C3532] text-xl mb-8">Register Into BidLeaf</h2>
 
-        <form class="space-y-6">
+        <!-- Add error message container -->
+        <div id="errorMessage" class="hidden p-4 mb-4 text-red-800 bg-red-100 rounded"></div>
+
+        <form id="registerForm" class="space-y-6">
           <div>
-            <label for="name" class="block text-[#2C3532] mb-2">First Name</label>
+            <label for="name" class="block text-[#2C3532] mb-2">Username</label>
             <input
               type="text"
               id="name"
               name="name"
               required
+              pattern="^[a-zA-Z0-9_]+$"
+              title="Username can only contain letters, numbers, and underscores"
               class="w-full p-3 bg-[#E5E7E4] rounded border-0 focus:ring-2 focus:ring-[#739072]"
             />
           </div>
@@ -65,7 +73,7 @@
           </div>
 
           <div>
-            <label for="avatar" class="block text-[#2C3532] mb-2">Avatar URL</label>
+            <label for="avatar" class="block text-[#2C3532] mb-2">Avatar URL (optional)</label>
             <input
               type="url"
               id="avatar"
@@ -74,19 +82,33 @@
             />
           </div>
 
+          <div>
+            <label for="avatarAlt" class="block text-[#2C3532] mb-2">Avatar Description (optional)</label>
+            <input
+              type="text"
+              id="avatarAlt"
+              name="avatarAlt"
+              maxlength="120"
+              class="w-full p-3 bg-[#E5E7E4] rounded border-0 focus:ring-2 focus:ring-[#739072]"
+            />
+          </div>
+
           <button
             type="submit"
-            class="w-full bg-[#4f6f52] text-white py-3 rounded hover:bg-[#739072] transition-colors"
+            class="w-full bg-[#4f6f52] text-white py-3 rounded hover:bg-[#739072] transition-colors flex items-center justify-center"
           >
-            Register
+            <span>Register</span>
+            <!-- Add loading spinner (hidden by default) -->
+            <svg id="loadingSpinner" class="hidden animate-spin ml-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
           </button>
 
-          <a
-            href="/pages/login.html"
-            class="block text-center w-full border border-[#4f6f52] text-[#4f6f52] py-3 rounded hover:bg-[#F8FAF5] transition-colors"
-          >
-            Login
-          </a>
+          <p class="text-center text-[#2C3532]">
+            Already have an account?
+            <a href="/pages/login.html" class="text-[#4f6f52] hover:text-[#739072]">Login here</a>
+          </p>
         </form>
       </div>
     </main>
