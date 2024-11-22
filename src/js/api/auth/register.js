@@ -13,24 +13,31 @@
  * @throws {Error} If registration fails
  */
 // src/js/api/auth/register.js
+// src/js/api/auth/register.js
 import { API_AUTH_REGISTER, headers } from '../constants.js';
 
 export async function register(userData) {
     try {
+        console.log('🟡 Attempting to register with data:', userData);
+        
         const response = await fetch(API_AUTH_REGISTER, {
             method: 'POST',
             headers: headers,
             body: JSON.stringify(userData)
         });
 
+        const json = await response.json();
+        console.log('🟢 Register API Response:', json);
+
         if (!response.ok) {
-            const err = await response.json();
-            throw new Error(err.message || 'Registration failed');
+            console.error('🔴 Registration failed:', json);
+            throw new Error(json.errors?.[0]?.message || 'Registration failed');
         }
 
-        return await response.json();
+        return json;
 
     } catch (error) {
-        throw new Error(error.message || 'An error occurred during registration');
+        console.error('🔴 Registration error:', error.message);
+        throw error;
     }
 }

@@ -9,10 +9,6 @@ export const API_AUTH = `${API_BASE_URL}/auth`;
 
 export const API_AUTH_REGISTER = `${API_BASE_URL}/auth/register`;
 
+export const API_AUTH_LOGIN = `${API_BASE_URL}/auth/login`;
 
-export const API_URLS = {
-    login: `${API_BASE_URL}/auth/login`,
-    listings: `${API_BASE_URL}/listings`
-};
 
-/**maybe after is /auction/profile */
