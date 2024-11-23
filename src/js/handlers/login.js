@@ -17,19 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             try {
-                console.log('🔄 Attempting login...');
                 const response = await login(userData);
-                console.log('✅ Login Response:', response);
+                console.log('Login Response:', response); // Add this
                 
                 if (response.data && response.data.accessToken) {
-                    console.log('🎉 Login successful!');
                     localStorage.setItem('token', response.data.accessToken);
                     localStorage.setItem('user', JSON.stringify(response.data));
-                    console.log('💾 Token and user data stored');
-                    
+                    console.log('Stored user:', JSON.parse(localStorage.getItem('user'))); // Add this
                     window.location.href = '/index.html';
                 }
-                
             } catch (error) {
                 console.error('❌ Login error:', error);
                 errorMessage.textContent = error.message;
