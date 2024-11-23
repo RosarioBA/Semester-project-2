@@ -19,7 +19,22 @@
           <a href="/" class="text-2xl font-['Lato'] font-extrabold">
             <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
           </a>
-          <a href="/pages/login.html" class="px-6 py-2 bg-[#4F6F52] text-white rounded-md">Login</a>
+          
+          <!-- Login Button (shown when logged out) -->
+          <a href="/pages/login.html" data-auth="login" class="px-6 py-2 bg-[#4F6F52] text-white rounded-md">Login</a>
+          
+          <!-- User Menu (shown when logged in) -->
+          <div data-auth="user-menu" class="hidden flex items-center gap-4">
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-700" id="userName"></p>
+              <p class="text-xs text-gray-500" id="userCredits"></p>
+            </div>
+            <button class="text-[#4F6F52]" id="mobileMenuButton" title="Open Mobile Menu">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         <!-- Desktop Navigation -->
@@ -32,7 +47,29 @@
             <input type="search" placeholder="Search" class="w-full px-4 py-2 rounded-md border" />
           </div>
 
-          <a href="/pages/login.html" class="px-6 py-2 bg-[#4F6F52] text-white rounded-md">Login</a>
+          <!-- Login Button (shown when logged out) -->
+          <a href="/pages/login.html" data-auth="login" class="px-6 py-2 bg-[#4F6F52] text-white rounded-md">Login</a>
+          
+          <!-- User Menu (shown when logged in) -->
+          <div data-auth="user-menu" class="hidden flex items-center gap-4">
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-700" id="userNameDesktop"></p>
+              <p class="text-xs text-gray-500" id="userCreditsDesktop"></p>
+            </div>
+            <div class="relative group">
+              <button class="text-[#4F6F52]" title="User Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+              </button>
+              <!-- Dropdown Menu -->
+              <div class="hidden group-hover:block absolute right-0 w-48 py-2 mt-2 bg-white rounded-md shadow-xl z-20">
+                <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                <a href="/my-listings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Listings</a>
+                <button id="logoutButton" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+              </div>
+            </div>
+          </div>
         </div>
       </nav>
     </header>
@@ -48,10 +85,8 @@
             Join our thriving community of buyers and sellers. Find rare, vintage, and exciting
             items in our growing collection!
           </p>
-          <a
-            href="/pages/register.html"
-            class="inline-block px-8 py-3 bg-[#4F6F52] text-white rounded-md"
-          >
+          <!-- Register Button (shown when logged out) -->
+          <a href="./pages/register.html" data-auth="register" class="inline-block px-8 py-3 bg-[#4F6F52] text-white rounded-md">
             Register Now
           </a>
         </div>
@@ -99,5 +134,8 @@
         <p class="text-center">&copy; 2024 BidLeaf. All rights reserved.</p>
       </div>
     </footer>
+
+    <!-- JavaScript -->
+    <script src="./js/handlers/index.js"></script>
   </body>
 </html>
