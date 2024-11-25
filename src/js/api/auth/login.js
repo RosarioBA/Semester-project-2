@@ -5,22 +5,17 @@ export async function login(userData) {
     try {
         const response = await fetch(API_AUTH_LOGIN, {
             method: 'POST',
-            headers: headers,
+            headers: headers,  // Only API key needed for login
             body: JSON.stringify(userData)
         });
 
-        console.log('Login response status:', response.status); // For debugging
-
-        const json = await response.json();
-
         if (!response.ok) {
-            throw new Error(json.errors?.[0]?.message || 'Login failed');
+            throw new Error('Login failed');
         }
 
-        return json; // Returns the whole response with data and meta properties
+        return await response.json();
 
     } catch (error) {
-        console.error('Login error:', error);
-        throw new Error(error.message || 'An error occurred during login');
+        throw new Error(error.message);
     }
 }
