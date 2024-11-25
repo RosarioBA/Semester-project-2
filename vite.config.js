@@ -1,7 +1,11 @@
+// vite.config.js
+
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: 'src',
+  // Add envDir to point to the project root where .env is located
+  envDir: '../',
   build: {
     outDir: '../dist',
     rollupOptions: {
