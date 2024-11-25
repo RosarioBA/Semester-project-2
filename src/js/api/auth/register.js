@@ -15,20 +15,19 @@
 import { API_AUTH_REGISTER, headers } from '../constants.js';
 
 export async function register(userData) {
-    try {
-        const response = await fetch(API_AUTH_REGISTER, {
-            method: 'POST',
-            headers: headers,  // Only API key needed for register
-            body: JSON.stringify(userData)
-        });
+  try {
+    const response = await fetch(API_AUTH_REGISTER, {
+      method: 'POST',
+      headers: headers, // Only API key needed for register
+      body: JSON.stringify(userData),
+    });
 
-        if (!response.ok) {
-            throw new Error('Registration failed');
-        }
-
-        return await response.json();
-
-    } catch (error) {
-        throw new Error(error.message);
+    if (!response.ok) {
+      throw new Error('Registration failed');
     }
+
+    return await response.json();
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }

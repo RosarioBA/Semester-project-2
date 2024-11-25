@@ -2,10 +2,13 @@
 import { updateUserInfo } from './updateUserInfo.js';
 import { handleLogout } from './logout.js';
 import { toggleAuthUI } from './toggleAuth.js';
+import { handleListings } from './listings.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   updateUserInfo();
   toggleAuthUI();
+  handleListings();
+  
 
   const logoutButton = document.getElementById('logoutButton');
   if (logoutButton) {
