@@ -3,6 +3,7 @@ import { updateUserInfo } from './updateUserInfo.js';
 import { handleLogout } from './logout.js';
 import { toggleAuthUI } from './toggleAuth.js';
 import { handleListings } from './listings.js';
+import './navigation.js';  // Add this line
 
 document.addEventListener('DOMContentLoaded', () => {
   updateUserInfo();
