@@ -3,10 +3,12 @@
 import { API_BASE_URL, getAuthHeaders } from '../api/constants.js';
 
 /**
- * Fetches and displays all listings
+ * Fetches and displays listings
  * @param {string} containerId - The ID of the container element
+ * @param {Object} options - Options for fetching listings
+ * @param {boolean} options.isHomePage - Whether this is the home page
  */
-export async function handleListings(containerId = 'listings') {
+export async function handleListings(containerId = 'listings', { isHomePage = false } = {}) {
     try {
         const container = document.getElementById(containerId);
         if (!container) {
@@ -21,8 +23,13 @@ export async function handleListings(containerId = 'listings') {
             </div>
         `;
 
-        // Fetch listings with sorting by newest first and include seller info
-        const response = await fetch(`${API_BASE_URL}/auction/listings?sort=created&sortOrder=desc&_seller=true`, {
+        // Build query URL
+        let url = `${API_BASE_URL}/auction/listings?sort=created&sortOrder=desc&_seller=true`;
+        if (isHomePage) {
+            url += '&limit=12';
+        }
+
+        const response = await fetch(url, {
             headers: getAuthHeaders()
         });
 
@@ -31,7 +38,6 @@ export async function handleListings(containerId = 'listings') {
         }
 
         const { data: listings } = await response.json();
-        console.log('Fetched listings:', listings); // Debug log
 
         // Handle no listings
         if (!listings || listings.length === 0) {
@@ -49,7 +55,6 @@ export async function handleListings(containerId = 'listings') {
 
         // Add listings to grid
         listings.forEach(listing => {
-            console.log('Processing listing:', listing); // Debug log
             const listingElement = document.createElement('div');
             listingElement.innerHTML = createListingHTML(listing);
             listingElement.querySelector('article').addEventListener('click', () => {
@@ -78,9 +83,7 @@ export async function handleListings(containerId = 'listings') {
 function createListingHTML(listing) {
     const { title, description, media, endsAt, _count, created, seller } = listing;
     
-    // Format dates
     const endDate = new Date(endsAt);
-    const createdDate = new Date(created);
     const timeRemaining = endDate > new Date() ? 
         `Ends: ${endDate.toLocaleDateString()}` : 
         'Auction ended';
@@ -102,7 +105,6 @@ function createListingHTML(listing) {
             <div class="flex flex-col gap-1 text-sm">
                 <span class="text-gray-500">${timeRemaining}</span>
                 <span class="text-[#4F6F52]">By: ${seller?.name || 'Unknown seller'}</span>
-                <span class="text-xs text-gray-400">Created: ${createdDate.toLocaleDateString()}</span>
             </div>
         </article>
     `;

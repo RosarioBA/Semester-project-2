@@ -1,86 +1,150 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Listings | BidLeaf</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>All Listings | BidLeaf</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@400;800&family=Lora:wght@500;600&display=swap"
       rel="stylesheet"
     />
-
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-[#F8FAF5] min-h-screen">
-    <!-- Header -->
+  <body class="bg-[#F8FAF5]">
+    <!-- Header Navigation -->
     <header class="bg-white shadow-sm">
-      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div class="flex items-center justify-between">
-          <a href="/" class="text-2xl font-['Lora'] font-semibold text-[#4f6f52]">BidLeaf</a>
+      <nav class="max-w-7xl mx-auto px-4 py-4">
+        <!-- Mobile Navigation -->
+        <div class="flex items-center justify-between md:hidden">
+          <a href="/" class="text-2xl font-['Lato'] font-extrabold">
+            <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
+          </a>
 
-          <div class="flex items-center gap-4">
-            <span class="text-[#2C3532]">1000 credits</span>
-            <button class="text-[#2C3532]" title="Menu">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
+          <!-- User Menu (starts hidden) -->
+          <div data-auth="user-menu" class="hidden items-center gap-4">
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-700" id="userName"></p>
+              <p class="text-xs text-gray-500" id="userCredits"></p>
+            </div>
+            <button class="text-[#4F6F52]" id="mobileMenuButton" title="Open Mobile Menu">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
               </svg>
             </button>
           </div>
         </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center justify-between w-full">
+          <a href="/" class="text-3xl font-['Lato'] font-extrabold">
+            <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
+          </a>
+
+          <div class="flex-1 max-w-xl mx-8">
+            <input
+              type="search"
+              placeholder="Search listings..."
+              class="w-full px-4 py-2 rounded-md border border-gray-200 bg-white"
+            />
+          </div>
+
+          <!-- User Info (shown when logged in) -->
+          <div data-auth="user-menu" class="hidden items-center gap-6">
+            <!-- Credits -->
+            <div class="flex items-center">
+              <span class="text-[#4F6F52] text-xl">$</span>
+              <span id="userCreditsDesktop" class="ml-1"></span>
+            </div>
+
+            <!-- Username with icon -->
+            <div class="flex items-center">
+              <svg class="w-5 h-5 text-[#4F6F52] mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+              </svg>
+              <span id="userNameDesktop" class="text-[#4F6F52]"></span>
+            </div>
+
+            <!-- Hamburger Menu with Dropdown -->
+            <div class="relative group">
+              <button class="text-[#4F6F52]" id="menuButton" title="Open Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+              <!-- Dropdown Menu -->
+              <div class="hidden group-hover:block absolute right-0 w-64 p-4 mt-2 bg-white rounded-md shadow-xl z-20">
+                <!-- User Info -->
+                <div class="mb-4">
+                  <div class="flex items-center mb-2">
+                    <svg class="w-5 h-5 text-[#4F6F52] mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                    </svg>
+                    <span class="text-gray-800" id="userNameDropdown"></span>
+                  </div>
+                  <div class="flex items-center">
+                    <span class="text-[#4F6F52] mr-2">$</span>
+                    <span class="text-gray-800" id="userCreditsDropdown"></span>
+                  </div>
+                </div>
+
+                <!-- Create New Listing Button -->
+                <button id="createListingBtn" class="w-full bg-[#4F6F52] text-white rounded-md p-2 mb-4 flex items-center justify-center">
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  Create New Listing
+                </button>
+
+                <!-- MY AUCTIONS Section -->
+                <div class="mb-4">
+                  <h3 class="text-sm font-semibold text-gray-500 mb-2">MY AUCTIONS</h3>
+                  <a href="/my-listings" class="block py-2 text-gray-700 hover:text-[#4F6F52]">My Listings</a>
+                  <a href="/active-bids" class="block py-2 text-gray-700 hover:text-[#4F6F52]">Active Bids</a>
+                </div>
+
+                <!-- ACCOUNT Section -->
+                <div class="mb-4">
+                  <h3 class="text-sm font-semibold text-gray-500 mb-2">ACCOUNT</h3>
+                  <a href="/profile" class="block py-2 text-gray-700 hover:text-[#4F6F52]">Profile</a>
+                  <a href="/settings" class="block py-2 text-gray-700 hover:text-[#4F6F52]">Settings</a>
+                </div>
+
+                <!-- Logout -->
+                <button id="logoutButton" class="w-full text-left py-2 text-[#D66853] hover:text-red-700">
+                  Log out
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Login Button (shown when logged out) -->
+          <a
+            href="/pages/login.html"
+            data-auth="login"
+            class="px-6 py-2 bg-[#4F6F52] text-white rounded-md"
+          >
+            Login
+          </a>
+        </div>
       </nav>
     </header>
 
-    <!-- Search Bar -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <input
-        type="search"
-        placeholder="Search"
-        class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-[#4F6F52]"
-      />
+    <!-- Page Header -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold text-[#2C3532]">All Listings</h1>
+        <div class="flex gap-4">
+          <!-- Add any filters or sorting options here -->
+        </div>
+      </div>
     </div>
 
     <!-- Listings Grid -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-        <!-- Listing Card Template -->
-        <article class="bg-white rounded-lg shadow overflow-hidden">
-          <div class="aspect-w-16 aspect-h-12 bg-gray-200">
-            <img
-              src="/api/placeholder/400/300"
-              alt="Listing image"
-              class="object-cover w-full h-full"
-            />
-          </div>
-          <div class="p-4">
-            <div class="flex justify-between items-start mb-2">
-              <h3 class="font-medium text-[#2C3532]">Leather Sofa</h3>
-              <button
-                class="px-3 py-1 text-sm bg-[#D66853] text-white rounded-md hover:bg-[#D66853]/90"
-              >
-                Place Bid
-              </button>
-            </div>
-            <p class="text-sm text-gray-600 mb-1">5000 Credits</p>
-            <p class="text-xs text-gray-500">Ends in 2 days</p>
-          </div>
-        </article>
-
-        <!-- Repeat article element for more listings -->
-      </div>
+    <main class="max-w-7xl mx-auto px-4 pb-12">
+      <div id="listings"></div>
     </main>
+
+    <!-- JavaScript -->
+    <script src="../js/handlers/index.js" type="module"></script>
   </body>
 </html>
