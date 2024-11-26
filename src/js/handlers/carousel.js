@@ -1,17 +1,16 @@
 // src/js/handlers/carousel.js
 
-import { API_BASE_URL, getAuthHeaders } from '../api/constants.js';
+import { getListings } from '../api/listings/index.js';
 
 export async function initializeCarousel() {
     try {
-        // Fetch last 3 listings
-        const response = await fetch(`${API_BASE_URL}/auction/listings?sort=created&sortOrder=desc&limit=3&_seller=true`, {
-            headers: getAuthHeaders()
+        // Get the latest 3 listings
+        const { data: listings } = await getListings({ 
+            limit: 3,
+            sort: 'created',
+            sortOrder: 'desc'
         });
 
-        if (!response.ok) throw new Error('Failed to fetch carousel listings');
-
-        const { data: listings } = await response.json();
         if (!listings || listings.length === 0) return;
 
         // Replace the static image with carousel
@@ -53,7 +52,6 @@ export async function initializeCarousel() {
         const slides = document.querySelectorAll('#carousel > div > div');
         const totalSlides = slides.length;
 
-        // Add carousel controls to window object
         window.carousel = {
             next: () => {
                 slides[currentSlide].classList.add('opacity-0');
@@ -67,10 +65,10 @@ export async function initializeCarousel() {
             }
         };
 
-        // Auto-advance slides
         setInterval(window.carousel.next, 5000);
 
     } catch (error) {
         console.error('Carousel error:', error);
+        // Silently fail and keep the default image
     }
 }

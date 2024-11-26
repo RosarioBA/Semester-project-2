@@ -1,24 +1,67 @@
 // src/js/api/listings/index.js
 
-import { API_BASE_URL } from '../constants.js';
+import { API_ENDPOINTS, getAuthHeaders, getPublicHeaders } from '../constants.js';
 
 /**
- * Fetches all listings
- * @returns {Promise<Array>} Array of listings
+ * Fetches listings with optional filters and pagination
  */
-export async function getListings() {
+export async function getListings(options = {}) {
     try {
-        const response = await fetch(`${API_BASE_URL}/auction/listings`);
-        
+        const queryParams = new URLSearchParams({
+            sort: options.sort || 'created',
+            sortOrder: options.sortOrder || 'desc',
+            _seller: 'true'
+        });
+
+        if (options.limit) queryParams.append('limit', options.limit);
+        if (options.page) queryParams.append('page', options.page);
+
+        // Use public headers for listings (no auth required)
+        const response = await fetch(`${API_ENDPOINTS.LISTINGS.BASE}?${queryParams}`, {
+            headers: getPublicHeaders()
+        });
+
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error('Failed to fetch listings');
         }
-        
-        const { data } = await response.json();
-        return data;
-        
+
+        return response.json();
     } catch (error) {
         console.error('Error fetching listings:', error);
+        throw error;
+    }
+}
+
+/**
+ * Creates a new listing (requires authentication)
+ */
+export async function createListing(listingData) {
+    try {
+        const response = await fetch(API_ENDPOINTS.LISTINGS.BASE, {
+            method: 'POST',
+            headers: getAuthHeaders(), // This one needs auth
+            body: JSON.stringify({
+                title: listingData.title,
+                description: listingData.description,
+                tags: listingData.tags?.split(',').map(tag => tag.trim()) || [],
+                media: listingData.media ? [
+                    {
+                        url: listingData.media,
+                        alt: listingData.title
+                    }
+                ] : [],
+                endsAt: new Date(listingData.deadline).toISOString()
+            })
+        });
+
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.errors?.[0]?.message || 'Failed to create listing');
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error('Error creating listing:', error);
         throw error;
     }
 }

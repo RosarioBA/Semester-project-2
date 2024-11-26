@@ -1,3 +1,7 @@
+// src/js/api/auth/register.js
+
+import { API_ENDPOINTS, headers } from '../constants.js';
+
 /**
  * Registers a new user with the auction house API
  * @param {Object} userData
@@ -11,23 +15,23 @@
  * @returns {Promise<Object>} The new user data
  * @throws {Error} If registration fails
  */
-// src/js/api/auth/register.js
-import { API_AUTH_REGISTER, headers } from '../constants.js';
-
 export async function register(userData) {
-  try {
-    const response = await fetch(API_AUTH_REGISTER, {
-      method: 'POST',
-      headers: headers, // Only API key needed for register
-      body: JSON.stringify(userData),
-    });
+    try {
+        const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(userData),
+        });
 
-    if (!response.ok) {
-      throw new Error('Registration failed');
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.errors?.[0]?.message || 'Registration failed');
+        }
+
+        return data.data;
+    } catch (error) {
+        console.error('Registration API Error:', error);
+        throw new Error(error.message || 'Failed to register. Please try again.');
     }
-
-    return await response.json();
-  } catch (error) {
-    throw new Error(error.message);
-  }
 }
