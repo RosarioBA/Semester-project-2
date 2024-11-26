@@ -3,22 +3,55 @@
 import { createListing } from '../api/listings/create.js';
 
 /**
+ * Shows a success message overlay and redirects after a delay
+ */
+function showSuccessAndRedirect() {
+    // Create success overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    
+    const message = document.createElement('div');
+    message.className = 'bg-white rounded-lg p-6 flex flex-col items-center max-w-sm mx-4';
+    message.innerHTML = `
+        <svg class="w-12 h-12 text-[#4F6F52] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Listing Created!</h3>
+        <p class="text-gray-500 text-center mb-1">Your listing has been created successfully.</p>
+        <p class="text-sm text-gray-400">Redirecting to homepage...</p>
+    `;
+    
+    overlay.appendChild(message);
+    document.body.appendChild(overlay);
+    
+    // Redirect after 2 seconds
+    setTimeout(() => {
+        window.location.href = '/';
+    }, 2000);
+}
+
+/**
  * Handles form submission for creating a new listing
  * @param {Event} event - The form submission event
  */
 async function handleCreateListing(event) {
     event.preventDefault();
     
-    // Get the form element
     const form = event.target;
-    
-    // Disable the submit button to prevent double submission
     const submitButton = form.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.innerHTML;
+    
+    // Disable submit button and show loading state
     submitButton.disabled = true;
-    submitButton.innerHTML = 'Creating...';
+    submitButton.innerHTML = `
+        <svg class="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Creating...
+    `;
     
     try {
-        // Get form data
         const formData = {
             title: form.title.value,
             description: form.description.value,
@@ -27,32 +60,26 @@ async function handleCreateListing(event) {
             deadline: form.deadline.value
         };
 
-        // Validate required fields
-        if (!formData.title || !formData.deadline) {
-            throw new Error('Title and deadline are required');
-        }
-
-        // Create the listing
-        const response = await createListing(formData);
-
-        // Show success message
-        alert('Listing created successfully!');
-
-        // Redirect to the listing page or home page
-        window.location.href = '/';
+        await createListing(formData);
+        showSuccessAndRedirect();
 
     } catch (error) {
-        // Show error message
-        alert(error.message || 'Failed to create listing. Please try again.');
+        // Create error message element
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'bg-red-50 text-red-500 p-4 rounded-md mb-4';
+        errorDiv.textContent = error.message || 'Failed to create listing. Please try again.';
         
-        // Re-enable the submit button
+        // Insert error message at the top of the form
+        form.insertBefore(errorDiv, form.firstChild);
+        
+        // Remove error message after 5 seconds
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 5000);
+        
+        // Reset button state
         submitButton.disabled = false;
-        submitButton.innerHTML = `
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            Create New Listing
-        `;
+        submitButton.innerHTML = originalButtonText;
     }
 }
 
@@ -63,17 +90,3 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', handleCreateListing);
     }
 });
-
-// Add validation for the deadline date
-const deadlineInput = document.getElementById('deadline');
-if (deadlineInput) {
-    deadlineInput.addEventListener('change', (event) => {
-        const selectedDate = new Date(event.target.value);
-        const now = new Date();
-        
-        if (selectedDate <= now) {
-            alert('Deadline must be in the future');
-            event.target.value = '';
-        }
-    });
-}
