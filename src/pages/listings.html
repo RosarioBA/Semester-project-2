@@ -131,8 +131,40 @@
 
     <!-- Page Header -->
     <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <h1 class="text-2xl font-semibold text-[#2C3532]">All Listings</h1>
+            <div class="flex gap-4">
+                <label for="sortSelect" class="sr-only">Sort Listings</label>
+                <select 
+                    id="sortSelect" 
+                    class="px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-[#4F6F52]"
+                >
+                    <option value="created-desc">Newest First</option>
+                    <option value="created-asc">Oldest First</option>
+                    <option value="title-asc">Title A-Z</option>
+                    <option value="title-desc">Title Z-A</option>
+                    <option value="endsAt-asc">Ending Soon</option>
+                    <option value="endsAt-desc">Ending Later</option>
+                </select>
+            </div>
+        </div>
+    
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="hidden">
+            <div class="flex justify-center items-center py-12">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#4F6F52]"></div>
+            </div>
+        </div>
+    
+        <!-- Listings Grid -->
+        <div id="listings"></div>
+    
+        <!-- Pagination -->
+        <div id="pagination" class="mt-8"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
       <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-semibold text-[#2C3532]">All Listings</h1>
         <div class="flex gap-4">
           <!-- Add any filters or sorting options here -->
         </div>
@@ -145,6 +177,6 @@
     </main>
 
     <!-- JavaScript -->
-    <script src="../js/handlers/index.js" type="module"></script>
+    <script src="../js/handlers/listingsPage.js" type="module"></script>
   </body>
 </html>
