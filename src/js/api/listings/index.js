@@ -65,3 +65,32 @@ export async function createListing(listingData) {
         throw error;
     }
 }
+
+// Add this function to your existing listings API file
+/**
+ * Fetches a single listing by ID
+ * @param {string} id - Listing ID
+ * @returns {Promise<Object>} Listing data
+ */
+export async function getSingleListing(id) {
+    try {
+        const queryParams = new URLSearchParams({
+            _seller: 'true',
+            _bids: 'true'
+        });
+
+        const response = await fetch(`${API_ENDPOINTS.LISTINGS.BASE}/${id}?${queryParams}`, {
+            headers: getPublicHeaders()
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch listing');
+        }
+
+        const { data } = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching listing:', error);
+        throw error;
+    }
+}
