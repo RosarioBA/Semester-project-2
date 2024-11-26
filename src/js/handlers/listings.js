@@ -7,7 +7,10 @@ import { API_BASE_URL, getAuthHeaders } from '../api/constants.js';
  * @param {string} containerId - The ID of the container element
  * @param {Object} options - Options for fetching listings
  * @param {boolean} options.isHomePage - Whether this is the home page
+ * 
  */
+
+
 export async function handleListings(containerId = 'listings', { isHomePage = false } = {}) {
     try {
         const container = document.getElementById(containerId);

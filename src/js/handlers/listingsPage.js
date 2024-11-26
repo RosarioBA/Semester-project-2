@@ -2,7 +2,7 @@
 
 import { API_BASE_URL, getAuthHeaders } from '../api/constants.js';
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 12;
 let currentPage = 1;
 
 export async function handleListingsPage(containerId = 'listings') {

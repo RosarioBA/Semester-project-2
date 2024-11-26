@@ -4,12 +4,15 @@ import { handleLogout } from './logout.js';
 import { toggleAuthUI } from './toggleAuth.js';
 import { handleListings } from './listings.js';
 import { initializeDropdown } from './dropdown.js';
+import { initializeCarousel } from './carousel.js';
 import './navigation.js';
+
 
 document.addEventListener('DOMContentLoaded', () => {
   updateUserInfo();
   toggleAuthUI();
   initializeDropdown();
+  initializeCarousel();
   
   const listingsContainer = document.getElementById('listings');
   if (listingsContainer) {
