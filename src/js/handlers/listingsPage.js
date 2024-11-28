@@ -6,9 +6,11 @@ import { createListingHTML, showLoading, showError } from '../utils/listingUtils
 const ITEMS_PER_PAGE = 12;
 let currentPage = 1;
 
+let container = null;
+
 export async function handleListingsPage(containerId = 'listings') {
     try {
-        const container = document.getElementById(containerId);
+        container = document.getElementById(containerId);
         if (!container) return;
 
         showLoading(container);
@@ -32,42 +34,37 @@ export async function handleListingsPage(containerId = 'listings') {
 }
 
 async function fetchAndDisplayListings(container, options = {}) {
-    try {
-        const { data: listings, meta } = await getListings({
-            page: currentPage,
-            limit: ITEMS_PER_PAGE,
-            sort: options.sort || 'created',
-            sortOrder: options.sortOrder || 'desc'
-        });
+    const { data: listings, meta } = await getListings({
+        page: currentPage,
+        limit: ITEMS_PER_PAGE,
+        sort: options.sort || 'created',
+        sortOrder: options.sortOrder || 'desc'
+    });
 
-        if (!listings?.length) {
-            container.innerHTML = `
-                <div class="text-center py-12">
-                    <p class="text-gray-500">No listings found</p>
-                </div>
-            `;
-            return;
-        }
-
-        const grid = document.createElement('div');
-        grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
-
-        listings.forEach(listing => {
-            const listingElement = document.createElement('div');
-            listingElement.innerHTML = createListingHTML(listing);
-            listingElement.querySelector('article').addEventListener('click', () => {
-                window.location.href = `/pages/single-listing.html?id=${listing.id}`;
-            });
-            grid.appendChild(listingElement);
-        });
-
-        container.innerHTML = '';
-        container.appendChild(grid);
-        updatePagination(meta);
-
-    } catch (error) {
-        throw error;
+    if (!listings?.length) {
+        container.innerHTML = `
+            <div class="text-center py-12">
+                <p class="text-gray-500">No listings found</p>
+            </div>
+        `;
+        return;
     }
+
+    const grid = document.createElement('div');
+    grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
+
+    listings.forEach(listing => {
+        const listingElement = document.createElement('div');
+        listingElement.innerHTML = createListingHTML(listing);
+        listingElement.querySelector('article').addEventListener('click', () => {
+            window.location.href = `/pages/single-listing.html?id=${listing.id}`;
+        });
+        grid.appendChild(listingElement);
+    });
+
+    container.innerHTML = '';
+    container.appendChild(grid);
+    updatePagination(meta);
 }
 
 function updatePagination(meta) {

@@ -95,12 +95,3 @@ export async function getSingleListing(id) {
     }
 }
 
-export async function getMyListings() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const response = await fetch(`${API_BASE_URL}/auction/profiles/${user.name}/listings`, {
-        headers: getAuthHeaders()
-    });
-
-    if (!response.ok) throw new Error('Failed to fetch your listings');
-    return response.json();
-}

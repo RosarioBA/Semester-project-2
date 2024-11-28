@@ -3,12 +3,11 @@
 import { getListings } from '../api/listings/index.js';
 import { createListingHTML, showLoading, showError } from '../utils/listingUtils.js';
 
-/**
- * Handles listings display for homepage
- */
+let container = null;
+
 export async function handleListings(containerId = 'listings') {
     try {
-        const container = document.getElementById(containerId);
+        container = document.getElementById(containerId);
         if (!container) return;
 
         showLoading(container);
