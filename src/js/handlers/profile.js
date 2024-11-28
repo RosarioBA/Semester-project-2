@@ -50,7 +50,7 @@ function updateProfileDisplay(profile) {
 
     listingsContainer.innerHTML = profile.listings.map(listing => `
         <div class="bg-white rounded-lg shadow-sm p-4 flex justify-between items-center">
-            <div class="flex items-center gap-4">
+            <a href="/pages/single-listing.html?id=${listing.id}" class="flex items-center gap-4 flex-1">
                 <img src="${listing.media?.[0]?.url || '/api/placeholder/64/64'}" 
                      alt="${listing.title}" 
                      class="w-16 h-16 rounded object-cover">
@@ -58,7 +58,7 @@ function updateProfileDisplay(profile) {
                     <h3 class="font-medium">${listing.title}</h3>
                     <p class="text-gray-600">${listing._count?.bids || 0} bids</p>
                 </div>
-            </div>
+            </a>
             <a href="/pages/edit-listing.html?id=${listing.id}" 
                class="px-4 py-2 bg-[#4f6f52] text-white rounded">
                 Edit
