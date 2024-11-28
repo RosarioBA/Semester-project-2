@@ -4,34 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile | BidLeaf</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;800&family=Lora:wght@500;600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;800&family=Lora:wght@500;600&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-[#F8FAF5]">
     <header class="bg-white shadow-sm">
-      <nav class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <a href="/" class="text-2xl font-['Lora'] font-semibold text-[#4f6f52]">BidLeaf</a>
-        <div class="flex items-center gap-4">
-          <span>1000 credits</span>
-          <button class="text-[#2C3532]" title="Menu">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
-          </button>
+      <nav class="max-w-7xl mx-auto px-4 py-4">
+        <!-- Mobile Navigation -->
+        <div class="flex items-center justify-between md:hidden">
+          <a href="/" class="text-2xl font-['Lato'] font-extrabold">
+            <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
+          </a>
+          <div data-auth="user-menu" class="hidden items-center gap-4">
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-700" id="userName"></p>
+              <p class="text-xs text-gray-500" id="userCredits"></p>
+            </div>
+            <button class="text-[#4F6F52]" id="mobileMenuButton" title="Open mobile menu">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center justify-between w-full">
+          <a href="/" class="text-3xl font-['Lato'] font-extrabold">
+            <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
+          </a>
+
+          <!-- User Info -->
+          <div data-auth="user-menu" class="hidden items-center gap-6">
+            <div class="flex items-center">
+              <span class="text-[#4F6F52] text-xl">$</span>
+              <span id="userCreditsDesktop" class="ml-1 profile-credits"></span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-5 h-5 text-[#4F6F52] mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+              </svg>
+              <span id="userNameDesktop" class="text-[#4F6F52] profile-name"></span>
+            </div>
+
+            <!-- Include the same dropdown menu as in index.html -->
+          </div>
         </div>
       </nav>
     </header>
@@ -41,61 +58,24 @@
       <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
         <div class="flex flex-col items-center">
           <div class="w-24 h-24 bg-gray-200 rounded-full mb-4 overflow-hidden">
-            <img src="/api/placeholder/96/96" alt="Profile" class="w-full h-full object-cover" />
+            <img src="/api/placeholder/96/96" alt="Profile" class="profile-avatar w-full h-full object-cover" />
           </div>
-          <h1 class="text-xl font-semibold mb-1">Rosario B.</h1>
-          <p class="text-gray-600 mb-2">rosario@stud.noroff.no</p>
+          <h1 class="profile-name text-xl font-semibold mb-1"></h1>
+          <p class="profile-email text-gray-600 mb-2"></p>
           <div class="bg-[#F8FAF5] px-4 py-2 rounded">
-            <span>1000 credits available</span>
+            <span class="profile-credits"></span>
           </div>
         </div>
       </div>
 
-      <!-- Your Listings Section -->
+      <!-- Listings Section -->
       <div class="mb-8">
         <h2 class="text-lg font-semibold mb-4">Your Listings</h2>
-        <div class="space-y-4">
-          {/* Listing Item */}
-          <div class="bg-white rounded-lg shadow-sm p-4 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-              <img
-                src="/api/placeholder/64/64"
-                alt="Leather Sofa"
-                class="w-16 h-16 rounded object-cover"
-              />
-              <div>
-                <h3 class="font-medium">Leather Sofa</h3>
-                <p class="text-gray-600">8000 Credits</p>
-              </div>
-            </div>
-            <button class="px-4 py-2 bg-[#4f6f52] text-white rounded">Edit</button>
-          </div>
-
-          {/* Repeat for more listings */}
-        </div>
-      </div>
-
-      <!-- Active Bids Section -->
-      <div>
-        <h2 class="text-lg font-semibold mb-4">Your Active Bids</h2>
-        <div class="space-y-4">
-          <div class="bg-white rounded-lg shadow-sm p-4 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-              <img
-                src="/api/placeholder/64/64"
-                alt="Leather Sofa"
-                class="w-16 h-16 rounded object-cover"
-              />
-              <div>
-                <h3 class="font-medium">Leather Sofa</h3>
-                <p class="text-gray-600">Current bid: 5500 Credits</p>
-                <p class="text-sm text-gray-500">Your bid: 5000 Credits</p>
-              </div>
-            </div>
-            <span class="text-[#D66853]">Outbid</span>
-          </div>
+        <div class="listings-container space-y-4">
+          <!-- Listings will be populated here -->
         </div>
       </div>
     </main>
+    <script src="../js/handlers/index.js" type="module"></script>
   </body>
 </html>
