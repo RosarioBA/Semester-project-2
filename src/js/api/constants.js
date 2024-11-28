@@ -13,6 +13,12 @@ export const API_ENDPOINTS = {
     LISTINGS: {
         BASE: `${API_BASE_URL}/auction/listings`,
         SEARCH: `${API_BASE_URL}/auction/listings/search`
+    },
+    PROFILES: {
+        BASE: `${API_BASE_URL}/auction/profiles`,
+        LISTINGS: (name) => `${API_BASE_URL}/auction/profiles/${name}/listings`,
+        BIDS: (name) => `${API_BASE_URL}/auction/profiles/${name}/bids`,
+        WINS: (name) => `${API_BASE_URL}/auction/profiles/${name}/wins`
     }
 };
 
