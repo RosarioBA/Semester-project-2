@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Listing | BidLeaf</title>
+    <title>All Listings | BidLeaf</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@400;800&family=Lora:wght@500;600&display=swap"
       rel="stylesheet"
@@ -20,14 +20,6 @@
             <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
           </a>
 
-          <!-- Login Button (shown when logged out) -->
-          <a
-            href="/pages/login.html"
-            data-auth="login"
-            class="px-6 py-2 bg-[#4F6F52] text-white rounded-md"
-            >Login</a
-          >
-
           <!-- User Menu (starts hidden) -->
           <div data-auth="user-menu" class="hidden items-center gap-4">
             <div class="text-right">
@@ -35,19 +27,8 @@
               <p class="text-xs text-gray-500" id="userCredits"></p>
             </div>
             <button class="text-[#4F6F52]" id="mobileMenuButton" title="Open Mobile Menu">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
               </svg>
             </button>
           </div>
@@ -62,7 +43,7 @@
           <div class="flex-1 max-w-xl mx-8">
             <input
               type="search"
-              placeholder="Search"
+              placeholder="Search listings..."
               class="w-full px-4 py-2 rounded-md border border-gray-200 bg-white"
             />
           </div>
@@ -78,18 +59,14 @@
             <!-- Username with icon -->
             <div class="flex items-center">
               <svg class="w-5 h-5 text-[#4F6F52] mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clip-rule="evenodd"
-                />
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
               </svg>
               <span id="userNameDesktop" class="text-[#4F6F52]"></span>
             </div>
 
             <!-- Hamburger Menu with Dropdown -->
             <div class="relative group">
-              <button class="text-[#4F6F52] p-2" id="menuButton" title="Open Menu">
+              <button class="text-[#4F6F52]" id="menuButton" title="Open Menu">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -111,10 +88,7 @@
                 </div>
 
                 <!-- Create New Listing Button -->
-                <button
-                  id="createListingBtn"
-                  class="w-full bg-[#4F6F52] text-white rounded-md p-2 mb-4 flex items-center justify-center hover:bg-[#4F6F52]/90 transition-colors"
-                >
+                <button id="createListingBtn" class="w-full bg-[#4F6F52] text-white rounded-md p-2 mb-4 flex items-center justify-center">
                   <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                   </svg>
@@ -155,22 +129,54 @@
       </nav>
     </header>
 
-    <!-- Main Content -->
-    <main>
-      <!-- Content will be populated by JavaScript -->
+    <!-- Page Header -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <h1 class="text-2xl font-semibold text-[#2C3532]">All Listings</h1>
+            <div class="flex gap-4">
+                <label for="sortSelect" class="sr-only">Sort Listings</label>
+                <select 
+                    id="sortSelect" 
+                    class="px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-[#4F6F52]"
+                >
+                    <option value="created-desc">Newest First</option>
+                    <option value="created-asc">Oldest First</option>
+                    <option value="title-asc">Title A-Z</option>
+                    <option value="title-desc">Title Z-A</option>
+                    <option value="endsAt-asc">Ending Soon</option>
+                    <option value="endsAt-desc">Ending Later</option>
+                </select>
+            </div>
+        </div>
+    
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="hidden">
+            <div class="flex justify-center items-center py-12">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#4F6F52]"></div>
+            </div>
+        </div>
+    
+        <!-- Listings Grid -->
+        <div id="listings"></div>
+    
+        <!-- Pagination -->
+        <div id="pagination" class="mt-8"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex gap-4">
+          <!-- Add any filters or sorting options here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Listings Grid -->
+    <main class="max-w-7xl mx-auto px-4 pb-12">
+      <div id="listings"></div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-[#4F6F52] text-white mt-12">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <p class="text-center">&copy; 2024 BidLeaf. All rights reserved.</p>
-      </div>
-    </footer>
-
     <!-- JavaScript -->
-    <script src="../js/handlers/index.js" type="module"></script>
-    <script src="../js/handlers/singleListing.js" type="module"></script>
-    <script src="../js/handlers/navigation.js" type="module"></script>
-    <script src="../js/handlers/bid.js" type="module"></script>
+    <script src="../js/handlers/myListings.js" type="module"></script>
   </body>
 </html>
