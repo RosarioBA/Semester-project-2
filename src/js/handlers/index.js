@@ -6,6 +6,8 @@ import { initializeDropdown } from './dropdown.js';
 import { initializeCarousel } from './carousel.js';
 import { loadProfilePage } from './profile.js';
 import { loadActiveBids } from './activeBids.js';
+import { initializeSearch } from './search.js';
+
 import './navigation.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -13,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
  await updateUserInfo();
  toggleAuthUI();
  initializeDropdown();
+  initializeSearch();
 
 
  const path = window.location.pathname;

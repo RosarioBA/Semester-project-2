@@ -16,6 +16,7 @@ export const API_ENDPOINTS = {
     },
     PROFILES: {
         BASE: `${API_BASE_URL}/auction/profiles`,
+        SEARCH: `${API_BASE_URL}/auction/profiles/search`,
         LISTINGS: (name) => `${API_BASE_URL}/auction/profiles/${name}/listings`,
         BIDS: (name) => `${API_BASE_URL}/auction/profiles/${name}/bids`,
         WINS: (name) => `${API_BASE_URL}/auction/profiles/${name}/wins`

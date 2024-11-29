@@ -21,3 +21,21 @@ export async function getProfile(name) {
         }
     };
 }
+
+export async function updateProfileMedia(name, data) {
+    const response = await fetch(`${API_ENDPOINTS.PROFILES.BASE}/${name}`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data)
+    });
+    return await response.json();
+}
+
+/*
+export async function searchProfiles(query) {
+    const response = await fetch(`${API_ENDPOINTS.PROFILES.BASE}/search?q=${query}`, {
+        headers: getAuthHeaders()
+    });
+    return await response.json();
+}
+*/
