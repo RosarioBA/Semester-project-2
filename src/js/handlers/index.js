@@ -5,6 +5,7 @@ import { handleListings } from './listings.js';
 import { initializeDropdown } from './dropdown.js'; 
 import { initializeCarousel } from './carousel.js';
 import { loadProfilePage } from './profile.js';
+import { loadActiveBids } from './activeBids.js';
 import './navigation.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -13,18 +14,21 @@ document.addEventListener('DOMContentLoaded', async () => {
  toggleAuthUI();
  initializeDropdown();
 
+
  const path = window.location.pathname;
 
  // Page-specific handlers
- if (path === '/pages/profile.html') {
-   loadProfilePage();
- } else if (path === '/' || path === '/index.html') {
-   initializeCarousel();
-   const listingsContainer = document.getElementById('listings');
-   if (listingsContainer) {
-     handleListings('listings', { isHomePage: true });
-   }
- }
+if (path === '/pages/profile.html') {
+  loadProfilePage();
+} else if (path === '/pages/active-bids.html') {
+  loadActiveBids();
+} else if (path === '/' || path === '/index.html') {
+  initializeCarousel();
+  const listingsContainer = document.getElementById('listings');
+  if (listingsContainer) {
+    handleListings('listings', { isHomePage: true });
+  }
+}
 
  // Global handlers
  const logoutButton = document.getElementById('logoutButton');

@@ -1,6 +1,8 @@
 // src/js/handlers/bid.js
-
 import { placeBid } from '../api/bids/index.js';
+import { getProfile } from '../api/profiles/index.js';
+import { getUser } from '../utils/userData.js';
+import { updateUserInfo } from './updateUserInfo.js';
 
 export function initializeBidding(listing, onBidPlaced) {
     const bidButton = document.getElementById('placeBidBtn');
@@ -22,6 +24,11 @@ export function initializeBidding(listing, onBidPlaced) {
         try {
             bidButton.disabled = true;
             await placeBid(listing.id, Number(bidInput.value));
+            
+            // Update credits after successful bid
+            const response = await getProfile(getUser().name);
+            localStorage.setItem('userCredits', response.data.credits);
+            updateUserInfo();
             
             bidButton.className = 'px-4 py-2 bg-green-600 text-white rounded transition-colors';
             bidButton.textContent = 'Bid Placed';

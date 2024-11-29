@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Active Bids | BidLeaf</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;800&family=Lora:wght@500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F8FAF5]">
+    <!-- Copy your header navigation from index.html -->
+     <!-- Header Navigation -->
+    <header class="bg-white shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 py-4">
+          <!-- Mobile Navigation -->
+          <div class="flex items-center justify-between md:hidden">
+            <a href="/" class="text-2xl font-['Lato'] font-extrabold">
+              <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
+            </a>
+  
+            <!-- User Menu (starts hidden) -->
+            <div data-auth="user-menu" class="hidden items-center gap-4">
+              <div class="text-right">
+                <p class="text-sm font-medium text-gray-700" id="userName"></p>
+                <p class="text-xs text-gray-500" id="userCredits"></p>
+              </div>
+              <button class="text-[#4F6F52]" id="mobileMenuButton" title="Open Mobile Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+  
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center justify-between w-full">
+            <a href="/" class="text-3xl font-['Lato'] font-extrabold">
+              <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
+            </a>
+  
+            <div class="flex-1 max-w-xl mx-8">
+              <input
+                type="search"
+                placeholder="Search listings..."
+                class="w-full px-4 py-2 rounded-md border border-gray-200 bg-white"
+              />
+            </div>
+  
+            <!-- User Info (shown when logged in) -->
+            <div data-auth="user-menu" class="hidden items-center gap-6">
+              <!-- Credits -->
+              <div class="flex items-center">
+                <span class="text-[#4F6F52] text-xl">$</span>
+                <span id="userCreditsDesktop" class="ml-1"></span>
+              </div>
+  
+              <!-- Username with icon -->
+              <div class="flex items-center">
+                <svg class="w-5 h-5 text-[#4F6F52] mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                </svg>
+                <span id="userNameDesktop" class="text-[#4F6F52]"></span>
+              </div>
+  
+              <!-- Hamburger Menu with Dropdown -->
+              <div class="relative group">
+                <button class="text-[#4F6F52]" id="menuButton" title="Open Menu">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+                <!-- Dropdown Menu -->
+                <div class="hidden group-hover:block absolute right-0 w-64 p-4 mt-2 bg-white rounded-md shadow-xl z-20">
+                  <!-- User Info -->
+                  <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                      <svg class="w-5 h-5 text-[#4F6F52] mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="text-gray-800" id="userNameDropdown"></span>
+                    </div>
+                    <div class="flex items-center">
+                      <span class="text-[#4F6F52] mr-2">$</span>
+                      <span class="text-gray-800" id="userCreditsDropdown"></span>
+                    </div>
+                  </div>
+  
+                  <!-- Create New Listing Button -->
+                  <button id="createListingBtn" class="w-full bg-[#4F6F52] text-white rounded-md p-2 mb-4 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    Create New Listing
+                  </button>
+  
+                  <!-- MY AUCTIONS Section -->
+                  <div class="mb-4">
+                    <h3 class="text-sm font-semibold text-gray-500 mb-2">MY AUCTIONS</h3>
+                    <a href="/my-listings" class="block py-2 text-gray-700 hover:text-[#4F6F52]">My Listings</a>
+                    <a href="../pages/active-bids.html" class="block py-2 text-gray-700 hover:text-[#4F6F52]">Active Bids</a>
+                  </div>
+  
+                  <!-- ACCOUNT Section -->
+                  <div class="mb-4">
+                    <h3 class="text-sm font-semibold text-gray-500 mb-2">ACCOUNT</h3>
+                    <a href="../pages/profile.html" class="block py-2 text-gray-700 hover:text-[#4F6F52]">Profile</a>
+                    <a href="/settings" class="block py-2 text-gray-700 hover:text-[#4F6F52]">Settings</a>
+                  </div>
+  
+                  <!-- Logout -->
+                  <button id="logoutButton" class="w-full text-left py-2 text-[#D66853] hover:text-red-700">
+                    Log out
+                  </button>
+                </div>
+              </div>
+            </div>
+          <!-- Login Button (shown when logged out) -->
+                <a
+                href="/pages/login.html"
+                data-auth="login"
+                class="px-6 py-2 bg-[#4F6F52] text-white rounded-md"
+                >
+                Login
+                </a>
+                </div>
+                </nav>
+                </header>
+
+    <main class="max-w-3xl mx-auto px-4 py-8">
+        <!-- Active Bids Section -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Your Active Bids</h2>
+            <div id="activeBids" class="space-y-4">
+                <!-- Bids will be populated here -->
+            </div>
+        </section>
+
+        <!-- Won Auctions Section -->
+        <section>
+            <h2 class="text-2xl font-semibold mb-4">Won Auctions</h2>
+            <div id="wonAuctions" class="space-y-4">
+                <!-- Won auctions will be populated here -->
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="../js/handlers/index.js"></script>
+</body>
+</html>
