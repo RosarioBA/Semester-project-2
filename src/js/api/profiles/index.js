@@ -31,11 +31,10 @@ export async function updateProfileMedia(name, data) {
     return await response.json();
 }
 
-/*
-export async function searchProfiles(query) {
+
+/*export async function searchProfiles(query) {
     const response = await fetch(`${API_ENDPOINTS.PROFILES.BASE}/search?q=${query}`, {
         headers: getAuthHeaders()
     });
     return await response.json();
-}
-*/
+}*/
