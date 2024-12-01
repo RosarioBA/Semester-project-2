@@ -13,34 +13,35 @@ import { API_BASE_URL, getAuthHeaders } from '../constants.js';
  * @returns {Promise<Object>} The created listing
  */
 export async function createListing(listingData) {
-    try {
-        const response = await fetch(`${API_BASE_URL}/auction/listings`, {
-            method: 'POST',
-            headers: getAuthHeaders(),
-            body: JSON.stringify({
-                title: listingData.title,
-                description: listingData.description,
-                tags: listingData.tags?.split(',').map(tag => tag.trim()) || [],
-                media: listingData.media ? [
-                    {
-                        url: listingData.media,
-                        alt: listingData.title
-                    }
-                ] : [],
-                endsAt: new Date(listingData.deadline).toISOString()
-            })
-        });
+  try {
+    const response = await fetch(`${API_BASE_URL}/auction/listings`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        title: listingData.title,
+        description: listingData.description,
+        tags: listingData.tags?.split(',').map((tag) => tag.trim()) || [],
+        media: listingData.media
+          ? [
+              {
+                url: listingData.media,
+                alt: listingData.title,
+              },
+            ]
+          : [],
+        endsAt: new Date(listingData.deadline).toISOString(),
+      }),
+    });
 
-        if (!response.ok) {
-            const err = await response.json();
-            throw new Error(err.errors?.[0]?.message || 'Failed to create listing');
-        }
-
-        const data = await response.json();
-        return data;
-
-    } catch (error) {
-        console.error('Error creating listing:', error);
-        throw error;
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.errors?.[0]?.message || 'Failed to create listing');
     }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error creating listing:', error);
+    throw error;
+  }
 }

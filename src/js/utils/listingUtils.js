@@ -4,14 +4,13 @@
  * Creates HTML for a listing card
  */
 export function createListingHTML(listing) {
-    const { title, description, media, endsAt, _count, seller } = listing;
-    
-    const endDate = new Date(endsAt);
-    const timeRemaining = endDate > new Date() ? 
-        `Ends: ${endDate.toLocaleDateString()}` : 
-        'Auction ended';
+  const { title, description, media, endsAt, _count, seller } = listing;
 
-    return `
+  const endDate = new Date(endsAt);
+  const timeRemaining =
+    endDate > new Date() ? `Ends: ${endDate.toLocaleDateString()}` : 'Auction ended';
+
+  return `
         <article class="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow cursor-pointer">
             <div class="relative aspect-w-16 aspect-h-9 mb-4">
                 <img 
@@ -37,7 +36,7 @@ export function createListingHTML(listing) {
  * Shows loading state in container
  */
 export function showLoading(container) {
-    container.innerHTML = `
+  container.innerHTML = `
         <div class="text-center py-12">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4F6F52] mx-auto"></div>
             <p class="text-gray-500 mt-4">Loading listings...</p>
@@ -49,7 +48,7 @@ export function showLoading(container) {
  * Shows error state in container
  */
 export function showError(container, message) {
-    container.innerHTML = `
+  container.innerHTML = `
         <div class="text-center py-12">
             <p class="text-red-500">Error: ${message}</p>
         </div>

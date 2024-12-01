@@ -5,34 +5,34 @@ export const API_BASE_URL = 'https://v2.api.noroff.dev';
 
 // Auth endpoints
 export const API_ENDPOINTS = {
-    AUTH: {
-        BASE: `${API_BASE_URL}/auth`,
-        LOGIN: `${API_BASE_URL}/auth/login`,
-        REGISTER: `${API_BASE_URL}/auth/register`
-    },
-    LISTINGS: {
-        BASE: `${API_BASE_URL}/auction/listings`,
-        SEARCH: `${API_BASE_URL}/auction/listings/search`
-    },
-    PROFILES: {
-        BASE: `${API_BASE_URL}/auction/profiles`,
-        SEARCH: `${API_BASE_URL}/auction/profiles/search`,
-        LISTINGS: (name) => `${API_BASE_URL}/auction/profiles/${name}/listings`,
-        BIDS: (name) => `${API_BASE_URL}/auction/profiles/${name}/bids`,
-        WINS: (name) => `${API_BASE_URL}/auction/profiles/${name}/wins`
-    }
+  AUTH: {
+    BASE: `${API_BASE_URL}/auth`,
+    LOGIN: `${API_BASE_URL}/auth/login`,
+    REGISTER: `${API_BASE_URL}/auth/register`,
+  },
+  LISTINGS: {
+    BASE: `${API_BASE_URL}/auction/listings`,
+    SEARCH: `${API_BASE_URL}/auction/listings/search`,
+  },
+  PROFILES: {
+    BASE: `${API_BASE_URL}/auction/profiles`,
+    SEARCH: `${API_BASE_URL}/auction/profiles/search`,
+    LISTINGS: (name) => `${API_BASE_URL}/auction/profiles/${name}/listings`,
+    BIDS: (name) => `${API_BASE_URL}/auction/profiles/${name}/bids`,
+    WINS: (name) => `${API_BASE_URL}/auction/profiles/${name}/wins`,
+  },
 };
 
 // Check if API key is available
 const apiKey = import.meta.env.VITE_API_KEY;
 if (!apiKey) {
-    console.error('API key not found. Make sure VITE_API_KEY is set in your .env file');
+  console.error('API key not found. Make sure VITE_API_KEY is set in your .env file');
 }
 
 // Default headers
 export const headers = {
-    'Content-Type': 'application/json',
-    'X-Noroff-API-Key': apiKey
+  'Content-Type': 'application/json',
+  'X-Noroff-API-Key': apiKey,
 };
 
 /**
@@ -41,15 +41,15 @@ export const headers = {
  * @returns {Object} Headers with auth token
  */
 export function getAuthHeaders() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        throw new Error('No authentication token found');
-    }
-    
-    return {
-        ...headers,
-        'Authorization': `Bearer ${token}`
-    };
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error('No authentication token found');
+  }
+
+  return {
+    ...headers,
+    Authorization: `Bearer ${token}`,
+  };
 }
 
 /**
@@ -57,7 +57,5 @@ export function getAuthHeaders() {
  * @returns {Object} Headers without auth token
  */
 export function getPublicHeaders() {
-    return { ...headers };
+  return { ...headers };
 }
-
-

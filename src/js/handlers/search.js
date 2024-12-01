@@ -2,54 +2,59 @@
 import { searchAll } from '../api/search/index.js';
 
 export function initializeSearch() {
-    const searchInputs = ['desktopSearch', 'mobileSearch'].map(id => document.getElementById(id));
-    const resultsContainers = ['desktopSearchResults', 'mobileSearchResults'].map(id => document.getElementById(id));
-    let searchTimeout;
+  const searchInputs = ['desktopSearch', 'mobileSearch'].map((id) => document.getElementById(id));
+  const resultsContainers = ['desktopSearchResults', 'mobileSearchResults'].map((id) =>
+    document.getElementById(id)
+  );
+  let searchTimeout;
 
-    searchInputs.forEach((input, index) => {
-        if (!input) return;
+  searchInputs.forEach((input, index) => {
+    if (!input) return;
 
-        input.addEventListener('input', (e) => {
-            clearTimeout(searchTimeout);
-            const query = e.target.value.trim();
-            
-            if (query.length < 2) {
-                resultsContainers[index].classList.add('hidden');
-                return;
-            }
+    input.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      const query = e.target.value.trim();
 
-            searchTimeout = setTimeout(() => performSearch(query, resultsContainers[index]), 300);
-        });
+      if (query.length < 2) {
+        resultsContainers[index].classList.add('hidden');
+        return;
+      }
 
-        // Close results when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!input.contains(e.target) && !resultsContainers[index].contains(e.target)) {
-                resultsContainers[index].classList.add('hidden');
-            }
-        });
+      searchTimeout = setTimeout(() => performSearch(query, resultsContainers[index]), 300);
     });
+
+    // Close results when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!input.contains(e.target) && !resultsContainers[index].contains(e.target)) {
+        resultsContainers[index].classList.add('hidden');
+      }
+    });
+  });
 }
 
 async function performSearch(query, resultsContainer) {
-    try {
-        const { listings, profiles } = await searchAll(query);
-        displaySearchResults(listings, profiles, resultsContainer);
-    } catch (error) {
-        console.error('Search error:', error);
-        resultsContainer.innerHTML = '<p class="text-center text-red-500 p-4">Error performing search</p>';
-        resultsContainer.classList.remove('hidden');
-    }
+  try {
+    const { listings, profiles } = await searchAll(query);
+    displaySearchResults(listings, profiles, resultsContainer);
+  } catch (error) {
+    console.error('Search error:', error);
+    resultsContainer.innerHTML =
+      '<p class="text-center text-red-500 p-4">Error performing search</p>';
+    resultsContainer.classList.remove('hidden');
+  }
 }
 
 function displaySearchResults(listings, profiles, container) {
-    let html = '';
+  let html = '';
 
-    if (profiles?.length) {
-        html += `
+  if (profiles?.length) {
+    html += `
             <div class="p-4 border-b">
                 <h3 class="font-semibold text-sm text-gray-500 mb-2">PROFILES</h3>
                 <div class="space-y-2">
-                    ${profiles.map(profile => `
+                    ${profiles
+                      .map(
+                        (profile) => `
                         <a href="/pages/profile.html?name=${profile.name}" 
                            class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-md">
                             <img src="${profile.avatar?.url || '/api/placeholder/32/32'}" 
@@ -60,18 +65,22 @@ function displaySearchResults(listings, profiles, container) {
                                 <p class="text-sm text-gray-500">${profile._count.listings} listings</p>
                             </div>
                         </a>
-                    `).join('')}
+                    `
+                      )
+                      .join('')}
                 </div>
             </div>
         `;
-    }
+  }
 
-    if (listings?.length) {
-        html += `
+  if (listings?.length) {
+    html += `
             <div class="p-4">
                 <h3 class="font-semibold text-sm text-gray-500 mb-2">LISTINGS</h3>
                 <div class="space-y-2">
-                    ${listings.map(listing => `
+                    ${listings
+                      .map(
+                        (listing) => `
                         <a href="/pages/single-listing.html?id=${listing.id}" 
                            class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-md">
                             <img src="${listing.media?.[0]?.url || '/api/placeholder/64/64'}" 
@@ -82,16 +91,18 @@ function displaySearchResults(listings, profiles, container) {
                                 <p class="text-sm text-gray-500">${listing._count?.bids || 0} bids</p>
                             </div>
                         </a>
-                    `).join('')}
+                    `
+                      )
+                      .join('')}
                 </div>
             </div>
         `;
-    }
+  }
 
-    if (!html) {
-        html = '<p class="text-center text-gray-500 p-4">No results found</p>';
-    }
+  if (!html) {
+    html = '<p class="text-center text-gray-500 p-4">No results found</p>';
+  }
 
-    container.innerHTML = html;
-    container.classList.remove('hidden');
+  container.innerHTML = html;
+  container.classList.remove('hidden');
 }

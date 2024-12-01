@@ -18,11 +18,11 @@ export function toggleAuthUI() {
     });
 
     // Add click handlers to usernames
-    ['userNameDesktop', 'userNameDropdown'].forEach(id => {
+    ['userNameDesktop', 'userNameDropdown'].forEach((id) => {
       const element = document.getElementById(id);
       if (element) {
         element.style.cursor = 'pointer';
-        element.addEventListener('click', () => window.location.href = '/pages/profile.html');
+        element.addEventListener('click', () => (window.location.href = '/pages/profile.html'));
       }
     });
   }

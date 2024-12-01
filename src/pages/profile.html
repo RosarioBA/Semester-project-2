@@ -1,10 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile | BidLeaf</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;800&family=Lora:wght@500;600&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;800&family=Lora:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-[#F8FAF5]">
@@ -21,8 +24,19 @@
               <p class="text-xs text-gray-500" id="userCredits"></p>
             </div>
             <button class="text-[#4F6F52]" id="mobileMenuButton" title="Open mobile menu">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
               </svg>
             </button>
           </div>
@@ -42,7 +56,11 @@
             </div>
             <div class="flex items-center">
               <svg class="w-5 h-5 text-[#4F6F52] mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                <path
+                  fill-rule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clip-rule="evenodd"
+                />
               </svg>
               <span id="userNameDesktop" class="text-[#4F6F52] profile-name"></span>
             </div>
@@ -59,11 +77,23 @@
         <div class="flex flex-col items-center">
           <div class="relative group">
             <div class="w-24 h-24 bg-gray-200 rounded-full mb-4 overflow-hidden">
-              <img src="/api/placeholder/96/96" alt="Profile" class="profile-avatar w-full h-full object-cover" />
+              <img
+                src="/api/placeholder/96/96"
+                alt="Profile"
+                class="profile-avatar w-full h-full object-cover"
+              />
             </div>
-            <button class="update-avatar absolute bottom-0 right-0 bg-[#4f6f52] text-white p-2 rounded-full hover:bg-[#4f6f52]/90" title="Update Avatar">
+            <button
+              class="update-avatar absolute bottom-0 right-0 bg-[#4f6f52] text-white p-2 rounded-full hover:bg-[#4f6f52]/90"
+              title="Update Avatar"
+            >
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                />
               </svg>
             </button>
           </div>
@@ -90,15 +120,37 @@
         <h3 class="text-lg font-semibold">Update Avatar</h3>
         <div>
           <label for="mediaUrl" class="block text-sm mb-1">Image URL</label>
-          <input type="url" id="mediaUrl" placeholder="https://example.com/image.jpg" class="w-full px-3 py-2 border rounded" required>
+          <input
+            type="url"
+            id="mediaUrl"
+            placeholder="https://example.com/image.jpg"
+            class="w-full px-3 py-2 border rounded"
+            required
+          />
         </div>
         <div>
           <label for="mediaAlt" class="block text-sm mb-1">Image Description</label>
-          <input type="text" id="mediaAlt" placeholder="Profile photo" class="w-full px-3 py-2 border rounded">
+          <input
+            type="text"
+            id="mediaAlt"
+            placeholder="Profile photo"
+            class="w-full px-3 py-2 border rounded"
+          />
         </div>
         <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="this.closest('dialog').close()" class="px-4 py-2 border rounded hover:bg-gray-50">Cancel</button>
-          <button type="submit" class="px-4 py-2 bg-[#4f6f52] text-white rounded hover:bg-[#4f6f52]/90">Update</button>
+          <button
+            type="button"
+            onclick="this.closest('dialog').close()"
+            class="px-4 py-2 border rounded hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 bg-[#4f6f52] text-white rounded hover:bg-[#4f6f52]/90"
+          >
+            Update
+          </button>
         </div>
       </form>
     </dialog>

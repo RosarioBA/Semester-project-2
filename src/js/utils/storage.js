@@ -1,8 +1,7 @@
 // src/js/utils/storage.js
 export function loadToken(token) {
-    localStorage.setItem('token', token);
-    }
-
+  localStorage.setItem('token', token);
+}
 
 export function saveToken(token) {
   localStorage.setItem('token', token);

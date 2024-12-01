@@ -4,12 +4,15 @@ import { getSingleListing } from '../api/listings/index.js';
 import { initializeBidding } from './bid.js';
 
 function renderBidHistory(bids) {
-    if (!bids?.length) return '';
-    
-    return `
+  if (!bids?.length) return '';
+
+  return `
         <div class="space-y-2 mt-4">
             <h2 class="font-medium">Bid History (${bids.length} bids)</h2>
-            ${bids.sort((a, b) => b.amount - a.amount).map(bid => `
+            ${bids
+              .sort((a, b) => b.amount - a.amount)
+              .map(
+                (bid) => `
                 <div class="flex items-center justify-between py-2 border-b last:border-0">
                     <div class="flex items-center gap-2">
                         <svg class="w-4 h-4 text-[#4F6F52]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -23,18 +26,20 @@ function renderBidHistory(bids) {
                         <span class="text-sm text-gray-500">${new Date(bid.created).toLocaleDateString()}</span>
                     </div>
                 </div>
-            `).join('')}
+            `
+              )
+              .join('')}
         </div>
     `;
 }
 
 function renderListing(listing) {
-    const mainContent = document.querySelector('main');
-    if (!mainContent) return;
+  const mainContent = document.querySelector('main');
+  if (!mainContent) return;
 
-    const highestBid = listing.bids?.length ? Math.max(...listing.bids.map(bid => bid.amount)) : 0;
+  const highestBid = listing.bids?.length ? Math.max(...listing.bids.map((bid) => bid.amount)) : 0;
 
-    mainContent.innerHTML = `
+  mainContent.innerHTML = `
         <div class="max-w-3xl mx-auto px-4 py-8">
             <a href="/pages/listings.html" class="text-[#4f6f52] mb-6 inline-block hover:underline">
                 &larr; Back to Listings
@@ -42,13 +47,17 @@ function renderListing(listing) {
 
             <div class="bg-white rounded-lg shadow-sm p-6">
                 <div class="mb-6">
-                    ${listing.media?.[0] ? `
+                    ${
+                      listing.media?.[0]
+                        ? `
                         <img 
                             src="${listing.media[0].url}" 
                             alt="${listing.media[0].alt || listing.title}"
                             class="w-full rounded-lg object-cover max-h-[500px]"
                         />
-                    ` : ''}
+                    `
+                        : ''
+                    }
                 </div>
 
                 <h1 class="text-2xl font-semibold mb-4">${listing.title}</h1>
@@ -107,34 +116,33 @@ function renderListing(listing) {
 }
 
 export async function handleSingleListing() {
-    try {
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get('id');
-        
-        if (!id) throw new Error('No listing ID provided');
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
 
-        const mainContent = document.querySelector('main');
-        if (!mainContent) return;
+    if (!id) throw new Error('No listing ID provided');
 
-        mainContent.innerHTML = `
+    const mainContent = document.querySelector('main');
+    if (!mainContent) return;
+
+    mainContent.innerHTML = `
             <div class="flex justify-center items-center min-h-[400px]">
                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4F6F52]"></div>
             </div>
         `;
 
-        const listing = await getSingleListing(id);
-        renderListing(listing);
+    const listing = await getSingleListing(id);
+    renderListing(listing);
 
-        initializeBidding(listing, async () => {
-            const updatedListing = await getSingleListing(id);
-            renderListing(updatedListing);
-        });
-
-    } catch (error) {
-        console.error('Error:', error);
-        const mainContent = document.querySelector('main');
-        if (mainContent) {
-            mainContent.innerHTML = `
+    initializeBidding(listing, async () => {
+      const updatedListing = await getSingleListing(id);
+      renderListing(updatedListing);
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    const mainContent = document.querySelector('main');
+    if (mainContent) {
+      mainContent.innerHTML = `
                 <div class="max-w-3xl mx-auto px-4 py-8 text-center">
                     <p class="text-red-500">${error.message}</p>
                     <a href="/pages/listings.html" class="text-[#4f6f52] mt-4 inline-block hover:underline">
@@ -142,8 +150,8 @@ export async function handleSingleListing() {
                     </a>
                 </div>
             `;
-        }
     }
+  }
 }
 
 document.addEventListener('DOMContentLoaded', handleSingleListing);

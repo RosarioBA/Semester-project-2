@@ -12,29 +12,29 @@ import { initializeEditListing } from './editListing.js';
 import './navigation.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await updateUserInfo();
-    toggleAuthUI();
-    initializeDropdown();
-    initializeSearch();
+  await updateUserInfo();
+  toggleAuthUI();
+  initializeDropdown();
+  initializeSearch();
 
-    const path = window.location.pathname;
+  const path = window.location.pathname;
 
-    if (path === '/pages/profile.html') {
-        loadProfilePage();
-    } else if (path === '/pages/active-bids.html') {
-        loadActiveBids();
-    } else if (path === '/' || path === '/index.html') {
-        initializeCarousel();
-        const listingsContainer = document.getElementById('listings');
-        if (listingsContainer) {
-            handleListings('listings', { isHomePage: true });
-        }
-    } else if (path === '/pages/edit-listing.html') {
-        initializeEditListing();
+  if (path === '/pages/profile.html') {
+    loadProfilePage();
+  } else if (path === '/pages/active-bids.html') {
+    loadActiveBids();
+  } else if (path === '/' || path === '/index.html') {
+    initializeCarousel();
+    const listingsContainer = document.getElementById('listings');
+    if (listingsContainer) {
+      handleListings('listings', { isHomePage: true });
     }
+  } else if (path === '/pages/edit-listing.html') {
+    initializeEditListing();
+  }
 
-    const logoutButton = document.getElementById('logoutButton');
-    if (logoutButton) {
-        logoutButton.addEventListener('click', handleLogout);
-    }
+  const logoutButton = document.getElementById('logoutButton');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', handleLogout);
+  }
 });

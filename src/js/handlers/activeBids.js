@@ -2,40 +2,42 @@ import { API_ENDPOINTS, getAuthHeaders } from '../api/constants.js';
 import { getUser } from '../utils/userData.js';
 
 export async function loadActiveBids() {
-    const user = getUser();
-    if (!user) {
-        window.location.href = '/pages/login.html';
-        return;
-    }
+  const user = getUser();
+  if (!user) {
+    window.location.href = '/pages/login.html';
+    return;
+  }
 
-    try {
-        const [bidsResponse, winsResponse] = await Promise.all([
-            fetch(`${API_ENDPOINTS.PROFILES.BASE}/${user.name}/bids?_listings=true`, {
-                headers: getAuthHeaders()
-            }),
-            fetch(`${API_ENDPOINTS.PROFILES.BASE}/${user.name}/wins`, {
-                headers: getAuthHeaders()
-            })
-        ]);
+  try {
+    const [bidsResponse, winsResponse] = await Promise.all([
+      fetch(`${API_ENDPOINTS.PROFILES.BASE}/${user.name}/bids?_listings=true`, {
+        headers: getAuthHeaders(),
+      }),
+      fetch(`${API_ENDPOINTS.PROFILES.BASE}/${user.name}/wins`, {
+        headers: getAuthHeaders(),
+      }),
+    ]);
 
-        const bids = await bidsResponse.json();
-        const wins = await winsResponse.json();
+    const bids = await bidsResponse.json();
+    const wins = await winsResponse.json();
 
-        displayActiveBids(bids.data);
-        displayWonAuctions(wins.data);
-    } catch (error) {
-        console.error('Error loading bids:', error);
-    }
+    displayActiveBids(bids.data);
+    displayWonAuctions(wins.data);
+  } catch (error) {
+    console.error('Error loading bids:', error);
+  }
 }
 
 function displayActiveBids(bids) {
-    const container = document.getElementById('activeBids');
-    if (!bids?.length) {
-        container.innerHTML = '<p class="text-gray-500 text-center py-4">No active bids</p>';
-        return;
-    }
+  const container = document.getElementById('activeBids');
+  if (!bids?.length) {
+    container.innerHTML = '<p class="text-gray-500 text-center py-4">No active bids</p>';
+    return;
+  }
 
-    container.innerHTML = bids.map(bid => `
+  container.innerHTML = bids
+    .map(
+      (bid) => `
         <div class="bg-white rounded-lg shadow-sm p-4">
             <div class="flex items-center justify-between">
                 <div>
@@ -49,17 +51,21 @@ function displayActiveBids(bids) {
                 </a>
             </div>
         </div>
-    `).join('');
+    `
+    )
+    .join('');
 }
 
 function displayWonAuctions(wins) {
-    const container = document.getElementById('wonAuctions');
-    if (!wins?.length) {
-        container.innerHTML = '<p class="text-gray-500 text-center py-4">No auctions won yet</p>';
-        return;
-    }
+  const container = document.getElementById('wonAuctions');
+  if (!wins?.length) {
+    container.innerHTML = '<p class="text-gray-500 text-center py-4">No auctions won yet</p>';
+    return;
+  }
 
-    container.innerHTML = wins.map(listing => `
+  container.innerHTML = wins
+    .map(
+      (listing) => `
         <div class="bg-white rounded-lg shadow-sm p-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-4">
@@ -77,5 +83,7 @@ function displayWonAuctions(wins) {
                 </a>
             </div>
         </div>
-    `).join('');
+    `
+    )
+    .join('');
 }

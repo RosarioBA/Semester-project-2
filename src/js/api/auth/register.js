@@ -16,22 +16,22 @@ import { API_ENDPOINTS, headers } from '../constants.js';
  * @throws {Error} If registration fails
  */
 export async function register(userData) {
-    try {
-        const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(userData),
-        });
+  try {
+    const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(userData),
+    });
 
-        const data = await response.json();
+    const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(data.errors?.[0]?.message || 'Registration failed');
-        }
-
-        return data.data;
-    } catch (error) {
-        console.error('Registration API Error:', error);
-        throw new Error(error.message || 'Failed to register. Please try again.');
+    if (!response.ok) {
+      throw new Error(data.errors?.[0]?.message || 'Registration failed');
     }
+
+    return data.data;
+  } catch (error) {
+    console.error('Registration API Error:', error);
+    throw new Error(error.message || 'Failed to register. Please try again.');
+  }
 }
