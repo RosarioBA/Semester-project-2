@@ -59,12 +59,28 @@
             <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
           </a>
 
-          <div class="flex-1 max-w-xl mx-8">
+                    <!-- Desktop Search -->
+          <div class="flex-1 max-w-xl mx-8 relative">
             <input
+              id="desktopSearch"
               type="search"
-              placeholder="Search"
+              placeholder="Search listings and profiles"
               class="w-full px-4 py-2 rounded-md border border-gray-200 bg-white"
             />
+            <div id="desktopSearchResults" class="absolute w-full bg-white mt-2 rounded-md shadow-lg z-30 hidden max-h-96 overflow-y-auto">
+            </div>
+          </div>
+
+          <!-- Mobile Search -->
+          <div class="md:hidden px-4 mb-8 relative">
+            <input
+              id="mobileSearch"
+              type="search"
+              placeholder="Search listings and profiles" 
+              class="w-full px-4 py-2 rounded-md border"
+            />
+            <div id="mobileSearchResults" class="absolute w-full bg-white mt-2 rounded-md shadow-lg z-30 hidden max-h-96 overflow-y-auto">
+            </div>
           </div>
 
           <!-- User Info (shown when logged in) -->
