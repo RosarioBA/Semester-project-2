@@ -1,7 +1,8 @@
 // src/js/handlers/listings.js
 
 import { getListings } from '../api/listings/index.js';
-import { createListingHTML, showLoading, showError } from '../utils/listingUtils.js';
+import { createListingHTML, displayLoadingState, showError } from '../utils/listingUtils.js';
+
 
 let container = null;
 
@@ -10,7 +11,7 @@ export async function handleListings(containerId = 'listings') {
     container = document.getElementById(containerId);
     if (!container) return;
 
-    showLoading(container);
+    displayLoadingState(container);
 
     const { data: listings } = await getListings({ limit: 12 });
 

@@ -1,7 +1,7 @@
 // src/js/handlers/listingsPage.js
 
 import { getListings } from '../api/listings/index.js';
-import { createListingHTML, showLoading, showError } from '../utils/listingUtils.js';
+import { createListingHTML, displayLoadingState, showError } from '../utils/listingUtils.js';
 
 const ITEMS_PER_PAGE = 12;
 let currentPage = 1;
@@ -13,7 +13,7 @@ export async function handleListingsPage(containerId = 'listings') {
     container = document.getElementById(containerId);
     if (!container) return;
 
-    showLoading(container);
+    displayLoadingState(container);
 
     // Set up sorting
     const sortSelect = document.getElementById('sortSelect');

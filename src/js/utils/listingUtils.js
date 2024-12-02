@@ -35,22 +35,31 @@ export function createListingHTML(listing) {
 /**
  * Shows loading state in container
  */
-export function showLoading(container) {
-  container.innerHTML = `
-        <div class="text-center py-12">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4F6F52] mx-auto"></div>
-            <p class="text-gray-500 mt-4">Loading listings...</p>
-        </div>
-    `;
-}
-
-/**
- * Shows error state in container
- */
-export function showError(container, message) {
-  container.innerHTML = `
+export function displayLoadingState(container) {
+    container.innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        ${Array(6).fill().map(() => `
+            <div class="border border-gray-200 shadow rounded-md p-4 w-full">
+                <div class="animate-pulse space-y-4">
+                    <div class="bg-slate-200 h-48 w-full rounded"></div>
+                    <div class="space-y-3">
+                        <div class="h-4 bg-slate-200 rounded"></div>
+                        <div class="h-4 bg-slate-200 rounded w-2/3"></div>
+                        <div class="flex justify-between">
+                            <div class="h-4 bg-slate-200 rounded w-1/4"></div>
+                            <div class="h-4 bg-slate-200 rounded w-1/4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('')}
+    </div>`;
+ }
+ 
+ export function showError(container, message) {
+    container.innerHTML = `
         <div class="text-center py-12">
             <p class="text-red-500">Error: ${message}</p>
         </div>
     `;
-}
+ }
