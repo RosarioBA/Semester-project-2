@@ -1,14 +1,16 @@
 // src/js/handlers/login.js
 
 import { login } from '../api/auth/login.js';
+import { getProfile } from '../api/profiles/index.js';  
 
 export async function handleLogin(email, password) {
   try {
     const userData = await login({ email, password });
-
-    // Store user data and token
     localStorage.setItem('token', userData.accessToken);
     localStorage.setItem('user', JSON.stringify(userData));
+
+    const { data: profile } = await getProfile(userData.name);
+    localStorage.setItem('userCredits', profile.credits || 1000);
 
     // Redirect to home page
     window.location.href = '/';
@@ -18,21 +20,24 @@ export async function handleLogin(email, password) {
   }
 }
 
+
+
 // Initialize form handling
+// src/js/handlers/login.js
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('loginForm');
+  const errorElement = document.getElementById('errorMessage'); // Changed from 'loginError'
+  
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       // Clear previous error messages
-      const errorElement = document.getElementById('loginError');
       if (errorElement) {
         errorElement.classList.add('hidden');
         errorElement.textContent = '';
       }
 
-      // Get form data
       const email = loginForm.email.value;
       const password = loginForm.password.value;
 

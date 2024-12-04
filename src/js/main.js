@@ -1,15 +1,12 @@
-// Main JavaScript entry point
-console.log('test pls'); // Missing semicolon to trigger ESLint
-function initializeApp() {
-  const testButton = document.getElementById('testButton');
-  const testResult = document.getElementById('testResult');
+// src/js/main.js
+import { initializeCore } from './core/init.js';
+import { routes } from './routes.js';
 
-  if (testButton && testResult) {
-    testButton.addEventListener('click', () => {
-      testResult.textContent = 'JavaScript is working! 🎉';
-      testResult.className = 'mt-2 text-sm text-primary font-bold';
-    });
-  }
+async function initializeApp() {
+  await initializeCore();
+  const path = window.location.pathname;
+  const handler = routes[path];
+  if (handler) handler();
 }
 
 document.addEventListener('DOMContentLoaded', initializeApp);

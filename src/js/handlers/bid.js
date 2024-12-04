@@ -27,9 +27,9 @@ export function initializeBidding(listing, onBidPlaced) {
       await placeBid(listing.id, Number(bidInput.value));
 
       // Update credits after successful bid
-      const response = await getProfile(getUser().name);
-      localStorage.setItem('userCredits', response.data.credits);
-      updateUserInfo();
+      const { data: profile } = await getProfile(getUser().name);
+      localStorage.setItem('userCredits', profile.credits);
+      updateUserInfo(); // Update display
 
       bidButton.className = 'px-4 py-2 bg-green-600 text-white rounded transition-colors';
       bidButton.textContent = 'Bid Placed';

@@ -16,17 +16,19 @@ export async function getListings(options = {}) {
       headers: getPublicHeaders(),
     });
 
+    const data = await response.json();
+    console.log('API Response:', data); // Add this line
+
     if (!response.ok) {
       throw new Error('Failed to fetch listings');
     }
 
-    return response.json();
+    return data;
   } catch (error) {
     console.error('Error fetching listings:', error);
     throw error;
   }
 }
-
 export async function getSingleListing(id) {
   try {
     const queryParams = new URLSearchParams({
@@ -34,21 +36,28 @@ export async function getSingleListing(id) {
       _bids: 'true',
     });
 
-    const response = await fetch(`${API_ENDPOINTS.LISTINGS.BASE}/${id}?${queryParams}`, {
+    const url = `${API_ENDPOINTS.LISTINGS.BASE}/${id}?${queryParams}`;
+    console.log('Request URL:', url);
+    console.log('Headers:', getPublicHeaders());
+
+    const response = await fetch(url, {
       headers: getPublicHeaders(),
     });
+
+    console.log('Response status:', response.status);
+    const data = await response.json();
+    console.log('Response data:', data);
 
     if (!response.ok) {
       throw new Error('Failed to fetch listing');
     }
 
-    return response.json();
+    return data.data;
   } catch (error) {
-    console.error('Error fetching listing:', error);
+    console.error('Error:', error);
     throw error;
   }
 }
-
 export async function updateListing(id, data) {
   try {
     const response = await fetch(`${API_ENDPOINTS.LISTINGS.BASE}/${id}`, {
