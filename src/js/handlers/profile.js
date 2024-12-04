@@ -1,6 +1,7 @@
 // src/js/handlers/profile.js
 import { getProfile, updateProfileMedia } from '../api/profiles/index.js';
 import { getUser } from '../utils/storage.js';
+import { displayProfileLoading } from '../utils/loadingStates.js';
 
 export async function loadProfilePage() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -11,6 +12,8 @@ export async function loadProfilePage() {
     window.location.href = '/pages/login.html';
     return;
   }
+
+  displayProfileLoading();
 
   try {
     const username = viewUsername || currentUser.name;
@@ -31,24 +34,27 @@ export async function loadProfilePage() {
 }
 
 function updateProfileDisplay(profile) {
+  // Update profile content
   document.querySelectorAll('.profile-name').forEach((el) => {
-    el.textContent = profile.name;
-  });
+    el.textContent = profile.name || '';
+});
 
-  document.querySelectorAll('.profile-email').forEach((el) => {
-    el.textContent = profile.email;
-  });
+document.querySelectorAll('.profile-email').forEach((el) => {
+    el.textContent = profile.email || '';
+});
 
-  document.querySelectorAll('.profile-credits').forEach((el) => {
-    el.textContent = `${profile.credits} credits available`;
-  });
+document.querySelectorAll('.profile-credits').forEach((el) => {
+    el.textContent = `${profile.credits || 0} credits available`;
+});
 
-  if (profile.avatar?.url) {
-    document.querySelectorAll('.profile-avatar').forEach((el) => {
+// Update avatar
+if (profile.avatar?.url) {
+  document.querySelectorAll('.profile-avatar').forEach(el => {
       el.src = profile.avatar.url;
       el.alt = profile.avatar.alt || 'Profile avatar';
-    });
-  }
+      el.classList.remove('animate-pulse');
+  });
+}
 
   const listingsContainer = document.querySelector('.listings-container');
   if (!listingsContainer) return;
