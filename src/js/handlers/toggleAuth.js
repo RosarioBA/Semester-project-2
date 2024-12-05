@@ -1,6 +1,7 @@
 // src/js/handlers/toggleAuth.js
 import { getUser, isLoggedIn } from '../utils/userData.js';
 
+// src/js/handlers/toggleAuth.js
 export function toggleAuthUI() {
   const user = getUser();
   const loggedIn = isLoggedIn();
@@ -16,7 +17,6 @@ export function toggleAuthUI() {
       menu.classList.remove('hidden');
       menu.classList.add('flex');
     });
-
     // Add click handlers to usernames
     ['userNameDesktop', 'userNameDropdown'].forEach((id) => {
       const element = document.getElementById(id);
