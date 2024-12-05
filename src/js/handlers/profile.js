@@ -65,33 +65,30 @@ if (profile.avatar?.url) {
   }
 
   const isOwnProfile = profile.name === getUser()?.name;
-  listingsContainer.innerHTML = profile.listings
-    .map(
-      (listing) => `
-       <div class="bg-white rounded-lg shadow-sm p-4 flex justify-between items-center">
-           <a href="/pages/single-listing.html?id=${listing.id}" class="flex items-center gap-4 flex-1">
-               <img src="${listing.media?.[0]?.url || '/api/placeholder/64/64'}" 
-                    alt="${listing.title}" 
-                    class="w-16 h-16 rounded object-cover">
-               <div>
-                   <h3 class="font-medium">${listing.title}</h3>
-                   <p class="text-gray-600">${listing._count?.bids || 0} bids</p>
-               </div>
-           </a>
-           ${
-             isOwnProfile
-               ? `
-               <a href="/pages/edit-listing.html?id=${listing.id}" 
-                  class="px-4 py-2 bg-[#4f6f52] text-white rounded">
-                   Edit
-               </a>
-           `
-               : ''
-           }
-       </div>
-   `
-    )
-    .join('');
+ // In updateProfileDisplay function, update the listing HTML:
+listingsContainer.innerHTML = profile.listings
+.map(listing => `
+    <div class="bg-white rounded-lg shadow-sm p-4 flex justify-between items-center">
+        <a href="/pages/single-listing.html?id=${listing.id}" class="flex items-center gap-4 flex-1">
+            <img src="${listing.media?.[0]?.url || '/api/placeholder/64/64'}" 
+                 alt="${listing.title}" 
+                 class="w-16 h-16 rounded object-cover">
+            <div>
+                <h3 class="font-medium">${listing.title}</h3>
+                <div class="text-gray-600">
+                    <p>${listing._count?.bids || 0} bids</p>
+                    <p class="text-sm">Last bid: ${listing.bids?.[0]?.amount || 'No bids yet'}</p>
+                </div>
+            </div>
+        </a>
+        ${isOwnProfile ? `
+            <a href="/pages/edit-listing.html?id=${listing.id}" 
+               class="px-4 py-2 bg-[#4f6f52] text-white rounded">
+                Edit
+            </a>
+        ` : ''}
+    </div>
+`).join('');
 }
 
 function initializeMediaUpdates() {

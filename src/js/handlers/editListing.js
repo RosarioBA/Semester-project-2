@@ -32,6 +32,10 @@ async function loadListing(id) {
     const deadline = new Date(listing.endsAt);
     const formattedDate = deadline.toISOString().slice(0, 16);
     document.getElementById('deadline').value = formattedDate;
+
+    if (listing.media?.length) {
+      listing.media.forEach(media => addMediaInput(media));
+    }
   } catch (error) {
     console.error('Error loading listing:', error);
   }
