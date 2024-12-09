@@ -41,7 +41,7 @@ export async function getSingleListing(id) {
     console.log('Headers:', getPublicHeaders());
 
     const response = await fetch(url, {
-      headers: getPublicHeaders(),
+      headers: getAuthHeaders(),
     });
 
     console.log('Response status:', response.status);
@@ -52,7 +52,7 @@ export async function getSingleListing(id) {
       throw new Error('Failed to fetch listing');
     }
 
-    return data.data;
+    return data;
   } catch (error) {
     console.error('Error:', error);
     throw error;

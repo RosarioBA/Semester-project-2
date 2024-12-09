@@ -24,20 +24,29 @@ export function initializeEditListing() {
 
 async function loadListing(id) {
   try {
-    const { data: listing } = await getSingleListing(id);
-    document.getElementById('title').value = listing.title;
-    document.getElementById('description').value = listing.description;
-    document.getElementById('tags').value = listing.tags?.join(', ') || '';
+      const response = await getSingleListing(id);
+      console.log('Listing data:', response);  // Debug log
 
-    const deadline = new Date(listing.endsAt);
-    const formattedDate = deadline.toISOString().slice(0, 16);
-    document.getElementById('deadline').value = formattedDate;
+      // Access the listing data correctly
+      const listing = response.data;
+      
+      if (!listing) {
+          throw new Error('No listing data received');
+      }
 
-    if (listing.media?.length) {
-      listing.media.forEach(media => addMediaInput(media));
-    }
+      document.getElementById('title').value = listing.title;
+      document.getElementById('description').value = listing.description;
+      document.getElementById('tags').value = listing.tags?.join(', ') || '';
+
+      const deadline = new Date(listing.endsAt);
+      const formattedDate = deadline.toISOString().slice(0, 16);
+      document.getElementById('deadline').value = formattedDate;
+
+      if (listing.media?.length) {
+          listing.media.forEach(media => addMediaInput(media));
+      }
   } catch (error) {
-    console.error('Error loading listing:', error);
+      console.error('Error loading listing:', error);
   }
 }
 
