@@ -125,43 +125,45 @@ function renderListing(listing) {
     `;
   }
 
-export async function handleSingleListing() {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-
-    if (!id) throw new Error('No listing ID provided');
-
-    const mainContent = document.querySelector('main');
-    if (!mainContent) return;
-
-    mainContent.innerHTML = `
-            <div class="flex justify-center items-center min-h-[400px]">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4F6F52]"></div>
-            </div>
-        `;
-
-    const listing = await getSingleListing(id);
-    renderListing(listing);
-
-    initializeBidding(listing, async () => {
-      const updatedListing = await getSingleListing(id);
-      renderListing(updatedListing);
-    });
-  } catch (error) {
-    console.error('Error:', error);
-    const mainContent = document.querySelector('main');
-    if (mainContent) {
+  export async function handleSingleListing() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+  
+      if (!id) throw new Error('No listing ID provided');
+  
+      const mainContent = document.querySelector('main');
+      if (!mainContent) return;
+  
       mainContent.innerHTML = `
-                <div class="max-w-3xl mx-auto px-4 py-8 text-center">
-                    <p class="text-red-500">${error.message}</p>
-                    <a href="/pages/listings.html" class="text-[#4f6f52] mt-4 inline-block hover:underline">
-                        &larr; Back to Listings
-                    </a>
-                </div>
-            `;
+        <div class="flex justify-center items-center min-h-[400px]">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4F6F52]"></div>
+        </div>
+      `;
+  
+      const response = await getSingleListing(id);
+      // Pass response.data instead of just response
+      renderListing(response.data);
+  
+      // Update this to pass response.data as well
+      initializeBidding(response.data, async () => {
+        const updatedResponse = await getSingleListing(id);
+        renderListing(updatedResponse.data);
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      const mainContent = document.querySelector('main');
+      if (mainContent) {
+        mainContent.innerHTML = `
+          <div class="max-w-3xl mx-auto px-4 py-8 text-center">
+            <p class="text-red-500">${error.message}</p>
+            <a href="/pages/listings.html" class="text-[#4f6f52] mt-4 inline-block hover:underline">
+              &larr; Back to Listings
+            </a>
+          </div>
+        `;
+      }
     }
   }
-}
 
 document.addEventListener('DOMContentLoaded', handleSingleListing);
