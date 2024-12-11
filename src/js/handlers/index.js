@@ -9,6 +9,7 @@ import { loadProfilePage } from './profile.js';
 import { loadActiveBids } from './activeBids.js';
 import { initializeSearch } from './search.js';
 import { initializeEditListing } from './editListing.js';
+import { handleListingsPage } from './listingspage.js';  // Add this import
 import './navigation.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -31,6 +32,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   } else if (path === '/pages/edit-listing.html') {
     initializeEditListing();
+  } else if (path === '/pages/listings.html') {  // Add this condition
+    handleListingsPage();
   }
 
   const logoutButton = document.getElementById('logoutButton');
