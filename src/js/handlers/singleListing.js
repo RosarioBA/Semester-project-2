@@ -2,6 +2,7 @@
 
 import { getSingleListing } from '../api/listings/index.js';
 import { initializeBidding } from './bid.js';
+import { formatTimeRemaining } from '../utils/listingUtils.js'; 
 
 function renderBidHistory(bids) {
   if (!bids?.length) return '';
@@ -34,96 +35,96 @@ function renderBidHistory(bids) {
 }
 
 function renderListing(listing) {
-    if (!listing) {
-      throw new Error('Invalid listing data');
-    }
+  if (!listing) {
+    throw new Error('Invalid listing data');
+  }
+
+  const mainContent = document.querySelector('main');
+  if (!mainContent) return;
+
+  // Safely access nested properties
+  const title = listing?.title || 'Untitled';
+  const description = listing?.description || 'No description provided';
+  const sellerName = listing?.seller?.name || 'Unknown';
+  const endsAt = listing?.endsAt ? new Date(listing.endsAt) : null;
+  const timeRemaining = endsAt && !isNaN(endsAt) ? formatTimeRemaining(endsAt) : 'Invalid Date';
   
-    const mainContent = document.querySelector('main');
-    if (!mainContent) return;
-  
-    // Safely access nested properties
-    const title = listing?.title || 'Untitled';
-    const description = listing?.description || 'No description provided';
-    const sellerName = listing?.seller?.name || 'Unknown';
-    const endsAt = listing?.endsAt ? new Date(listing.endsAt) : null;
-    const endDate = endsAt && !isNaN(endsAt) ? endsAt.toLocaleDateString() : 'Invalid Date';
-    
-    const bids = listing?.bids || [];
-    const highestBid = bids.length ? Math.max(...bids.map(bid => bid.amount)) : 0;
-    const mediaUrl = listing?.media?.[0]?.url || null;
-    const mediaAlt = listing?.media?.[0]?.alt || title;
-  
-    mainContent.innerHTML = `
-      <div class="max-w-3xl mx-auto px-4 py-8">
-        <a href="/pages/listings.html" class="text-[#4f6f52] mb-6 inline-block hover:underline">
-          &larr; Back to Listings
-        </a>
-  
-        <div class="bg-white rounded-lg shadow-sm p-6">
-          ${mediaUrl ? `
-            <div class="mb-6">
-              <img 
-                src="${mediaUrl}" 
-                alt="${mediaAlt}"
-                class="w-full rounded-lg object-cover max-h-[500px]"
-                onerror="this.src='/api/placeholder/400/320'"
-              />
-            </div>
-          ` : ''}
-  
-          <h1 class="text-2xl font-semibold mb-4">${title}</h1>
-  
+  const bids = listing?.bids || [];
+  const highestBid = bids.length ? Math.max(...bids.map(bid => bid.amount)) : 0;
+  const mediaUrl = listing?.media?.[0]?.url || null;
+  const mediaAlt = listing?.media?.[0]?.alt || title;
+
+  mainContent.innerHTML = `
+    <div class="max-w-3xl mx-auto px-4 py-8">
+      <a href="/pages/listings.html" class="text-[#4f6f52] mb-6 inline-block hover:underline">
+        &larr; Back to Listings
+      </a>
+
+      <div class="bg-white rounded-lg shadow-sm p-6">
+        ${mediaUrl ? `
           <div class="mb-6">
-            <h2 class="text-lg font-medium mb-2">Description</h2>
-            <p class="text-gray-600">${description}</p>
+            <img 
+              src="${mediaUrl}" 
+              alt="${mediaAlt}"
+              class="w-full rounded-lg object-cover max-h-[500px]"
+              onerror="this.src='/api/placeholder/400/320'"
+            />
           </div>
-  
-          <div class="space-y-4">
-            <div class="flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>Ends: ${endDate}</span>
-            </div>
-  
-            <div class="flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <span>Seller: ${sellerName}</span>
-            </div>
-  
-            <!-- Bidding Section -->
-            <div class="bidding-section">
-              <div class="p-4 bg-gray-50 rounded-lg">
-                <p class="text-lg font-medium mb-4">Current Highest Bid: ${highestBid} Credits</p>
-                <div class="flex gap-2">
-                  <input
-                    type="number"
-                    id="bidAmount"
-                    placeholder="Enter bid amount"
-                    min="${highestBid + 1}"
-                    class="flex-1 p-2 border rounded focus:outline-none focus:border-[#4f6f52]"
-                  />
-                  <button 
-                    id="placeBidBtn"
-                    class="px-4 py-2 bg-[#D66853] text-white rounded hover:bg-[#D66853]/90 transition-colors"
-                  >
-                    Place Bid
-                  </button>
-                </div>
-                <p id="bidError" class="text-red-500 mt-2 text-sm hidden"></p>
+        ` : ''}
+
+        <h1 class="text-2xl font-semibold mb-4">${title}</h1>
+
+        <div class="mb-6">
+          <h2 class="text-lg font-medium mb-2">Description</h2>
+          <p class="text-gray-600">${description}</p>
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>${timeRemaining}</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span>Seller: ${sellerName}</span>
+          </div>
+
+          <!-- Bidding Section -->
+          <div class="bidding-section">
+            <div class="p-4 bg-gray-50 rounded-lg">
+              <p class="text-lg font-medium mb-4">Current Highest Bid: ${highestBid} Credits</p>
+              <div class="flex gap-2">
+                <input
+                  type="number"
+                  id="bidAmount"
+                  placeholder="Enter bid amount"
+                  min="${highestBid + 1}"
+                  class="flex-1 p-2 border rounded focus:outline-none focus:border-[#4f6f52]"
+                />
+                <button 
+                  id="placeBidBtn"
+                  class="px-4 py-2 bg-[#D66853] text-white rounded hover:bg-[#D66853]/90 transition-colors"
+                >
+                  Place Bid
+                </button>
               </div>
+              <p id="bidError" class="text-red-500 mt-2 text-sm hidden"></p>
             </div>
-  
-            ${renderBidHistory(bids)}
           </div>
+
+          ${renderBidHistory(bids)}
         </div>
       </div>
-    `;
-  }
+    </div>
+  `;
+}
 
   export async function handleSingleListing() {
     try {

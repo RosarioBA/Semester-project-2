@@ -19,9 +19,9 @@ export function createListingHTML(listing) {
   }
 
   const endDate = endsAt ? new Date(endsAt) : null;
-  const timeRemaining = endDate && !isNaN(endDate) 
-    ? `Ends: ${endDate.toLocaleDateString()}` 
-    : 'Invalid Date';
+  const timeRemaining = endDate && !isNaN(endDate)
+  ? formatTimeRemaining(endDate)
+  : 'Invalid Date';
 
   // Create image or fallback div
   const imageHTML = media?.[0]?.url 
@@ -72,7 +72,7 @@ function createEmptyListingHTML() {
 * @param {Date} endDate - The listing end date
 * @returns {string} Formatted time remaining string
 */
-function formatTimeRemaining(endDate) {
+export function formatTimeRemaining(endDate) {
   const now = new Date();
   const timeLeft = endDate - now;
 

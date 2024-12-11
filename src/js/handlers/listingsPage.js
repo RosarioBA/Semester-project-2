@@ -33,37 +33,74 @@ export async function handleListingsPage(containerId = 'listings') {
 }
 
 async function fetchAndDisplayListings(container, options = {}) {
-  const { data: listings, meta } = await getListings({
-    page: currentPage,
-    limit: ITEMS_PER_PAGE,
-    sort: options.sort || 'created',
-    sortOrder: options.sortOrder || 'desc',
-  });
-
-  if (!listings?.length) {
-    container.innerHTML = `
-            <div class="text-center py-12">
-                <p class="text-gray-500">No listings found</p>
-            </div>
-        `;
-    return;
-  }
-
-  const grid = document.createElement('div');
-  grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
-
-  listings.forEach((listing) => {
-    const listingElement = document.createElement('div');
-    listingElement.innerHTML = createListingHTML(listing);
-    listingElement.querySelector('article').addEventListener('click', () => {
-      window.location.href = `/pages/single-listing.html?id=${listing.id}`;
+  try {
+    // First, get total count without limit to know how many pages we really have
+    const initialFetch = await getListings({
+      page: 1,
+      sort: options.sort || 'created',
+      sortOrder: options.sortOrder || 'desc',
     });
-    grid.appendChild(listingElement);
-  });
 
-  container.innerHTML = '';
-  container.appendChild(grid);
-  updatePagination(meta);
+    // Get more items per page to account for filtering
+    const { data: allListings, meta } = await getListings({
+      page: currentPage,
+      limit: ITEMS_PER_PAGE * 2, // Get more items to account for filtering
+      sort: options.sort || 'created',
+      sortOrder: options.sortOrder || 'desc',
+    });
+
+    // Filter out expired listings
+    const activeListings = allListings?.filter(listing => {
+      const endDate = new Date(listing.endsAt);
+      return endDate > new Date();
+    });
+
+    // Take only the first ITEMS_PER_PAGE active listings
+    const displayListings = activeListings.slice(0, ITEMS_PER_PAGE);
+
+    if (!displayListings?.length) {
+      container.innerHTML = `
+        <div class="text-center py-12">
+          <p class="text-gray-500">No active listings found</p>
+        </div>
+      `;
+      return;
+    }
+
+    const grid = document.createElement('div');
+    grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
+
+    displayListings.forEach((listing) => {
+      const listingElement = document.createElement('div');
+      listingElement.innerHTML = createListingHTML(listing);
+      listingElement.querySelector('article').addEventListener('click', () => {
+        window.location.href = `/pages/single-listing.html?id=${listing.id}`;
+      });
+      grid.appendChild(listingElement);
+    });
+
+    container.innerHTML = '';
+    container.appendChild(grid);
+
+    // Calculate total active pages
+    const totalActiveListings = initialFetch.data.filter(listing => {
+      const endDate = new Date(listing.endsAt);
+      return endDate > new Date();
+    }).length;
+
+    // Update pagination with correct count of active listings
+    const adjustedMeta = {
+      ...meta,
+      currentPage: currentPage,
+      pageCount: Math.ceil(totalActiveListings / ITEMS_PER_PAGE),
+      isFirstPage: currentPage === 1,
+      isLastPage: currentPage >= Math.ceil(totalActiveListings / ITEMS_PER_PAGE)
+    };
+    updatePagination(adjustedMeta);
+  } catch (error) {
+    console.error('Error:', error);
+    showError(container, error.message);
+  }
 }
 
 function updatePagination(meta) {

@@ -17,7 +17,12 @@ export async function getListings(options = {}) {
     });
 
     const data = await response.json();
-    console.log('API Response:', data); // Add this line
+    console.log('API Response:', {
+      totalListings: data.data?.length,
+      meta: data.meta,
+      firstListing: data.data?.[0],
+      queryParams: queryParams.toString()
+    });
 
     if (!response.ok) {
       throw new Error('Failed to fetch listings');
@@ -29,6 +34,7 @@ export async function getListings(options = {}) {
     throw error;
   }
 }
+
 export async function getSingleListing(id) {
   try {
     const queryParams = new URLSearchParams({

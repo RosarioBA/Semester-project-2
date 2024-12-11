@@ -13,21 +13,27 @@ export async function handleListings(containerId = 'listings') {
 
     displayLoadingState(container);
 
-    const { data: listings } = await getListings({ limit: 12 });
+    const { data: allListings } = await getListings({ limit: 12 });
 
-    if (!listings?.length) {
+    // Filter out expired listings
+    const activeListings = allListings?.filter(listing => {
+      const endDate = new Date(listing.endsAt);
+      return endDate > new Date();
+    });
+
+    if (!activeListings?.length) {
       container.innerHTML = `
-                <div class="text-center py-12">
-                    <p class="text-gray-500">No listings found</p>
-                </div>
-            `;
+        <div class="text-center py-12">
+          <p class="text-gray-500">No active listings found</p>
+        </div>
+      `;
       return;
     }
 
     const grid = document.createElement('div');
     grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
 
-    listings.forEach((listing) => {
+    activeListings.forEach((listing) => {
       const listingElement = document.createElement('div');
       listingElement.innerHTML = createListingHTML(listing);
       listingElement.querySelector('article').addEventListener('click', () => {
