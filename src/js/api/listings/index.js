@@ -44,10 +44,13 @@ export async function getSingleListing(id) {
 
     const url = `${API_ENDPOINTS.LISTINGS.BASE}/${id}?${queryParams}`;
     console.log('Request URL:', url);
-    console.log('Headers:', getPublicHeaders());
+
+    // Use public headers for fetching single listing
+    const headers = getPublicHeaders();
+    console.log('Headers:', headers);
 
     const response = await fetch(url, {
-      headers: getAuthHeaders(),
+      headers: headers,
     });
 
     console.log('Response status:', response.status);
@@ -64,11 +67,12 @@ export async function getSingleListing(id) {
     throw error;
   }
 }
+
 export async function updateListing(id, data) {
   try {
     const response = await fetch(`${API_ENDPOINTS.LISTINGS.BASE}/${id}`, {
       method: 'PUT',
-      headers: getAuthHeaders(),
+      headers: getAuthHeaders(), // Keep auth headers for updating
       body: JSON.stringify({
         title: data.title,
         description: data.description,
