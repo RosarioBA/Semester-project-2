@@ -1,7 +1,7 @@
 import { getSingleListing } from '../api/listings/index.js';
 import { initializeBidding } from './bid.js';
 import { formatTimeRemaining } from '../utils/listingUtils.js';
-import { getToken } from '../utils/storage.js';  // Updated import
+import { getToken } from '../utils/storage.js';
 
 function renderBidHistory(bids) {
   if (!bids?.length) return '';
@@ -19,7 +19,10 @@ function renderBidHistory(bids) {
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                        <span>${bid.bidder.name}</span>
+                        <a href="/pages/profile.html?name=${bid.bidder.name}" 
+                           class="hover:text-[#4F6F52] hover:underline">
+                          ${bid.bidder.name}
+                        </a>
                     </div>
                     <div class="flex flex-col items-end">
                         <span class="font-medium">${bid.amount} Credits</span>
@@ -41,8 +44,8 @@ function renderListing(listing) {
   const mainContent = document.querySelector('main');
   if (!mainContent) return;
 
-  const isLoggedIn = !!getToken();  // Updated to use getToken 
-
+  const isLoggedIn = !!getToken();
+  
   // Safely access nested properties
   const title = listing?.title || 'Untitled';
   const description = listing?.description || 'No description provided';
@@ -94,7 +97,12 @@ function renderListing(listing) {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
-            <span>Seller: ${sellerName}</span>
+            <span>Seller: 
+              <a href="/pages/profile.html?name=${sellerName}" 
+                 class="text-[#4F6F52] hover:underline">
+                ${sellerName}
+              </a>
+            </span>
           </div>
 
           <!-- Bidding Section -->
@@ -138,6 +146,7 @@ function renderListing(listing) {
     </div>
   `;
 }
+
 
 export async function handleSingleListing() {
   try {
