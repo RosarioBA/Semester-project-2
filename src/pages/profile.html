@@ -13,44 +13,50 @@
   <body class="bg-[#F8FAF5]">
     <header class="bg-white shadow-sm">
       <nav class="max-w-7xl mx-auto px-4 py-4">
-        <!-- Mobile Navigation -->
-        <div class="flex items-center justify-between md:hidden">
-          <a href="/" class="text-2xl font-['Lato'] font-extrabold">
+        <!-- Main Navigation -->
+        <div class="flex items-center justify-between w-full">
+          <!-- Logo -->
+          <a href="../index.html" class="text-2xl md:text-3xl font-['Lato'] font-extrabold">
             <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
           </a>
+    
+          <!-- Search (hidden on mobile) -->
+          <div class="hidden md:block flex-1 max-w-xl mx-8 relative">
+            <input
+              id="desktopSearch"
+              type="search"
+              placeholder="Search listings and profiles"
+              class="w-full px-4 py-2 rounded-md border border-gray-200 bg-white"
+            />
+            <div id="desktopSearchResults" class="absolute w-full bg-white mt-2 rounded-md shadow-lg z-30 hidden max-h-96 overflow-y-auto"></div>
+          </div>
+    
+          <!-- User Info & Menu -->
           <div data-auth="user-menu" class="hidden items-center gap-4">
-            <div class="text-right">
-              <p class="text-sm font-medium text-gray-700" id="userName"></p>
-              <p class="text-xs text-gray-500" id="userCredits"></p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Desktop Navigation -->
-        <div class="hidden md:flex items-center justify-between w-full">
-          <a href="/" class="text-3xl font-['Lato'] font-extrabold">
-            <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
-          </a>
-
-          <!-- User Info -->
-          <div data-auth="user-menu" class="hidden items-center gap-6">
-            <div class="flex items-center">
+            <!-- Credits (hidden on mobile) -->
+            <div class="hidden md:flex items-center">
               <span class="text-[#4F6F52] text-xl">$</span>
-              <span id="userCreditsDesktop" class="ml-1 profile-credits"></span>
+              <span id="userCreditsDesktop" class="ml-1"></span>
             </div>
-            <div class="flex items-center">
+    
+            <!-- Username (hidden on mobile) -->
+            <div class="hidden md:flex items-center">
               <svg class="w-5 h-5 text-[#4F6F52] mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clip-rule="evenodd"
-                />
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
               </svg>
-              <span id="userNameDesktop" class="text-[#4F6F52] profile-name"></span>
+              <span id="userNameDesktop" class="text-[#4F6F52]"></span>
             </div>
-
-            <!-- Include the same dropdown menu as in index.html -->
+    
+            <!-- Menu Button & Dropdown -->
+            <div class="relative dropdown-container">
+              <!-- ... keep existing menu button and dropdown ... -->
+            </div>
           </div>
+    
+          <!-- Login Button (shown when logged out) -->
+          <a href="./login.html" data-auth="login" class="px-6 py-2 bg-[#4F6F52] text-white rounded-md">
+            Login
+          </a>
         </div>
       </nav>
     </header>
@@ -67,8 +73,9 @@
                 class="profile-avatar w-full h-full object-cover"
               />
             </div>
+            <!-- Only show edit button on own profile -->
             <button
-              class="update-avatar absolute bottom-0 right-0 bg-[#4f6f52] text-white p-2 rounded-full hover:bg-[#4f6f52]/90"
+              class="update-avatar absolute bottom-0 right-0 bg-[#4f6f52] text-white p-2 rounded-full hover:bg-[#4f6f52]/90 hidden"
               title="Update Avatar"
             >
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -83,7 +90,8 @@
           </div>
           <h1 class="profile-name text-xl font-semibold mb-1"></h1>
           <p class="profile-email text-gray-600 mb-2"></p>
-          <div class="bg-[#F8FAF5] px-4 py-2 rounded">
+          <!-- Only show credits on own profile -->
+          <div class="bg-[#F8FAF5] px-4 py-2 rounded profile-credits-container hidden">
             <span class="profile-credits"></span>
           </div>
         </div>
@@ -91,13 +99,12 @@
 
       <!-- Listings Section -->
       <div class="mb-8">
-        <h2 class="text-lg font-semibold mb-4">Your Listings</h2>
+        <h2 class="text-lg font-semibold mb-4 profile-listings-title">Listings</h2>
         <div class="listings-container space-y-4">
           <!-- Listings will be populated here -->
         </div>
       </div>
     </main>
-
     <!-- Avatar Update Modal -->
     <dialog id="mediaModal" class="p-4 rounded-lg shadow-xl backdrop:bg-gray-500/50">
       <form method="dialog" class="space-y-4 min-w-[300px]">
