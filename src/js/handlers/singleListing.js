@@ -45,16 +45,16 @@ function renderListing(listing) {
   if (!mainContent) return;
 
   const isLoggedIn = !!getToken();
-  
+
   // Safely access nested properties
   const title = listing?.title || 'Untitled';
   const description = listing?.description || 'No description provided';
   const sellerName = listing?.seller?.name || 'Unknown';
   const endsAt = listing?.endsAt ? new Date(listing.endsAt) : null;
   const timeRemaining = endsAt && !isNaN(endsAt) ? formatTimeRemaining(endsAt) : 'Invalid Date';
-  
+
   const bids = listing?.bids || [];
-  const highestBid = bids.length ? Math.max(...bids.map(bid => bid.amount)) : 0;
+  const highestBid = bids.length ? Math.max(...bids.map((bid) => bid.amount)) : 0;
   const mediaUrl = listing?.media?.[0]?.url || null;
   const mediaAlt = listing?.media?.[0]?.alt || title;
 
@@ -65,7 +65,9 @@ function renderListing(listing) {
       </a>
 
       <div class="bg-white rounded-lg shadow-sm p-6">
-        ${mediaUrl ? `
+        ${
+          mediaUrl
+            ? `
           <div class="mb-6">
             <img 
               src="${mediaUrl}" 
@@ -74,7 +76,9 @@ function renderListing(listing) {
               onerror="this.src='/api/placeholder/400/320'"
             />
           </div>
-        ` : ''}
+        `
+            : ''
+        }
 
         <h1 class="text-2xl font-semibold mb-4">${title}</h1>
 
@@ -109,7 +113,9 @@ function renderListing(listing) {
           <div class="bidding-section">
             <div class="p-4 bg-gray-50 rounded-lg">
               <p class="text-lg font-medium mb-4">Current Highest Bid: ${highestBid} Credits</p>
-              ${isLoggedIn ? `
+              ${
+                isLoggedIn
+                  ? `
                 <div class="flex gap-2">
                   <input
                     type="number"
@@ -126,7 +132,8 @@ function renderListing(listing) {
                   </button>
                 </div>
                 <p id="bidError" class="text-red-500 mt-2 text-sm hidden"></p>
-              ` : `
+              `
+                  : `
                 <div class="text-center">
                   <p class="mb-4 text-gray-600">Want to place a bid?</p>
                   <a 
@@ -136,7 +143,8 @@ function renderListing(listing) {
                     Login to Bid
                   </a>
                 </div>
-              `}
+              `
+              }
             </div>
           </div>
 
@@ -146,7 +154,6 @@ function renderListing(listing) {
     </div>
   `;
 }
-
 
 export async function handleSingleListing() {
   try {
@@ -168,7 +175,8 @@ export async function handleSingleListing() {
     renderListing(response.data);
 
     // Only initialize bidding if user is logged in
-    if (getToken()) {  // Updated to use getToken
+    if (getToken()) {
+      // Updated to use getToken
       initializeBidding(response.data, async () => {
         const updatedResponse = await getSingleListing(id);
         renderListing(updatedResponse.data);

@@ -2,15 +2,18 @@ import { formatTimeRemaining } from './listingUtils.js';
 
 export function categorizeListings(listings) {
   const now = new Date();
-  return listings.reduce((acc, listing) => {
-    const endsAt = new Date(listing.endsAt);
-    if (endsAt > now) {
-      acc.active.push(listing);
-    } else {
-      acc.past.push(listing);
-    }
-    return acc;
-  }, { active: [], past: [] });
+  return listings.reduce(
+    (acc, listing) => {
+      const endsAt = new Date(listing.endsAt);
+      if (endsAt > now) {
+        acc.active.push(listing);
+      } else {
+        acc.past.push(listing);
+      }
+      return acc;
+    },
+    { active: [], past: [] }
+  );
 }
 
 export function renderListingCard(listing, isOwnProfile) {
@@ -45,19 +48,23 @@ export function renderListingCard(listing, isOwnProfile) {
           </div>
         </div>
       </a>
-      ${isOwnProfile && isActive ? `
+      ${
+        isOwnProfile && isActive
+          ? `
         <a href="/pages/edit-listing.html?id=${listing.id}" 
            class="ml-4 px-4 py-2 bg-[#4f6f52] text-white rounded hover:bg-[#4f6f52]/90 transition-colors">
           Edit
         </a>
-      ` : ''}
+      `
+          : ''
+      }
     </div>
   `;
 }
 
 export function renderListingsSection(profile, isOwnProfile) {
   const { active, past } = categorizeListings(profile.listings || []);
-  
+
   return `
     <!-- Active Listings Section -->
     <div class="mb-8">
@@ -68,11 +75,12 @@ export function renderListingsSection(profile, isOwnProfile) {
         </svg>
         Active Listings (${active.length})
       </h2>
-      ${active.length ? 
-        `<div class="space-y-4">
-          ${active.map(listing => renderListingCard(listing, isOwnProfile)).join('')}
-        </div>` : 
-        '<p class="text-gray-500 text-center py-4">No active listings</p>'
+      ${
+        active.length
+          ? `<div class="space-y-4">
+          ${active.map((listing) => renderListingCard(listing, isOwnProfile)).join('')}
+        </div>`
+          : '<p class="text-gray-500 text-center py-4">No active listings</p>'
       }
     </div>
 
@@ -85,11 +93,12 @@ export function renderListingsSection(profile, isOwnProfile) {
         </svg>
         Past Listings (${past.length})
       </h2>
-      ${past.length ? 
-        `<div class="space-y-4 opacity-75">
-          ${past.map(listing => renderListingCard(listing, isOwnProfile)).join('')}
-        </div>` : 
-        '<p class="text-gray-500 text-center py-4">No past listings</p>'
+      ${
+        past.length
+          ? `<div class="space-y-4 opacity-75">
+          ${past.map((listing) => renderListingCard(listing, isOwnProfile)).join('')}
+        </div>`
+          : '<p class="text-gray-500 text-center py-4">No past listings</p>'
       }
     </div>
   `;

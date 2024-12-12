@@ -24,29 +24,29 @@ export function initializeEditListing() {
 
 async function loadListing(id) {
   try {
-      const response = await getSingleListing(id);
-      console.log('Listing data:', response);  // Debug log
+    const response = await getSingleListing(id);
+    console.log('Listing data:', response); // Debug log
 
-      // Access the listing data correctly
-      const listing = response.data;
-      
-      if (!listing) {
-          throw new Error('No listing data received');
-      }
+    // Access the listing data correctly
+    const listing = response.data;
 
-      document.getElementById('title').value = listing.title;
-      document.getElementById('description').value = listing.description;
-      document.getElementById('tags').value = listing.tags?.join(', ') || '';
+    if (!listing) {
+      throw new Error('No listing data received');
+    }
 
-      const deadline = new Date(listing.endsAt);
-      const formattedDate = deadline.toISOString().slice(0, 16);
-      document.getElementById('deadline').value = formattedDate;
+    document.getElementById('title').value = listing.title;
+    document.getElementById('description').value = listing.description;
+    document.getElementById('tags').value = listing.tags?.join(', ') || '';
 
-      if (listing.media?.length) {
-          listing.media.forEach(media => addMediaInput(media));
-      }
+    const deadline = new Date(listing.endsAt);
+    const formattedDate = deadline.toISOString().slice(0, 16);
+    document.getElementById('deadline').value = formattedDate;
+
+    if (listing.media?.length) {
+      listing.media.forEach((media) => addMediaInput(media));
+    }
   } catch (error) {
-      console.error('Error loading listing:', error);
+    console.error('Error loading listing:', error);
   }
 }
 

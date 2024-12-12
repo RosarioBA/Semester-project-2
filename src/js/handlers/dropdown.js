@@ -3,9 +3,9 @@ export function initializeDropdown() {
   const menuButton = document.getElementById('menuButton');
   const dropdownContainer = menuButton?.closest('.dropdown-container');
   const dropdownMenu = dropdownContainer?.querySelector('div[class*="hidden"]');
-  
+
   if (!menuButton || !dropdownMenu) return;
-  
+
   let isOpen = false;
   let timeoutId = null;
 

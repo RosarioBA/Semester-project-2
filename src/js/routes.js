@@ -16,5 +16,5 @@ export const routes = {
   },
   '/pages/profile.html': loadProfilePage,
   '/pages/active-bids.html': loadActiveBids,
-  '/pages/edit-listing.html': initializeEditListing
+  '/pages/edit-listing.html': initializeEditListing,
 };

@@ -2,25 +2,27 @@
 import { getListings } from '../api/listings/index.js';
 
 export async function initializeCarousel() {
-   try {
-       // Get the latest 3 listings
-       const { data: listings } = await getListings({
-           limit: 3,
-           sort: 'created',
-           sortOrder: 'desc',
-       });
+  try {
+    // Get the latest 3 listings
+    const { data: listings } = await getListings({
+      limit: 3,
+      sort: 'created',
+      sortOrder: 'desc',
+    });
 
-       if (!listings || listings.length === 0) return;
+    if (!listings || listings.length === 0) return;
 
-       // Find carousel container
-       const carouselContainer = document.querySelector('.carousel-container');
-       if (!carouselContainer) return;
+    // Find carousel container
+    const carouselContainer = document.querySelector('.carousel-container');
+    if (!carouselContainer) return;
 
-       // Create and insert carousel HTML
-       carouselContainer.innerHTML = `
+    // Create and insert carousel HTML
+    carouselContainer.innerHTML = `
            <div class="relative w-96 h-96 rounded-lg shadow-lg overflow-hidden" id="carousel">
                <div class="h-full">
-                   ${listings.map((listing, index) => `
+                   ${listings
+                     .map(
+                       (listing, index) => `
                        <div class="absolute w-full h-full transition-opacity duration-500 ${index === 0 ? 'opacity-100' : 'opacity-0'}"
                             style="background-image: url('${listing.media?.[0]?.url || '/api/placeholder/400/400'}'); 
                                    background-size: cover; 
@@ -29,7 +31,9 @@ export async function initializeCarousel() {
                                <h3 class="text-lg font-semibold">${listing.title}</h3>
                            </div>
                        </div>
-                   `).join('')}
+                   `
+                     )
+                     .join('')}
                </div>
 
                <!-- Navigation arrows -->
@@ -48,29 +52,28 @@ export async function initializeCarousel() {
            </div>
        `;
 
-       // Initialize carousel functionality
-       let currentSlide = 0;
-       const slides = document.querySelectorAll('#carousel > div > div');
-       const totalSlides = slides.length;
+    // Initialize carousel functionality
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('#carousel > div > div');
+    const totalSlides = slides.length;
 
-       window.carousel = {
-           next: () => {
-               slides[currentSlide].classList.add('opacity-0');
-               currentSlide = (currentSlide + 1) % totalSlides;
-               slides[currentSlide].classList.remove('opacity-0');
-           },
-           prev: () => {
-               slides[currentSlide].classList.add('opacity-0');
-               currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-               slides[currentSlide].classList.remove('opacity-0');
-           }
-       };
+    window.carousel = {
+      next: () => {
+        slides[currentSlide].classList.add('opacity-0');
+        currentSlide = (currentSlide + 1) % totalSlides;
+        slides[currentSlide].classList.remove('opacity-0');
+      },
+      prev: () => {
+        slides[currentSlide].classList.add('opacity-0');
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        slides[currentSlide].classList.remove('opacity-0');
+      },
+    };
 
-       // Auto advance slides
-       setInterval(window.carousel.next, 5000);
-
-   } catch (error) {
-       console.error('Carousel error:', error);
-       // Silently fail and keep the default image
-   }
+    // Auto advance slides
+    setInterval(window.carousel.next, 5000);
+  } catch (error) {
+    console.error('Carousel error:', error);
+    // Silently fail and keep the default image
+  }
 }

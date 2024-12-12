@@ -18,7 +18,7 @@ export async function loadProfilePage() {
   try {
     const username = viewUsername || currentUser.name;
     const { data: profile } = await getProfile(username);
-    
+
     const isOwnProfile = currentUser && username === currentUser.name;
     updateProfileDisplay(profile, isOwnProfile);
 
@@ -52,7 +52,7 @@ function updateProfileDisplay(profile, isOwnProfile) {
   if (creditsContainer) {
     creditsContainer.classList.toggle('hidden', !isOwnProfile);
   }
-  
+
   // Then update all credits displays
   document.querySelectorAll('.profile-credits').forEach((el) => {
     el.textContent = `${profile.credits || 0} credits available`;
@@ -60,7 +60,7 @@ function updateProfileDisplay(profile, isOwnProfile) {
 
   // 4. Update avatar
   if (profile.avatar?.url) {
-    document.querySelectorAll('.profile-avatar').forEach(el => {
+    document.querySelectorAll('.profile-avatar').forEach((el) => {
       el.src = profile.avatar.url;
       el.alt = profile.avatar.alt || 'Profile avatar';
       el.classList.remove('animate-pulse'); // Remove loading state
@@ -86,7 +86,7 @@ function updateProfileDisplay(profile, isOwnProfile) {
   if (!profile.listings?.length) {
     listingsContainer.innerHTML = `
       <p class="text-gray-500 text-center py-4">
-        ${isOwnProfile ? 'You haven\'t created any listings yet' : 'No listings yet'}
+        ${isOwnProfile ? "You haven't created any listings yet" : 'No listings yet'}
       </p>`;
     return;
   }
@@ -97,7 +97,6 @@ function updateProfileDisplay(profile, isOwnProfile) {
 
 // Export the function if needed
 export { updateProfileDisplay };
-
 
 function initializeMediaUpdates() {
   const modal = document.getElementById('mediaModal');

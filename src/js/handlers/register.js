@@ -12,10 +12,10 @@ export async function handleRegister(formData) {
 
     // Register user
     await register(formData);
-    
+
     // Set initial credits after registration
     localStorage.setItem('userCredits', '1000');
-    
+
     // Redirect to login page on success
     window.location.href = '/pages/login.html';
   } catch (error) {
@@ -26,40 +26,40 @@ export async function handleRegister(formData) {
 
 // Initialize form handling
 document.addEventListener('DOMContentLoaded', () => {
- const form = document.getElementById('registerForm');
- const errorMessage = document.getElementById('errorMessage');
- const loadingSpinner = document.getElementById('loadingSpinner');
+  const form = document.getElementById('registerForm');
+  const errorMessage = document.getElementById('errorMessage');
+  const loadingSpinner = document.getElementById('loadingSpinner');
 
- if (form) {
-   form.addEventListener('submit', async (event) => {
-     event.preventDefault();
+  if (form) {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
 
-     // Reset UI state
-     errorMessage?.classList.add('hidden');
-     loadingSpinner?.classList.remove('hidden');
+      // Reset UI state
+      errorMessage?.classList.add('hidden');
+      loadingSpinner?.classList.remove('hidden');
 
-     try {
-       const formData = {
-         name: form.name.value,
-         email: form.email.value,
-         password: form.password.value,
-         avatar: form.avatar?.value
-           ? {
-               url: form.avatar.value,
-               alt: form.avatarAlt?.value || '',
-             }
-           : undefined,
-       };
+      try {
+        const formData = {
+          name: form.name.value,
+          email: form.email.value,
+          password: form.password.value,
+          avatar: form.avatar?.value
+            ? {
+                url: form.avatar.value,
+                alt: form.avatarAlt?.value || '',
+              }
+            : undefined,
+        };
 
-       await handleRegister(formData);
-     } catch (error) {
-       if (errorMessage) {
-         errorMessage.textContent = error.message;
-         errorMessage.classList.remove('hidden');
-       }
-     } finally {
-       loadingSpinner?.classList.add('hidden');
-     }
-   });
- }
+        await handleRegister(formData);
+      } catch (error) {
+        if (errorMessage) {
+          errorMessage.textContent = error.message;
+          errorMessage.classList.remove('hidden');
+        }
+      } finally {
+        loadingSpinner?.classList.add('hidden');
+      }
+    });
+  }
 });

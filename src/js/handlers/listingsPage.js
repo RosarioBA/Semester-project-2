@@ -50,7 +50,7 @@ async function fetchAndDisplayListings(container, options = {}) {
     });
 
     // Filter out expired listings
-    const activeListings = allListings?.filter(listing => {
+    const activeListings = allListings?.filter((listing) => {
       const endDate = new Date(listing.endsAt);
       return endDate > new Date();
     });
@@ -83,7 +83,7 @@ async function fetchAndDisplayListings(container, options = {}) {
     container.appendChild(grid);
 
     // Calculate total active pages
-    const totalActiveListings = initialFetch.data.filter(listing => {
+    const totalActiveListings = initialFetch.data.filter((listing) => {
       const endDate = new Date(listing.endsAt);
       return endDate > new Date();
     }).length;
@@ -94,7 +94,7 @@ async function fetchAndDisplayListings(container, options = {}) {
       currentPage: currentPage,
       pageCount: Math.ceil(totalActiveListings / ITEMS_PER_PAGE),
       isFirstPage: currentPage === 1,
-      isLastPage: currentPage >= Math.ceil(totalActiveListings / ITEMS_PER_PAGE)
+      isLastPage: currentPage >= Math.ceil(totalActiveListings / ITEMS_PER_PAGE),
     };
     updatePagination(adjustedMeta);
   } catch (error) {

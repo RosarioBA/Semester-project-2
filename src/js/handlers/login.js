@@ -1,7 +1,7 @@
 // src/js/handlers/login.js
 
 import { login } from '../api/auth/login.js';
-import { getProfile } from '../api/profiles/index.js';  
+import { getProfile } from '../api/profiles/index.js';
 
 export async function handleLogin(email, password) {
   try {
@@ -20,14 +20,12 @@ export async function handleLogin(email, password) {
   }
 }
 
-
-
 // Initialize form handling
 // src/js/handlers/login.js
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('loginForm');
   const errorElement = document.getElementById('errorMessage'); // Changed from 'loginError'
-  
+
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();

@@ -3,7 +3,6 @@
 import { getListings } from '../api/listings/index.js';
 import { createListingHTML, displayLoadingState, showError } from '../utils/listingUtils.js';
 
-
 let container = null;
 
 export async function handleListings(containerId = 'listings') {
@@ -16,7 +15,7 @@ export async function handleListings(containerId = 'listings') {
     const { data: allListings } = await getListings({ limit: 12 });
 
     // Filter out expired listings
-    const activeListings = allListings?.filter(listing => {
+    const activeListings = allListings?.filter((listing) => {
       const endDate = new Date(listing.endsAt);
       return endDate > new Date();
     });

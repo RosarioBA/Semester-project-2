@@ -21,7 +21,7 @@ export async function getListings(options = {}) {
       totalListings: data.data?.length,
       meta: data.meta,
       firstListing: data.data?.[0],
-      queryParams: queryParams.toString()
+      queryParams: queryParams.toString(),
     });
 
     if (!response.ok) {
