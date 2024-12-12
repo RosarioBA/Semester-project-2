@@ -1,6 +1,7 @@
 import { getProfile, updateProfileMedia } from '../api/profiles/index.js';
 import { getUser } from '../utils/storage.js';
 import { displayProfileLoading } from '../utils/loadingStates.js';
+import { renderListingsSection } from '../utils/profileListings.js';
 
 export async function loadProfilePage() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -30,12 +31,12 @@ export async function loadProfilePage() {
 }
 
 function updateProfileDisplay(profile, isOwnProfile) {
-  // Update profile name
+  // 1. Update profile name everywhere it appears
   document.querySelectorAll('.profile-name').forEach((el) => {
     el.textContent = profile.name || '';
   });
 
-  // Only show email and credits for own profile
+  // 2. Handle email display
   document.querySelectorAll('.profile-email').forEach((el) => {
     if (isOwnProfile) {
       el.textContent = profile.email || '';
@@ -45,63 +46,58 @@ function updateProfileDisplay(profile, isOwnProfile) {
     }
   });
 
-  document.querySelector('.profile-credits-container')?.classList.toggle('hidden', !isOwnProfile);
+  // 3. Handle credits display
+  // First, toggle the container visibility
+  const creditsContainer = document.querySelector('.profile-credits-container');
+  if (creditsContainer) {
+    creditsContainer.classList.toggle('hidden', !isOwnProfile);
+  }
+  
+  // Then update all credits displays
   document.querySelectorAll('.profile-credits').forEach((el) => {
     el.textContent = `${profile.credits || 0} credits available`;
   });
 
-  // Update avatar
+  // 4. Update avatar
   if (profile.avatar?.url) {
     document.querySelectorAll('.profile-avatar').forEach(el => {
       el.src = profile.avatar.url;
       el.alt = profile.avatar.alt || 'Profile avatar';
-      el.classList.remove('animate-pulse');
+      el.classList.remove('animate-pulse'); // Remove loading state
     });
   }
 
-  // Show/hide edit controls
+  // 5. Toggle edit controls visibility
   document.querySelectorAll('.edit-profile, .update-avatar').forEach((el) => {
     el.classList.toggle('hidden', !isOwnProfile);
   });
 
-  // Update listings title
+  // 6. Update listings section title
   const listingsTitle = document.querySelector('.profile-listings-title');
   if (listingsTitle) {
     listingsTitle.textContent = isOwnProfile ? 'My Listings' : `${profile.name}'s Listings`;
   }
 
+  // 7. Handle listings display
   const listingsContainer = document.querySelector('.listings-container');
   if (!listingsContainer) return;
 
+  // If no listings, show appropriate message
   if (!profile.listings?.length) {
-    listingsContainer.innerHTML = '<p class="text-gray-500 text-center py-4">No listings yet</p>';
+    listingsContainer.innerHTML = `
+      <p class="text-gray-500 text-center py-4">
+        ${isOwnProfile ? 'You haven\'t created any listings yet' : 'No listings yet'}
+      </p>`;
     return;
   }
 
-  listingsContainer.innerHTML = profile.listings
-    .map(listing => `
-      <div class="bg-white rounded-lg shadow-sm p-4 flex justify-between items-center">
-        <a href="/pages/single-listing.html?id=${listing.id}" class="flex items-center gap-4 flex-1">
-          <img src="${listing.media?.[0]?.url || '/api/placeholder/64/64'}" 
-               alt="${listing.title}" 
-               class="w-16 h-16 rounded object-cover">
-          <div>
-            <h3 class="font-medium">${listing.title}</h3>
-            <div class="text-gray-600">
-              <p>${listing._count?.bids || 0} bids</p>
-              <p class="text-sm">Last bid: ${listing.bids?.[0]?.amount || 'No bids yet'}</p>
-            </div>
-          </div>
-        </a>
-        ${isOwnProfile ? `
-          <a href="/pages/edit-listing.html?id=${listing.id}" 
-             class="px-4 py-2 bg-[#4f6f52] text-white rounded">
-            Edit
-          </a>
-        ` : ''}
-      </div>
-    `).join('');
+  // 8. Render listings sections (active and past)
+  listingsContainer.innerHTML = renderListingsSection(profile, isOwnProfile);
 }
+
+// Export the function if needed
+export { updateProfileDisplay };
+
 
 function initializeMediaUpdates() {
   const modal = document.getElementById('mediaModal');
