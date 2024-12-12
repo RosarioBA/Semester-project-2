@@ -1,7 +1,7 @@
 // src/js/handlers/index.js
 import { updateUserInfo } from './updateUserInfo.js';
-import { handleLogout } from './logout.js';
-import { toggleAuthUI } from './toggleAuth.js';
+import { handleLogout } from '../features/auth/logout.js';
+import { toggleAuthUI } from '../features/auth/toggleAuth.js';
 import { handleListings } from './listings.js';
 import { initializeDropdown } from './dropdown.js';
 import { initializeCarousel } from './carousel.js';
@@ -9,7 +9,7 @@ import { loadProfilePage } from './profile.js';
 import { loadActiveBids } from './activeBids.js';
 import { initializeSearch } from './search.js';
 import { initializeEditListing } from './editListing.js';
-import { handleListingsPage } from './listingspage.js'; // Add this import
+import { handleListingsPage } from '../features/listings/listingsPage.js'; // Add this import
 import './navigation.js';
 
 document.addEventListener('DOMContentLoaded', async () => {

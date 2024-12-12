@@ -1,7 +1,8 @@
-import { getSingleListing } from '../api/listings/index.js';
-import { initializeBidding } from './bid.js';
-import { formatTimeRemaining } from '../utils/listingUtils.js';
-import { getToken } from '../utils/storage.js';
+
+import { getSingleListing } from '../../api/listings/index.js';
+import { initializeBidding } from '../../handlers/bid.js';  // We'll update this path later when we move bid.js
+import { formatTimeRemaining } from '../../utils/listingUtils.js';
+import { getToken } from '../../utils/storage.js';
 
 function renderBidHistory(bids) {
   if (!bids?.length) return '';

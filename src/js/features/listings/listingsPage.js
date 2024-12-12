@@ -1,7 +1,8 @@
 // src/js/handlers/listingsPage.js
 
-import { getListings } from '../api/listings/index.js';
-import { createListingHTML, displayLoadingState, showError } from '../utils/listingUtils.js';
+import { getListings } from '../../api/listings/index.js';
+import { createListingHTML, displayLoadingState, showError } from '../../utils/listingUtils.js';
+
 
 const ITEMS_PER_PAGE = 12;
 let currentPage = 1;

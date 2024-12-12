@@ -1,6 +1,6 @@
-// src/js/handlers/register.js
-import { register } from '../api/auth/register.js';
-import { validateRegistration } from '../utils/validation.js';
+// src/js/features/auth/register.js
+import { register } from '../../api/auth/register.js';
+import { validateRegistration } from '../../utils/validation.js';
 
 export async function handleRegister(formData) {
   try {

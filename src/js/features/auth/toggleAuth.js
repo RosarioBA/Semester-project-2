@@ -1,7 +1,6 @@
-// src/js/handlers/toggleAuth.js
-import { getUser, isLoggedIn } from '../utils/userData.js';
+// src/js/features/auth/toggleAuth.js
+import { getUser, isLoggedIn } from '../../utils/userData.js';
 
-// src/js/handlers/toggleAuth.js
 export function toggleAuthUI() {
   const user = getUser();
   const loggedIn = isLoggedIn();
