@@ -1,6 +1,18 @@
+
 // src/js/features/listings/activeBids.js
 import { API_ENDPOINTS, getAuthHeaders } from '../../api/constants.js';
 import { getUser } from '../../utils/userData.js';
+
+/**
+ * Loads the active bids and won auctions for the current user.
+ * If the user is not authenticated, redirects to the login page.
+ * Fetches the active bids and won auctions from the API and displays them.
+ * 
+ * @async
+ * @function loadActiveBids
+ * @returns {Promise<void>}
+ */
+
 
 export async function loadActiveBids() {
   const user = getUser();
@@ -29,6 +41,14 @@ export async function loadActiveBids() {
   }
 }
 
+/**
+ * Displays the active bids in the specified container.
+ * If there are no active bids, displays a message indicating so.
+ * 
+ * @function displayActiveBids
+ * @param {Array<Object>} bids - The list of active bids.
+ */
+
 function displayActiveBids(bids) {
   const container = document.getElementById('activeBids');
   if (!bids?.length) {
@@ -56,6 +76,15 @@ function displayActiveBids(bids) {
     )
     .join('');
 }
+
+/**
+ * Displays the won auctions in the specified container.
+ * If there are no won auctions, displays a message indicating so.
+ * 
+ * @function displayWonAuctions
+ * @param {Array<Object>} wins - The list of won auctions.
+ */
+
 
 function displayWonAuctions(wins) {
   const container = document.getElementById('wonAuctions');

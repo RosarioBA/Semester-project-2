@@ -1,6 +1,10 @@
 // src/js/features/listings/editListing.js
 import { getSingleListing, updateListing } from '../../api/listings/index.js';
 
+/**
+ * Initializes the edit listing form by loading the listing data and setting up event listeners.
+ */
+
 export function initializeEditListing() {
   const form = document.getElementById('editListingForm');
   const addMediaBtn = document.getElementById('addMediaBtn');
@@ -21,6 +25,12 @@ export function initializeEditListing() {
     saveListing(listingId);
   });
 }
+
+/**
+ * Loads the listing data and populates the form fields with the retrieved data.
+ * 
+ * @param {string} id - The ID of the listing to load.
+ */
 
 async function loadListing(id) {
   try {
@@ -50,6 +60,14 @@ async function loadListing(id) {
   }
 }
 
+/**
+ * Adds a new media input field to the media list.
+ * 
+ * @param {Object|null} media - The media object containing URL and alt text. If null, empty inputs are added.
+ * @param {string} [media.url] - The URL of the media.
+ * @param {string} [media.alt] - The alt text of the media.
+ */
+
 function addMediaInput(media = null) {
   const mediaList = document.getElementById('mediaList');
   const mediaDiv = document.createElement('div');
@@ -65,6 +83,12 @@ function addMediaInput(media = null) {
   mediaDiv.querySelector('button').addEventListener('click', () => mediaDiv.remove());
   mediaList.appendChild(mediaDiv);
 }
+
+/**
+ * Saves the updated listing data by sending it to the server.
+ * 
+ * @param {string} id - The ID of the listing to update.
+ */
 
 async function saveListing(id) {
   const title = document.getElementById('title').value;

@@ -1,8 +1,14 @@
-
 import { getSingleListing } from '../../api/listings/index.js';
-import { initializeBidding } from './bid.js';  // Now it's in the same directory  
+import { initializeBidding } from './bid.js';
 import { formatTimeRemaining } from '../../utils/listingUtils.js';
 import { getToken } from '../../utils/storage.js';
+
+/**
+ * Renders the bid history for a listing.
+ * 
+ * @param {Array} bids - An array of bid objects.
+ * @returns {string} - The HTML string for the bid history.
+ */
 
 function renderBidHistory(bids) {
   if (!bids?.length) return '';
@@ -36,6 +42,13 @@ function renderBidHistory(bids) {
         </div>
     `;
 }
+
+/**
+ * Renders a single listing on the page.
+ * 
+ * @param {Object} listing - The listing object containing details of the listing.
+ * @throws {Error} - Throws an error if the listing data is invalid.
+ */
 
 function renderListing(listing) {
   if (!listing) {
@@ -155,6 +168,15 @@ function renderListing(listing) {
     </div>
   `;
 }
+
+/**
+ * Handles the display of a single listing page.
+ * Fetches the listing data based on the ID from the URL parameters and renders it.
+ * Initializes bidding functionality if the user is logged in.
+ * 
+ * @async
+ * @function handleSingleListing
+ */
 
 export async function handleSingleListing() {
   try {

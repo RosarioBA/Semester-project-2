@@ -3,6 +3,16 @@
 import { login } from '../../api/auth/login.js';
 import { getProfile } from '../../api/profiles/index.js';
 
+/**
+ * Handles the login process by calling the login API and storing user data in localStorage.
+ * Redirects to the home page upon successful login.
+ *
+ * @param {string} email - The email address of the user.
+ * @param {string} password - The password of the user.
+ * @throws Will throw an error if the login process fails.
+ */
+
+
 export async function handleLogin(email, password) {
   try {
     const userData = await login({ email, password });
@@ -50,3 +60,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+

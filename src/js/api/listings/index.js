@@ -1,5 +1,16 @@
-// src/js/api/listings/index.js
 import { API_ENDPOINTS, getAuthHeaders, getPublicHeaders } from '../constants.js';
+
+/**
+ * Fetches a list of listings from the API.
+ *
+ * @param {Object} [options={}] - Options for fetching listings.
+ * @param {string} [options.sort='created'] - Sort field.
+ * @param {string} [options.sortOrder='desc'] - Sort order.
+ * @param {number} [options.limit] - Limit the number of listings.
+ * @param {number} [options.page] - Page number for pagination.
+ * @returns {Promise<Object>} The data from the API response.
+ * @throws {Error} If the fetch operation fails.
+ */
 
 export async function getListings(options = {}) {
   try {
@@ -35,6 +46,14 @@ export async function getListings(options = {}) {
   }
 }
 
+/**
+ * Fetches a single listing by its ID from the API.
+ *
+ * @param {string} id - The ID of the listing to fetch.
+ * @returns {Promise<Object>} The data from the API response.
+ * @throws {Error} If the fetch operation fails.
+ */
+
 export async function getSingleListing(id) {
   try {
     const queryParams = new URLSearchParams({
@@ -67,6 +86,21 @@ export async function getSingleListing(id) {
     throw error;
   }
 }
+
+
+/**
+ * Updates a listing by its ID.
+ *
+ * @param {string} id - The ID of the listing to update.
+ * @param {Object} data - The data to update the listing with.
+ * @param {string} data.title - The title of the listing.
+ * @param {string} data.description - The description of the listing.
+ * @param {Array<string>} data.tags - The tags associated with the listing.
+ * @param {Array<string>} data.media - The media URLs associated with the listing.
+ * @param {string} [data.endsAt] - The end date of the listing in ISO format.
+ * @returns {Promise<Object>} The updated listing data from the API response.
+ * @throws {Error} If the update operation fails.
+ */
 
 export async function updateListing(id, data) {
   try {

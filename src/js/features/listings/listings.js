@@ -1,9 +1,26 @@
+
 // src/js/features/listings/listings.js
 
 import { getListings } from '../../api/listings/index.js';
 import { createListingHTML, displayLoadingState, showError } from '../../utils/listingUtils.js';
 
 let container = null;
+
+/**
+ * Handles the retrieval and display of listings.
+ * 
+ * @param {string} [containerId='listings'] - The ID of the container element where the listings will be displayed.
+ * @returns {Promise<void>} - A promise that resolves when the listings have been handled.
+ * 
+ * @async
+ * @function handleListings
+ * 
+ * @example
+ * // Call the function to handle listings
+ * handleListings();
+ * 
+ * @throws Will throw an error if the listings cannot be retrieved or displayed.
+ */
 
 export async function handleListings(containerId = 'listings') {
   try {

@@ -1,5 +1,13 @@
 // src/js/api/bids/index.js
 
+/**
+ * Places a bid on a listing
+ * @param {string} listingId - The ID of the listing to bid on
+ * @param {number} amount - The bid amount
+ * @returns {Promise<Object>} The updated listing data
+ * @throws {Error} If the request fails
+ */
+
 import { API_ENDPOINTS, getAuthHeaders } from '../constants.js';
 
 export async function placeBid(listingId, amount) {

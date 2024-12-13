@@ -3,11 +3,17 @@
 import { getListings } from '../../api/listings/index.js';
 import { createListingHTML, displayLoadingState, showError } from '../../utils/listingUtils.js';
 
-
 const ITEMS_PER_PAGE = 12;
 let currentPage = 1;
 
 let container = null;
+
+/**
+ * Handles the listings page by fetching and displaying listings, setting up sorting, and handling pagination.
+ * 
+ * @param {string} [containerId='listings'] - The ID of the container element where listings will be displayed.
+ * @returns {Promise<void>}
+ */
 
 export async function handleListingsPage(containerId = 'listings') {
   try {
@@ -32,6 +38,16 @@ export async function handleListingsPage(containerId = 'listings') {
     showError(container, error.message);
   }
 }
+
+/**
+ * Fetches and displays listings in the specified container with optional sorting and pagination.
+ * 
+ * @param {HTMLElement} container - The container element where listings will be displayed.
+ * @param {Object} [options={}] - Optional parameters for sorting and pagination.
+ * @param {string} [options.sort='created'] - The field to sort by.
+ * @param {string} [options.sortOrder='desc'] - The order to sort by (asc or desc).
+ * @returns {Promise<void>}
+ */
 
 async function fetchAndDisplayListings(container, options = {}) {
   try {
@@ -103,6 +119,16 @@ async function fetchAndDisplayListings(container, options = {}) {
     showError(container, error.message);
   }
 }
+
+/**
+ * Updates the pagination controls based on the provided metadata.
+ * 
+ * @param {Object} meta - Metadata for pagination.
+ * @param {number} meta.currentPage - The current page number.
+ * @param {number} meta.pageCount - The total number of pages.
+ * @param {boolean} meta.isFirstPage - Whether the current page is the first page.
+ * @param {boolean} meta.isLastPage - Whether the current page is the last page.
+ */
 
 function updatePagination(meta) {
   const paginationContainer = document.getElementById('pagination');

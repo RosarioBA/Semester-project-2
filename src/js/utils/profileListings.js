@@ -1,5 +1,12 @@
 import { formatTimeRemaining } from './listingUtils.js';
 
+/**
+ * Categorizes listings into active and past based on the current date.
+ * 
+ * @param {Array} listings - Array of listing objects.
+ * @returns {Object} An object containing two arrays: active and past listings.
+ */
+
 export function categorizeListings(listings) {
   const now = new Date();
   return listings.reduce(
@@ -15,6 +22,14 @@ export function categorizeListings(listings) {
     { active: [], past: [] }
   );
 }
+
+/**
+ * Renders a single listing card.
+ * 
+ * @param {Object} listing - The listing object.
+ * @param {boolean} isOwnProfile - Indicates if the profile belongs to the current user.
+ * @returns {string} The HTML string for the listing card.
+ */
 
 export function renderListingCard(listing, isOwnProfile) {
   const endsAt = new Date(listing.endsAt);
@@ -61,6 +76,14 @@ export function renderListingCard(listing, isOwnProfile) {
     </div>
   `;
 }
+
+/**
+ * Renders the listings section for a profile.
+ * 
+ * @param {Object} profile - The profile object containing listings.
+ * @param {boolean} isOwnProfile - Indicates if the profile belongs to the current user.
+ * @returns {string} The HTML string for the listings section.
+ */
 
 export function renderListingsSection(profile, isOwnProfile) {
   const { active, past } = categorizeListings(profile.listings || []);

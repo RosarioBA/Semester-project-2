@@ -1,4 +1,19 @@
+/**
+ * Initializes the carousel component by fetching the latest listings and setting up the carousel functionality.
+ * 
+ * This function performs the following steps:
+ * 1. Fetches the latest 3 listings from the API.
+ * 2. Finds the carousel container in the DOM.
+ * 3. Creates and inserts the carousel HTML structure.
+ * 4. Initializes the carousel functionality, including navigation and auto-advance.
+ * 
+ * @async
+ * @function initializeCarousel
+ * @returns {Promise<void>} A promise that resolves when the carousel is initialized.
+ * @throws Will log an error to the console if the initialization fails.
+ */
 // src/js/components/carousel.js
+
 import { getListings } from '../api/listings/index.js';
 
 export async function initializeCarousel() {

@@ -1,6 +1,11 @@
 // src/js/handlers/search.js
 import { searchAll } from '../../api/search/index.js';
 
+/**
+ * Initializes the search functionality for desktop and mobile search inputs.
+ * Adds event listeners to handle input changes and perform search queries.
+ */
+
 export function initializeSearch() {
   const searchInputs = ['desktopSearch', 'mobileSearch'].map((id) => document.getElementById(id));
   const resultsContainers = ['desktopSearchResults', 'mobileSearchResults'].map((id) =>
@@ -32,6 +37,14 @@ export function initializeSearch() {
   });
 }
 
+
+/**
+ * Performs the search query and displays the results.
+ * 
+ * @param {string} query - The search query string.
+ * @param {HTMLElement} resultsContainer - The container element to display the search results.
+ */
+
 async function performSearch(query, resultsContainer) {
   try {
     const { listings, profiles } = await searchAll(query);
@@ -43,6 +56,13 @@ async function performSearch(query, resultsContainer) {
     resultsContainer.classList.remove('hidden');
   }
 }
+/**
+ * Displays the search results in the specified container.
+ * 
+ * @param {Array} listings - The array of listing results.
+ * @param {Array} profiles - The array of profile results.
+ * @param {HTMLElement} container - The container element to display the search results.
+ */
 
 function displaySearchResults(listings, profiles, container) {
   let html = '';

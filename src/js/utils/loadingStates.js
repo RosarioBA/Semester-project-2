@@ -1,6 +1,10 @@
 // src/js/utils/loadingStates.js
 
-// Loading state for listings grid
+/**
+ * Displays a loading state for a listings grid.
+ * 
+ * @param {HTMLElement} container - The container element where the loading state will be displayed.
+ */
 export function displayLoadingState(container) {
   container.innerHTML = `
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -27,7 +31,10 @@ export function displayLoadingState(container) {
     </div>`;
 }
 
-// Loading state for profile page
+/**
+ * Displays a loading state for the profile page.
+ */
+
 export function displayProfileLoading() {
   // Clear existing profile content
   const profileElements = {
@@ -75,7 +82,13 @@ export function displayProfileLoading() {
   }
 }
 
-// General error display
+/**
+ * Displays a general error message.
+ * 
+ * @param {HTMLElement} container - The container element where the error message will be displayed.
+ * @param {string} message - The error message to display.
+ */
+
 export function showError(container, message) {
   container.innerHTML = `
         <div class="text-center py-12">

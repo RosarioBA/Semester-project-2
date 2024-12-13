@@ -2,7 +2,15 @@
 import { placeBid } from '../../api/bids/index.js';
 import { getProfile } from '../../api/profiles/index.js';
 import { getUser } from '../../utils/userData.js';
-import { updateUserInfo } from '../../components/userInfo.js'; // We'll update this path later when we move updateUserInfo
+import { updateUserInfo } from '../../components/userInfo.js'; 
+
+/**
+ * Initializes the bidding functionality for a listing.
+ * 
+ * @param {Object} listing - The listing object containing details of the item to bid on.
+ * @param {Function} onBidPlaced - Callback function to be executed after a bid is successfully placed.
+ */
+
 
 export function initializeBidding(listing, onBidPlaced) {
   const bidButton = document.getElementById('placeBidBtn');

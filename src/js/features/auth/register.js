@@ -1,6 +1,21 @@
 // src/js/features/auth/register.js
+
 import { register } from '../../api/auth/register.js';
 import { validateRegistration } from '../../utils/validation.js';
+
+/**
+ * Handles the registration process.
+ *
+ * @param {Object} formData - The form data containing user registration details.
+ * @param {string} formData.name - The name of the user.
+ * @param {string} formData.email - The email of the user.
+ * @param {string} formData.password - The password of the user.
+ * @param {Object} [formData.avatar] - The avatar object containing URL and alt text.
+ * @param {string} formData.avatar.url - The URL of the avatar image.
+ * @param {string} [formData.avatar.alt] - The alt text for the avatar image.
+ * @throws Will throw an error if registration fails or validation errors occur.
+ * @returns {Promise<void>} A promise that resolves when registration is complete.
+ */
 
 export async function handleRegister(formData) {
   try {

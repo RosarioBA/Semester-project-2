@@ -3,6 +3,19 @@
 import { getMyListings } from '../../api/listings/index.js';
 import { createListingHTML } from '../../utils/listingUtils.js';
 
+/**
+ * Handles the display of user's listings.
+ * 
+ * This function fetches the user's listings from the API and displays them on the page.
+ * If there are no listings, it shows a message indicating that the user hasn't created any listings yet.
+ * If there are listings, it creates HTML elements for each listing and appends them to the main content.
+ * In case of an error, it displays an error message.
+ * 
+ * @async
+ * @function handleMyListings
+ * @returns {Promise<void>} A promise that resolves when the listings have been handled.
+ */
+
 export async function handleMyListings() {
   const mainContent = document.querySelector('main');
   try {

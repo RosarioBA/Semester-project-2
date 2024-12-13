@@ -1,8 +1,19 @@
+
 // src/js/features/profile/profile.js
 import { getProfile, updateProfileMedia } from '../../api/profiles/index.js';
 import { getUser } from '../../utils/storage.js';
 import { displayProfileLoading } from '../../utils/loadingStates.js';
 import { renderListingsSection } from '../../utils/profileListings.js';
+
+/**
+ * Loads the profile page by fetching the profile data and updating the display.
+ * Redirects to the login page if no username is found in the URL parameters or in the current user data.
+ * Displays a loading state while fetching the profile data.
+ * 
+ * @async
+ * @function loadProfilePage
+ * @returns {Promise<void>}
+ */
 
 export async function loadProfilePage() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -30,6 +41,16 @@ export async function loadProfilePage() {
     console.error('Error loading profile:', error);
   }
 }
+
+/**
+ * Updates the profile display with the provided profile data.
+ * 
+ * @function updateProfileDisplay
+ * @param {Object} profile - The profile data to display.
+ * @param {boolean} isOwnProfile - Indicates if the profile belongs to the current user.
+ */
+
+
 
 function updateProfileDisplay(profile, isOwnProfile) {
   // 1. Update profile name everywhere it appears
@@ -98,6 +119,13 @@ function updateProfileDisplay(profile, isOwnProfile) {
 
 // Export the function if needed
 export { updateProfileDisplay };
+
+/**
+ * Initializes the media update functionality for the profile.
+ * Sets up event listeners for updating the profile avatar.
+ * 
+ * @function initializeMediaUpdates
+ */
 
 function initializeMediaUpdates() {
   const modal = document.getElementById('mediaModal');

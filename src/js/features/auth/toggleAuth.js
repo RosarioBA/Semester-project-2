@@ -1,6 +1,17 @@
 // src/js/features/auth/toggleAuth.js
 import { getUser, isLoggedIn } from '../../utils/userData.js';
 
+/**
+ * Toggles the authentication UI elements based on the user's login status.
+ * 
+ * This function checks if the user is logged in and updates the visibility
+ * of login buttons, register button, and user menu accordingly. If the user
+ * is logged in, it hides the login and register buttons and shows the user
+ * menu. Additionally, it adds click handlers to the username elements to
+ * redirect to the profile page.
+ * 
+ */
+
 export function toggleAuthUI() {
   const user = getUser();
   const loggedIn = isLoggedIn();
