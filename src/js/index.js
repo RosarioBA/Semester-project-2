@@ -1,16 +1,16 @@
-// src/js/handlers/index.js
-import { updateUserInfo } from './updateUserInfo.js';
-import { handleLogout } from '../features/auth/logout.js';
-import { toggleAuthUI } from '../features/auth/toggleAuth.js';
-import { handleListings } from './listings.js';
-import { initializeDropdown } from './dropdown.js';
-import { initializeCarousel } from './carousel.js';
-import { loadProfilePage } from './profile.js';
-import { loadActiveBids } from './activeBids.js';
-import { initializeSearch } from './search.js';
-import { initializeEditListing } from './editListing.js';
-import { handleListingsPage } from '../features/listings/listingsPage.js'; // Add this import
-import './navigation.js';
+// src/js/index.js
+import { updateUserInfo } from './components/userInfo.js';
+import { handleLogout } from './features/auth/logout.js';
+import { toggleAuthUI } from './features/auth/toggleAuth.js';
+import { handleListings } from './features/listings/listings.js';
+import { initializeDropdown } from './components/dropdown.js';
+import { initializeCarousel } from './components/carousel.js';
+import { loadProfilePage } from './features/profile/profile.js';
+import { loadActiveBids } from './features/listings/activeBids.js';
+import { initializeSearch } from './features/search/search.js';
+import { initializeEditListing } from './features/listings/editListing.js';
+import { handleListingsPage } from './features/listings/listingsPage.js';
+import './components/navigation.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   await updateUserInfo();
@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else if (path === '/pages/edit-listing.html') {
     initializeEditListing();
   } else if (path === '/pages/listings.html') {
-    // Add this condition
     handleListingsPage();
   }
 

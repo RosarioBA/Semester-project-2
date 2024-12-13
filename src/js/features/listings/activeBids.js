@@ -1,5 +1,6 @@
-import { API_ENDPOINTS, getAuthHeaders } from '../api/constants.js';
-import { getUser } from '../utils/userData.js';
+// src/js/features/listings/activeBids.js
+import { API_ENDPOINTS, getAuthHeaders } from '../../api/constants.js';
+import { getUser } from '../../utils/userData.js';
 
 export async function loadActiveBids() {
   const user = getUser();

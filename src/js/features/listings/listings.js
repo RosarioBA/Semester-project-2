@@ -1,7 +1,7 @@
-// src/js/handlers/listings.js
+// src/js/features/listings/listings.js
 
-import { getListings } from '../api/listings/index.js';
-import { createListingHTML, displayLoadingState, showError } from '../utils/listingUtils.js';
+import { getListings } from '../../api/listings/index.js';
+import { createListingHTML, displayLoadingState, showError } from '../../utils/listingUtils.js';
 
 let container = null;
 

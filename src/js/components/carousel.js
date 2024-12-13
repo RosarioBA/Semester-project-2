@@ -1,4 +1,4 @@
-// src/js/handlers/carousel.js
+// src/js/components/carousel.js
 import { getListings } from '../api/listings/index.js';
 
 export async function initializeCarousel() {
@@ -9,7 +9,6 @@ export async function initializeCarousel() {
       sort: 'created',
       sortOrder: 'desc',
     });
-
     if (!listings || listings.length === 0) return;
 
     // Find carousel container
@@ -35,7 +34,6 @@ export async function initializeCarousel() {
                      )
                      .join('')}
                </div>
-
                <!-- Navigation arrows -->
                <button onclick="carousel.prev()" 
                        class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white/75 rounded-full p-2">

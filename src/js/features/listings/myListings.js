@@ -1,7 +1,7 @@
-// src/js/handlers/myListings.js
+// src/js/features/listings/myListings.js
 
-import { getMyListings } from '../api/listings/index.js';
-import { createListingHTML } from '../utils/listingUtils.js';
+import { getMyListings } from '../../api/listings/index.js';
+import { createListingHTML } from '../../utils/listingUtils.js';
 
 export async function handleMyListings() {
   const mainContent = document.querySelector('main');

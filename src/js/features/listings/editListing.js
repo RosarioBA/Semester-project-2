@@ -1,5 +1,5 @@
-// src/js/handlers/editListing.js
-import { getSingleListing, updateListing } from '../api/listings/index.js';
+// src/js/features/listings/editListing.js
+import { getSingleListing, updateListing } from '../../api/listings/index.js';
 
 export function initializeEditListing() {
   const form = document.getElementById('editListingForm');

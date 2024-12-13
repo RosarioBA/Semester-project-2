@@ -1,7 +1,8 @@
-import { getProfile, updateProfileMedia } from '../api/profiles/index.js';
-import { getUser } from '../utils/storage.js';
-import { displayProfileLoading } from '../utils/loadingStates.js';
-import { renderListingsSection } from '../utils/profileListings.js';
+// src/js/features/profile/profile.js
+import { getProfile, updateProfileMedia } from '../../api/profiles/index.js';
+import { getUser } from '../../utils/storage.js';
+import { displayProfileLoading } from '../../utils/loadingStates.js';
+import { renderListingsSection } from '../../utils/profileListings.js';
 
 export async function loadProfilePage() {
   const urlParams = new URLSearchParams(window.location.search);

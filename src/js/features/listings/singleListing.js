@@ -1,6 +1,6 @@
 
 import { getSingleListing } from '../../api/listings/index.js';
-import { initializeBidding } from '../../handlers/bid.js';  // We'll update this path later when we move bid.js
+import { initializeBidding } from './bid.js';  // Now it's in the same directory  
 import { formatTimeRemaining } from '../../utils/listingUtils.js';
 import { getToken } from '../../utils/storage.js';
 

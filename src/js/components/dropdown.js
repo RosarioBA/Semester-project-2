@@ -1,4 +1,4 @@
-// src/js/handlers/dropdown.js
+// src/js/components/dropdown.js
 export function initializeDropdown() {
   const menuButton = document.getElementById('menuButton');
   const dropdownContainer = menuButton?.closest('.dropdown-container');

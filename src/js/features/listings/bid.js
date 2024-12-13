@@ -1,8 +1,8 @@
-// src/js/handlers/bid.js
-import { placeBid } from '../api/bids/index.js';
-import { getProfile } from '../api/profiles/index.js';
-import { getUser } from '../utils/userData.js';
-import { updateUserInfo } from './updateUserInfo.js';
+// src/js/features/listings/bid.js
+import { placeBid } from '../../api/bids/index.js';
+import { getProfile } from '../../api/profiles/index.js';
+import { getUser } from '../../utils/userData.js';
+import { updateUserInfo } from '../../components/userInfo.js'; // We'll update this path later when we move updateUserInfo
 
 export function initializeBidding(listing, onBidPlaced) {
   const bidButton = document.getElementById('placeBidBtn');

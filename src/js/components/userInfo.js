@@ -1,4 +1,4 @@
-// src/js/handlers/updateUserInfo.js
+// src/js/components/userInfo.js
 import { getUser } from '../utils/userData.js';
 
 export function updateUserInfo() {

@@ -1,6 +1,6 @@
-// src/js/handlers/createListing.js
+// src/js/features/listings/createListing.js
 
-import { createListing } from '../api/listings/create.js';
+import { createListing } from '../../api/listings/create.js';
 
 /**
  * Shows a success message overlay and redirects after a delay

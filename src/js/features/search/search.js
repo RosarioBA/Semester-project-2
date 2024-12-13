@@ -1,5 +1,5 @@
 // src/js/handlers/search.js
-import { searchAll } from '../api/search/index.js';
+import { searchAll } from '../../api/search/index.js';
 
 export function initializeSearch() {
   const searchInputs = ['desktopSearch', 'mobileSearch'].map((id) => document.getElementById(id));
