@@ -1,18 +1,18 @@
 /**
  * Initializes the dropdown menu functionality.
- * 
+ *
  * This function sets up event listeners for a dropdown menu, allowing it to be toggled
  * by clicking a button, and optionally handling hover events on desktop screens.
- * 
+ *
  * The dropdown menu is expected to be a sibling of the button within a container
  * element with the class "dropdown-container". The menu should have a class that
  * includes "hidden" when it is not visible.
- * 
+ *
  * Functionality:
  * - Toggles the visibility of the dropdown menu when the button is clicked.
  * - Closes the dropdown menu when clicking outside of it.
  * - Optionally handles hover events to show/hide the menu on desktop screens.
- * 
+ *
  * @function initializeDropdown
  */
 

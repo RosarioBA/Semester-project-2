@@ -4,19 +4,18 @@ import { getListings } from '../api/listings/index.js';
 
 /**
  * Initializes the carousel component by fetching the latest listings and setting up the carousel functionality.
- * 
+ *
  * This function performs the following steps:
  * 1. Fetches the latest 3 listings from the API.
  * 2. Finds the carousel container in the DOM.
  * 3. Creates and inserts the carousel HTML structure.
  * 4. Initializes the carousel functionality, including navigation and auto-advance.
- * 
+ *
  * @async
  * @function initializeCarousel
  * @returns {Promise<void>} A promise that resolves when the carousel is initialized.
  * @throws Will log an error to the console if the initialization fails.
  */
-
 
 export async function initializeCarousel() {
   try {
@@ -24,7 +23,7 @@ export async function initializeCarousel() {
       limit: 3,
       sort: 'created',
       sortOrder: 'desc',
-      _active: true
+      _active: true,
     });
     if (!listings || listings.length === 0) return;
 
@@ -37,7 +36,9 @@ export async function initializeCarousel() {
     carouselContainer.innerHTML = `
       <div class="relative w-96 h-96 rounded-lg shadow-lg overflow-hidden" id="carousel">
         <div class="h-full" id="slides">
-          ${listings.map((listing, index) => `
+          ${listings
+            .map(
+              (listing, index) => `
             <div class="absolute w-full h-full transition-opacity duration-500 cursor-pointer" 
                  style="background-image: url('${listing.media?.[0]?.url || '/api/placeholder/400/400'}'); 
                         background-size: cover; 
@@ -48,7 +49,9 @@ export async function initializeCarousel() {
                 <h3 class="text-lg font-semibold">${listing.title}</h3>
               </div>
             </div>
-          `).join('')}
+          `
+            )
+            .join('')}
         </div>
         <button onclick="carousel.prev()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white/75 rounded-full p-2 z-10">
           <svg class="w-6 h-6 text-[#4F6F52]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,7 +78,7 @@ export async function initializeCarousel() {
         slides[currentSlide].style.opacity = '0';
         currentSlide = (currentSlide - 1 + slides.length) % slides.length;
         slides[currentSlide].style.opacity = '1';
-      }
+      },
     };
 
     setInterval(window.carousel.next, 5000);

@@ -91,7 +91,6 @@ export async function getSingleListing(id) {
   }
 }
 
-
 /**
  * Updates a listing by its ID.
  *

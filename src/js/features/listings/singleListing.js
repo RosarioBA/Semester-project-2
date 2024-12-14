@@ -2,11 +2,11 @@ import { getSingleListing } from '../../api/listings/index.js';
 import { initializeBidding } from './bid.js';
 import { formatTimeRemaining } from '../../utils/listingUtils.js';
 import { getToken } from '../../utils/storage.js';
-import { getUser } from '../../utils/userData.js'; 
+import { getUser } from '../../utils/userData.js';
 
 /**
  * Renders the bid history for a listing.
- * 
+ *
  * @param {Array} bids - An array of bid objects.
  * @returns {string} - The HTML string for the bid history.
  */
@@ -46,7 +46,7 @@ function renderBidHistory(bids) {
 
 /**
  * Renders a single listing on the page.
- * 
+ *
  * @param {Object} listing - The listing object containing details of the listing.
  * @throws {Error} - Throws an error if the listing data is invalid.
  */
@@ -69,9 +69,9 @@ function renderListing(listing) {
   const sellerName = listing?.seller?.name || 'Unknown';
   const endsAt = listing?.endsAt ? new Date(listing.endsAt) : null;
   const timeRemaining = endsAt && !isNaN(endsAt) ? formatTimeRemaining(endsAt) : 'Invalid Date';
-  
+
   const bids = listing?.bids || [];
-  const highestBid = bids.length ? Math.max(...bids.map(bid => bid.amount)) : 0;
+  const highestBid = bids.length ? Math.max(...bids.map((bid) => bid.amount)) : 0;
   const mediaUrl = listing?.media?.[0]?.url || null;
   const mediaAlt = listing?.media?.[0]?.alt || title;
 
@@ -81,16 +81,22 @@ function renderListing(listing) {
         <a href="/pages/listings.html" class="text-[#4f6f52] inline-block hover:underline">
           &larr; Back to Listings
         </a>
-        ${isOwner ? `
+        ${
+          isOwner
+            ? `
           <a href="/pages/edit-listing.html?id=${listing.id}" 
              class="px-4 py-2 bg-[#4f6f52] text-white rounded hover:bg-[#4f6f52]/90 transition-colors">
             Edit Listing
           </a>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
 
       <div class="bg-white rounded-lg shadow-sm p-6">
-        ${mediaUrl ? `
+        ${
+          mediaUrl
+            ? `
           <div class="mb-6">
             <img 
               src="${mediaUrl}" 
@@ -99,7 +105,9 @@ function renderListing(listing) {
               onerror="this.src='/api/placeholder/400/320'"
             />
           </div>
-        ` : ''}
+        `
+            : ''
+        }
 
         <h1 class="text-2xl font-semibold mb-4">${title}</h1>
 
@@ -134,8 +142,12 @@ function renderListing(listing) {
           <div class="bidding-section">
             <div class="p-4 bg-gray-50 rounded-lg">
               <p class="text-lg font-medium mb-4">Current Highest Bid: ${highestBid} Credits</p>
-              ${!isOwner ? `
-                ${isLoggedIn ? `
+              ${
+                !isOwner
+                  ? `
+                ${
+                  isLoggedIn
+                    ? `
                   <div class="flex gap-2">
                     <input
                       type="number"
@@ -152,7 +164,8 @@ function renderListing(listing) {
                     </button>
                   </div>
                   <p id="bidError" class="text-red-500 mt-2 text-sm hidden"></p>
-                ` : `
+                `
+                    : `
                   <div class="text-center">
                     <p class="mb-4 text-gray-600">Want to place a bid?</p>
                     <a 
@@ -162,10 +175,13 @@ function renderListing(listing) {
                       Login to Bid
                     </a>
                   </div>
-                `}
-              ` : `
+                `
+                }
+              `
+                  : `
                 <p class="text-gray-600 text-center">This is your listing</p>
-              `}
+              `
+              }
             </div>
           </div>
 
@@ -176,12 +192,11 @@ function renderListing(listing) {
   `;
 }
 
-
 /**
  * Handles the display of a single listing page.
  * Fetches the listing data based on the ID from the URL parameters and renders it.
  * Initializes bidding functionality if the user is logged in.
- * 
+ *
  * @async
  * @function handleSingleListing
  */

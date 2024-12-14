@@ -10,7 +10,7 @@ let container = null;
 
 /**
  * Handles the listings page by fetching and displaying listings, setting up sorting, and handling pagination.
- * 
+ *
  * @param {string} [containerId='listings'] - The ID of the container element where listings will be displayed.
  * @returns {Promise<void>}
  */
@@ -46,7 +46,7 @@ export async function handleListingsPage(containerId = 'listings') {
 
 /**
  * Fetches and displays listings in the specified container with optional sorting and pagination.
- * 
+ *
  * @param {HTMLElement} container - The container element where listings will be displayed.
  * @param {Object} [options={}] - Optional parameters for sorting and pagination.
  * @param {string} [options.sort='created'] - The field to sort by.
@@ -61,7 +61,7 @@ async function fetchAndDisplayListings(container) {
 
     const activeFilter = document.getElementById('activeFilter');
     const sortSelect = document.getElementById('sortSelect');
-    
+
     const [sort, sortOrder] = sortSelect?.value.split('-') || ['created', 'desc'];
     const isActive = activeFilter?.value;
 
@@ -70,7 +70,7 @@ async function fetchAndDisplayListings(container) {
       limit: ITEMS_PER_PAGE,
       sort,
       sortOrder,
-      _active: isActive || undefined // Only include if set
+      _active: isActive || undefined, // Only include if set
     });
 
     if (!listings?.length) {
@@ -109,7 +109,7 @@ async function fetchAndDisplayListings(container) {
 }
 /**
  * Updates the pagination controls based on the provided metadata.
- * 
+ *
  * @param {Object} meta - Metadata for pagination.
  * @param {number} meta.currentPage - The current page number.
  * @param {number} meta.pageCount - The total number of pages.
@@ -142,9 +142,7 @@ function updatePagination(meta) {
       <button 
         ${isLastPage ? 'disabled' : ''}
         class="px-4 py-2 rounded-md ${
-          isLastPage
-            ? 'bg-gray-100 text-gray-400'
-            : 'bg-[#4F6F52] text-white hover:bg-[#4F6F52]/90'
+          isLastPage ? 'bg-gray-100 text-gray-400' : 'bg-[#4F6F52] text-white hover:bg-[#4F6F52]/90'
         }"
         onclick="changePage(${page + 1})"
       >
@@ -155,7 +153,7 @@ function updatePagination(meta) {
 }
 
 // Global pagination handler
-window.changePage = async function(newPage) {
+window.changePage = async function (newPage) {
   currentPage = newPage;
   const container = document.getElementById('listings');
   if (container) {

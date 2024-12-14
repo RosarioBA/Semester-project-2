@@ -12,7 +12,6 @@ import { getProfile } from '../../api/profiles/index.js';
  * @throws Will throw an error if the login process fails.
  */
 
-
 export async function handleLogin(email, password) {
   try {
     const userData = await login({ email, password });
@@ -60,5 +59,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
-

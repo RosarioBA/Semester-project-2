@@ -2,7 +2,7 @@ import { formatTimeRemaining } from './listingUtils.js';
 
 /**
  * Categorizes listings into active and past based on the current date.
- * 
+ *
  * @param {Array} listings - Array of listing objects.
  * @returns {Object} An object containing two arrays: active and past listings.
  */
@@ -25,7 +25,7 @@ export function categorizeListings(listings) {
 
 /**
  * Renders a single listing card.
- * 
+ *
  * @param {Object} listing - The listing object.
  * @param {boolean} isOwnProfile - Indicates if the profile belongs to the current user.
  * @returns {string} The HTML string for the listing card.
@@ -79,7 +79,7 @@ export function renderListingCard(listing, isOwnProfile) {
 
 /**
  * Renders the listings section for a profile.
- * 
+ *
  * @param {Object} profile - The profile object containing listings.
  * @param {boolean} isOwnProfile - Indicates if the profile belongs to the current user.
  * @returns {string} The HTML string for the listings section.

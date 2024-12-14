@@ -2,11 +2,9 @@
 
 import { createListing } from '../../api/listings/create.js';
 
-
 /**
  * Displays a success message overlay and redirects to the homepage after a short delay.
  */
-
 
 function showSuccessAndRedirect() {
   // Create success overlay
@@ -92,4 +90,3 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', handleCreateListing);
   }
 });
-

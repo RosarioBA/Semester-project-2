@@ -28,7 +28,7 @@ export function initializeEditListing() {
 
 /**
  * Loads the listing data and populates the form fields with the retrieved data.
- * 
+ *
  * @param {string} id - The ID of the listing to load.
  */
 
@@ -62,7 +62,7 @@ async function loadListing(id) {
 
 /**
  * Adds a new media input field to the media list.
- * 
+ *
  * @param {Object|null} media - The media object containing URL and alt text. If null, empty inputs are added.
  * @param {string} [media.url] - The URL of the media.
  * @param {string} [media.alt] - The alt text of the media.
@@ -86,7 +86,7 @@ function addMediaInput(media = null) {
 
 /**
  * Saves the updated listing data by sending it to the server.
- * 
+ *
  * @param {string} id - The ID of the listing to update.
  */
 

@@ -2,7 +2,7 @@
 
 /**
  * Displays a loading state for a listings grid.
- * 
+ *
  * @param {HTMLElement} container - The container element where the loading state will be displayed.
  */
 export function displayLoadingState(container) {
@@ -84,7 +84,7 @@ export function displayProfileLoading() {
 
 /**
  * Displays a general error message.
- * 
+ *
  * @param {HTMLElement} container - The container element where the error message will be displayed.
  * @param {string} message - The error message to display.
  */

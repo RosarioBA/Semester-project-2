@@ -37,10 +37,9 @@ export function initializeSearch() {
   });
 }
 
-
 /**
  * Performs the search query and displays the results.
- * 
+ *
  * @param {string} query - The search query string.
  * @param {HTMLElement} resultsContainer - The container element to display the search results.
  */
@@ -58,7 +57,7 @@ async function performSearch(query, resultsContainer) {
 }
 /**
  * Displays the search results in the specified container.
- * 
+ *
  * @param {Array} listings - The array of listing results.
  * @param {Array} profiles - The array of profile results.
  * @param {HTMLElement} container - The container element to display the search results.
