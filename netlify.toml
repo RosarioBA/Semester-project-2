@@ -3,4 +3,4 @@
   publish = "dist"
 
 [context.production.environment]
-  VITE_API_KEY = 822b4398-be20-4c88-a15e-d5ebb99fdac6
+  VITE_API_KEY = "822b4398-be20-4c88-a15e-d5ebb99fdac6"
