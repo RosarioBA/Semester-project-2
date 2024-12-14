@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './src/**/*.{html,js}', // This tells Tailwind to look for any HTML or JS files in src folder
-    './src/index.html', // Explicitly include the index.html
+    './src/**/*.{html,js}',
+    './src/index.html',
   ],
   theme: {
     extend: {
