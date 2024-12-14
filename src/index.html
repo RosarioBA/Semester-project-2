@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BidLeaf - Discover Unique Auctions Daily</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@400;800&family=Lora:wght@500;600&display=swap"
       rel="stylesheet"
-    />
+    >
     <link rel="stylesheet" href="./styles/main.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
   </head>
@@ -29,7 +29,7 @@
               type="search"
               placeholder="Search listings and profiles"
               class="w-full px-4 py-2 rounded-md border border-gray-200 bg-white"
-            />
+            >
             <div
               id="desktopSearchResults"
               class="absolute w-full bg-white mt-2 rounded-md shadow-lg z-30 hidden max-h-96 overflow-y-auto"
@@ -161,7 +161,7 @@
             type="search"
             placeholder="Search listings and profiles"
             class="w-full px-4 py-2 rounded-md border"
-          />
+          >
           <div
             id="mobileSearchResults"
             class="absolute w-full bg-white mt-2 rounded-md shadow-lg z-30 hidden max-h-96 overflow-y-auto"
@@ -200,14 +200,12 @@
       <!-- Mobile Search (Below Hero) -->
       <div class="md:hidden px-4 mb-8 relative">
         <input
-          id="mobileSearch"
           type="search"
           placeholder="Search listings and profiles"
-          class="w-full px-4 py-2 rounded-md border"
-        />
+          class="mobileSearch w-full px-4 py-2 rounded-md border"
+        >
         <div
-          id="mobileSearchResults"
-          class="absolute w-full bg-white mt-2 rounded-md shadow-lg z-30 hidden max-h-96 overflow-y-auto"
+          class="mobileSearchResults absolute w-full bg-white mt-2 rounded-md shadow-lg z-30 hidden max-h-96 overflow-y-auto"
         ></div>
       </div>
 
@@ -223,12 +221,12 @@
 
       <!-- Auction Grid -->
       <div id="listings" class="container mx-auto px-4 py-8"></div>
-      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Auction Item Template (repeat 12 times) -->
           <!-- Repeat article element for all items -->
         </div>
-      </section>
+      </div>
     </main>
 
     <!-- Footer -->
