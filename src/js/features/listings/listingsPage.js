@@ -17,19 +17,24 @@ let container = null;
 
 export async function handleListingsPage(containerId = 'listings') {
   try {
-    container = document.getElementById(containerId);
+    const container = document.getElementById(containerId);
     if (!container) return;
 
     displayLoadingState(container);
 
-    // Set up sorting
+    // Set up filter and sort event listeners
+    const activeFilter = document.getElementById('activeFilter');
     const sortSelect = document.getElementById('sortSelect');
-    if (sortSelect) {
-      sortSelect.addEventListener('change', async (e) => {
-        const [sort, sortOrder] = e.target.value.split('-');
-        await fetchAndDisplayListings(container, { sort, sortOrder });
-      });
-    }
+
+    activeFilter?.addEventListener('change', () => {
+      currentPage = 1; // Reset to first page when filter changes
+      fetchAndDisplayListings(container);
+    });
+
+    sortSelect?.addEventListener('change', () => {
+      currentPage = 1; // Reset to first page when sort changes
+      fetchAndDisplayListings(container);
+    });
 
     // Initial fetch
     await fetchAndDisplayListings(container);
@@ -49,45 +54,39 @@ export async function handleListingsPage(containerId = 'listings') {
  * @returns {Promise<void>}
  */
 
-async function fetchAndDisplayListings(container, options = {}) {
+async function fetchAndDisplayListings(container) {
   try {
-    // First, get total count without limit to know how many pages we really have
-    const initialFetch = await getListings({
-      page: 1,
-      sort: options.sort || 'created',
-      sortOrder: options.sortOrder || 'desc',
-    });
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    loadingIndicator?.classList.remove('hidden');
 
-    // Get more items per page to account for filtering
-    const { data: allListings, meta } = await getListings({
+    const activeFilter = document.getElementById('activeFilter');
+    const sortSelect = document.getElementById('sortSelect');
+    
+    const [sort, sortOrder] = sortSelect?.value.split('-') || ['created', 'desc'];
+    const isActive = activeFilter?.value;
+
+    const { data: listings, meta } = await getListings({
       page: currentPage,
-      limit: ITEMS_PER_PAGE * 2, // Get more items to account for filtering
-      sort: options.sort || 'created',
-      sortOrder: options.sortOrder || 'desc',
+      limit: ITEMS_PER_PAGE,
+      sort,
+      sortOrder,
+      _active: isActive || undefined // Only include if set
     });
 
-    // Filter out expired listings
-    const activeListings = allListings?.filter((listing) => {
-      const endDate = new Date(listing.endsAt);
-      return endDate > new Date();
-    });
-
-    // Take only the first ITEMS_PER_PAGE active listings
-    const displayListings = activeListings.slice(0, ITEMS_PER_PAGE);
-
-    if (!displayListings?.length) {
+    if (!listings?.length) {
       container.innerHTML = `
         <div class="text-center py-12">
-          <p class="text-gray-500">No active listings found</p>
+          <p class="text-gray-500">No listings found</p>
         </div>
       `;
+      loadingIndicator?.classList.add('hidden');
       return;
     }
 
     const grid = document.createElement('div');
     grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
 
-    displayListings.forEach((listing) => {
+    listings.forEach((listing) => {
       const listingElement = document.createElement('div');
       listingElement.innerHTML = createListingHTML(listing);
       listingElement.querySelector('article').addEventListener('click', () => {
@@ -98,28 +97,16 @@ async function fetchAndDisplayListings(container, options = {}) {
 
     container.innerHTML = '';
     container.appendChild(grid);
+    loadingIndicator?.classList.add('hidden');
 
-    // Calculate total active pages
-    const totalActiveListings = initialFetch.data.filter((listing) => {
-      const endDate = new Date(listing.endsAt);
-      return endDate > new Date();
-    }).length;
-
-    // Update pagination with correct count of active listings
-    const adjustedMeta = {
-      ...meta,
-      currentPage: currentPage,
-      pageCount: Math.ceil(totalActiveListings / ITEMS_PER_PAGE),
-      isFirstPage: currentPage === 1,
-      isLastPage: currentPage >= Math.ceil(totalActiveListings / ITEMS_PER_PAGE),
-    };
-    updatePagination(adjustedMeta);
+    updatePagination(meta);
   } catch (error) {
     console.error('Error:', error);
     showError(container, error.message);
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    loadingIndicator?.classList.add('hidden');
   }
 }
-
 /**
  * Updates the pagination controls based on the provided metadata.
  * 
@@ -136,46 +123,46 @@ function updatePagination(meta) {
 
   const { currentPage: page, pageCount, isFirstPage, isLastPage } = meta;
 
-  const paginationHTML = `
-        <div class="flex justify-center items-center gap-4">
-            <button 
-                ${isFirstPage ? 'disabled' : ''}
-                class="px-4 py-2 rounded-md ${
-                  isFirstPage
-                    ? 'bg-gray-100 text-gray-400'
-                    : 'bg-[#4F6F52] text-white hover:bg-[#4F6F52]/90'
-                }"
-                onclick="changePage(${page - 1})"
-            >
-                Previous
-            </button>
-            <span class="text-gray-600">
-                Page ${page} of ${pageCount}
-            </span>
-            <button 
-                ${isLastPage ? 'disabled' : ''}
-                class="px-4 py-2 rounded-md ${
-                  isLastPage
-                    ? 'bg-gray-100 text-gray-400'
-                    : 'bg-[#4F6F52] text-white hover:bg-[#4F6F52]/90'
-                }"
-                onclick="changePage(${page + 1})"
-            >
-                Next
-            </button>
-        </div>
-    `;
-
-  paginationContainer.innerHTML = paginationHTML;
+  paginationContainer.innerHTML = `
+    <div class="flex justify-center items-center gap-4">
+      <button 
+        ${isFirstPage ? 'disabled' : ''}
+        class="px-4 py-2 rounded-md ${
+          isFirstPage
+            ? 'bg-gray-100 text-gray-400'
+            : 'bg-[#4F6F52] text-white hover:bg-[#4F6F52]/90'
+        }"
+        onclick="changePage(${page - 1})"
+      >
+        Previous
+      </button>
+      <span class="text-gray-600">
+        Page ${page} of ${pageCount}
+      </span>
+      <button 
+        ${isLastPage ? 'disabled' : ''}
+        class="px-4 py-2 rounded-md ${
+          isLastPage
+            ? 'bg-gray-100 text-gray-400'
+            : 'bg-[#4F6F52] text-white hover:bg-[#4F6F52]/90'
+        }"
+        onclick="changePage(${page + 1})"
+      >
+        Next
+      </button>
+    </div>
+  `;
 }
 
 // Global pagination handler
-window.changePage = async function (newPage) {
+window.changePage = async function(newPage) {
   currentPage = newPage;
   const container = document.getElementById('listings');
-  const sortSelect = document.getElementById('sortSelect');
-  const [sort, sortOrder] = sortSelect ? sortSelect.value.split('-') : ['created', 'desc'];
-  await fetchAndDisplayListings(container, { sort, sortOrder });
+  if (container) {
+    await fetchAndDisplayListings(container);
+    // Scroll to top of listings when page changes
+    container.scrollIntoView({ behavior: 'smooth' });
+  }
 };
 
 // Initialize when DOM is loaded

@@ -22,6 +22,10 @@ export async function getListings(options = {}) {
 
     if (options.limit) queryParams.append('limit', options.limit);
     if (options.page) queryParams.append('page', options.page);
+    // Add _active parameter when it's provided
+    if (options._active !== undefined) {
+      queryParams.append('_active', options._active);
+    }
 
     const response = await fetch(`${API_ENDPOINTS.LISTINGS.BASE}?${queryParams}`, {
       headers: getPublicHeaders(),

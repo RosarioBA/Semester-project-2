@@ -173,6 +173,14 @@
         >
           <h1 class="text-2xl font-semibold text-[#2C3532]">All Listings</h1>
           <div class="flex gap-4">
+            <select
+            id="activeFilter"
+            title="Filter Listings"
+            class="px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-[#4F6F52]"
+          >
+            <option value="true">Active Listings</option>
+            <option value="">All Listings</option>
+          </select>
             <label for="sortSelect" class="sr-only">Sort Listings</label>
             <select
               id="sortSelect"
