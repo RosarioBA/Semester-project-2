@@ -2,6 +2,7 @@ import { getSingleListing } from '../../api/listings/index.js';
 import { initializeBidding } from './bid.js';
 import { formatTimeRemaining } from '../../utils/listingUtils.js';
 import { getToken } from '../../utils/storage.js';
+import { getUser } from '../../utils/userData.js'; 
 
 /**
  * Renders the bid history for a listing.
@@ -59,6 +60,8 @@ function renderListing(listing) {
   if (!mainContent) return;
 
   const isLoggedIn = !!getToken();
+  const currentUser = getUser();
+  const isOwner = currentUser && listing.seller?.name === currentUser.name;
 
   // Safely access nested properties
   const title = listing?.title || 'Untitled';
@@ -66,22 +69,28 @@ function renderListing(listing) {
   const sellerName = listing?.seller?.name || 'Unknown';
   const endsAt = listing?.endsAt ? new Date(listing.endsAt) : null;
   const timeRemaining = endsAt && !isNaN(endsAt) ? formatTimeRemaining(endsAt) : 'Invalid Date';
-
+  
   const bids = listing?.bids || [];
-  const highestBid = bids.length ? Math.max(...bids.map((bid) => bid.amount)) : 0;
+  const highestBid = bids.length ? Math.max(...bids.map(bid => bid.amount)) : 0;
   const mediaUrl = listing?.media?.[0]?.url || null;
   const mediaAlt = listing?.media?.[0]?.alt || title;
 
   mainContent.innerHTML = `
     <div class="max-w-3xl mx-auto px-4 py-8">
-      <a href="/pages/listings.html" class="text-[#4f6f52] mb-6 inline-block hover:underline">
-        &larr; Back to Listings
-      </a>
+      <div class="flex justify-between items-center mb-6">
+        <a href="/pages/listings.html" class="text-[#4f6f52] inline-block hover:underline">
+          &larr; Back to Listings
+        </a>
+        ${isOwner ? `
+          <a href="/pages/edit-listing.html?id=${listing.id}" 
+             class="px-4 py-2 bg-[#4f6f52] text-white rounded hover:bg-[#4f6f52]/90 transition-colors">
+            Edit Listing
+          </a>
+        ` : ''}
+      </div>
 
       <div class="bg-white rounded-lg shadow-sm p-6">
-        ${
-          mediaUrl
-            ? `
+        ${mediaUrl ? `
           <div class="mb-6">
             <img 
               src="${mediaUrl}" 
@@ -90,9 +99,7 @@ function renderListing(listing) {
               onerror="this.src='/api/placeholder/400/320'"
             />
           </div>
-        `
-            : ''
-        }
+        ` : ''}
 
         <h1 class="text-2xl font-semibold mb-4">${title}</h1>
 
@@ -127,38 +134,38 @@ function renderListing(listing) {
           <div class="bidding-section">
             <div class="p-4 bg-gray-50 rounded-lg">
               <p class="text-lg font-medium mb-4">Current Highest Bid: ${highestBid} Credits</p>
-              ${
-                isLoggedIn
-                  ? `
-                <div class="flex gap-2">
-                  <input
-                    type="number"
-                    id="bidAmount"
-                    placeholder="Enter bid amount"
-                    min="${highestBid + 1}"
-                    class="flex-1 p-2 border rounded focus:outline-none focus:border-[#4f6f52]"
-                  />
-                  <button 
-                    id="placeBidBtn"
-                    class="px-4 py-2 bg-[#D66853] text-white rounded hover:bg-[#D66853]/90 transition-colors"
-                  >
-                    Place Bid
-                  </button>
-                </div>
-                <p id="bidError" class="text-red-500 mt-2 text-sm hidden"></p>
-              `
-                  : `
-                <div class="text-center">
-                  <p class="mb-4 text-gray-600">Want to place a bid?</p>
-                  <a 
-                    href="/pages/login.html" 
-                    class="inline-block px-6 py-2 bg-[#4F6F52] text-white rounded hover:bg-[#4F6F52]/90 transition-colors"
-                  >
-                    Login to Bid
-                  </a>
-                </div>
-              `
-              }
+              ${!isOwner ? `
+                ${isLoggedIn ? `
+                  <div class="flex gap-2">
+                    <input
+                      type="number"
+                      id="bidAmount"
+                      placeholder="Enter bid amount"
+                      min="${highestBid + 1}"
+                      class="flex-1 p-2 border rounded focus:outline-none focus:border-[#4f6f52]"
+                    />
+                    <button 
+                      id="placeBidBtn"
+                      class="px-4 py-2 bg-[#D66853] text-white rounded hover:bg-[#D66853]/90 transition-colors"
+                    >
+                      Place Bid
+                    </button>
+                  </div>
+                  <p id="bidError" class="text-red-500 mt-2 text-sm hidden"></p>
+                ` : `
+                  <div class="text-center">
+                    <p class="mb-4 text-gray-600">Want to place a bid?</p>
+                    <a 
+                      href="/pages/login.html" 
+                      class="inline-block px-6 py-2 bg-[#4F6F52] text-white rounded hover:bg-[#4F6F52]/90 transition-colors"
+                    >
+                      Login to Bid
+                    </a>
+                  </div>
+                `}
+              ` : `
+                <p class="text-gray-600 text-center">This is your listing</p>
+              `}
             </div>
           </div>
 
@@ -168,6 +175,7 @@ function renderListing(listing) {
     </div>
   `;
 }
+
 
 /**
  * Handles the display of a single listing page.

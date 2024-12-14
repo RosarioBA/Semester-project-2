@@ -1,7 +1,7 @@
-
 // src/js/features/listings/activeBids.js
 import { API_ENDPOINTS, getAuthHeaders } from '../../api/constants.js';
 import { getUser } from '../../utils/userData.js';
+import { formatTimeRemaining } from '../../utils/listingUtils.js';
 
 /**
  * Loads the active bids and won auctions for the current user.
@@ -34,7 +34,14 @@ export async function loadActiveBids() {
     const bids = await bidsResponse.json();
     const wins = await winsResponse.json();
 
-    displayActiveBids(bids.data);
+    // Filter and display active bids
+    const activeBids = bids.data.filter(bid => {
+      const endDate = new Date(bid.listing?.endsAt);
+      return endDate > new Date();
+    });
+    displayActiveBids(activeBids);
+
+    // Display won auctions
     displayWonAuctions(wins.data);
   } catch (error) {
     console.error('Error loading bids:', error);
@@ -56,26 +63,45 @@ function displayActiveBids(bids) {
     return;
   }
 
-  container.innerHTML = bids
+  // Sort bids by end date, ending soonest first
+  const sortedBids = bids.sort((a, b) => new Date(a.listing.endsAt) - new Date(b.listing.endsAt));
+
+  container.innerHTML = sortedBids
     .map(
       (bid) => `
         <div class="bg-white rounded-lg shadow-sm p-4">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h3 class="font-medium">${bid.listing?.title || 'Unknown Listing'}</h3>
-                    <p class="text-gray-600">Your bid: ${bid.amount} credits</p>
-                    <p class="text-sm text-gray-500">Placed on ${new Date(bid.created).toLocaleDateString()}</p>
+            <div class="flex gap-4">
+                <div class="w-24 h-24 flex-shrink-0">
+                    <img src="${bid.listing?.media?.[0]?.url || '/api/placeholder/96/96'}" 
+                         alt="${bid.listing?.title}" 
+                         class="w-full h-full rounded object-cover">
                 </div>
-                <a href="/pages/single-listing.html?id=${bid.listing?.id}" 
-                   class="px-4 py-2 text-[#4f6f52] hover:underline">
-                    View Listing
-                </a>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-medium text-lg">${bid.listing?.title || 'Unknown Listing'}</h3>
+                            <p class="text-gray-600">Your bid: ${bid.amount} credits</p>
+                        </div>
+                        <a href="/pages/single-listing.html?id=${bid.listing?.id}" 
+                           class="px-4 py-2 text-[#4f6f52] hover:underline">
+                            View Listing
+                        </a>
+                    </div>
+                    <div class="mt-2 flex items-center gap-2 text-sm text-gray-500">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        ${formatTimeRemaining(new Date(bid.listing.endsAt))}
+                    </div>
+                </div>
             </div>
         </div>
     `
     )
     .join('');
 }
+
 
 /**
  * Displays the won auctions in the specified container.
@@ -93,24 +119,31 @@ function displayWonAuctions(wins) {
     return;
   }
 
-  container.innerHTML = wins
+  // Sort wins by end date, most recent first
+  const sortedWins = wins.sort((a, b) => new Date(b.endsAt) - new Date(a.endsAt));
+
+  container.innerHTML = sortedWins
     .map(
       (listing) => `
         <div class="bg-white rounded-lg shadow-sm p-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <img src="${listing.media?.[0]?.url || '/api/placeholder/64/64'}" 
+            <div class="flex gap-4">
+                <div class="w-24 h-24 flex-shrink-0">
+                    <img src="${listing.media?.[0]?.url || '/api/placeholder/96/96'}" 
                          alt="${listing.title}" 
-                         class="w-16 h-16 rounded object-cover">
-                    <div>
-                        <h3 class="font-medium">${listing.title}</h3>
-                        <p class="text-gray-600">Won on ${new Date(listing.endsAt).toLocaleDateString()}</p>
+                         class="w-full h-full rounded object-cover">
+                </div>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-medium text-lg">${listing.title}</h3>
+                            <p class="text-gray-600">Won on ${new Date(listing.endsAt).toLocaleDateString()}</p>
+                        </div>
+                        <a href="/pages/single-listing.html?id=${listing.id}" 
+                           class="px-4 py-2 text-[#4f6f52] hover:underline">
+                            View Details
+                        </a>
                     </div>
                 </div>
-                <a href="/pages/single-listing.html?id=${listing.id}" 
-                   class="px-4 py-2 text-[#4f6f52] hover:underline">
-                    View Details
-                </a>
             </div>
         </div>
     `
