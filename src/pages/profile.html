@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
     <title>Profile | BidLeaf</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@400;800&family=Lora:wght@500;600&display=swap"
       rel="stylesheet"
-    />
+    >
     <link rel="stylesheet" href="../styles/main.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
   </head>
@@ -17,7 +17,7 @@
         <!-- Main Navigation -->
         <div class="flex items-center justify-between w-full">
           <!-- Logo -->
-          <a href="../index.html" class="text-2xl md:text-3xl font-['Lato'] font-extrabold">
+          <a href="../index.html" class="text-2xl md:text-3xl" style="font-family: 'Lato', sans-serif; font-weight: 800;">
             <span class="text-[#4F6F52]">Bid</span><span class="text-[#739072]">Leaf</span>
           </a>
 
@@ -28,7 +28,7 @@
               type="search"
               placeholder="Search listings and profiles"
               class="w-full px-4 py-2 rounded-md border border-gray-200 bg-white"
-            />
+            >
             <div
               id="desktopSearchResults"
               class="absolute w-full bg-white mt-2 rounded-md shadow-lg z-30 hidden max-h-96 overflow-y-auto"
@@ -96,7 +96,7 @@
               </svg>
             </button>
           </div>
-          <h1 class="profile-name text-xl font-semibold mb-1"></h1>
+          <h1 class="profile-name text-xl font-semibold mb-1">Profile Name</h1>
           <p class="profile-email text-gray-600 mb-2"></p>
           <!-- Only show credits on own profile -->
           <div class="bg-[#F8FAF5] px-4 py-2 rounded profile-credits-container hidden">
@@ -125,7 +125,7 @@
             placeholder="https://example.com/image.jpg"
             class="w-full px-3 py-2 border rounded"
             required
-          />
+          >
         </div>
         <div>
           <label for="mediaAlt" class="block text-sm mb-1">Image Description</label>
@@ -134,7 +134,7 @@
             id="mediaAlt"
             placeholder="Profile photo"
             class="w-full px-3 py-2 border rounded"
-          />
+          >
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <button
