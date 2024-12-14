@@ -6,9 +6,7 @@ export default defineConfig({
   envDir: '../',
   css: {
     postcss: './postcss.config.js',
-  },
-    define: {
-      'import.meta.env.VITE_API_KEY': JSON.stringify(process.env.VITE_API_KEY),
+    
   },
   build: {
     outDir: '../dist',
