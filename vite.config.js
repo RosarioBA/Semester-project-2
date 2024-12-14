@@ -1,5 +1,5 @@
-// vite.config.js
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
   root: 'src',
@@ -11,13 +11,15 @@ export default defineConfig({
     outDir: '../dist',
     rollupOptions: {
       input: {
-        main: 'index.html',
-        login: 'pages/login.html',
-        register: 'pages/register.html',
-        profile: 'pages/profile.html',
-        listing: 'pages/listing.html',
-        singlelisting: 'pages/single-listing.html',
-        createlistings: 'pages/create-listing.html',
+        main: resolve(__dirname, 'src/index.html'),
+        login: resolve(__dirname, 'src/pages/login.html'),
+        register: resolve(__dirname, 'src/pages/register.html'),
+        profile: resolve(__dirname, 'src/pages/profile.html'),
+        listing: resolve(__dirname, 'src/pages/listings.html'),
+        singlelisting: resolve(__dirname, 'src/pages/single-listing.html'),
+        createlistings: resolve(__dirname, 'src/pages/create-listing.html'),
+        activebids: resolve(__dirname, 'src/pages/active-bids.html'),
+        editlisting: resolve(__dirname, 'src/pages/edit-listing.html'),
       },
     },
   },
