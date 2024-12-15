@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../styles/main.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
   </head>
-  <body class="bg-[#F8FAF5]">
+  <body class="bg-[#F8FAF5] flex flex-col min-h-screen">
     <!-- Header Navigation -->
     <header class="bg-white shadow-sm">
       <nav class="max-w-7xl mx-auto px-4 py-4">
@@ -167,17 +167,16 @@
     </header>
 
     <!-- Main Content -->
-    <main>
+    <main class="flex-grow">
       <!-- Content will be populated by JavaScript -->
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#4F6F52] text-white mt-12">
+    <footer class="bg-[#4F6F52] text-white mt-auto">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <p class="text-center">&copy; 2024 BidLeaf. All rights reserved.</p>
       </div>
     </footer>
-
     <!-- JavaScript -->
     <script src="../js/index.js" type="module"></script>
     <script src="../js/features/listings/singleListing.js" type="module"></script>
