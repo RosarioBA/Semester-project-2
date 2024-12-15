@@ -7,14 +7,14 @@ BidLeaf is an auction platform where users can list items for auction and bid on
 
 # Features 🌟
 
-# User Authentication
+## User Authentication
 
 - Register with a stud.noroff.no email
 - Login/logout functionality
 - Update avatar and user information
 - 1000 starting credits for new users
 
-# Auction Listings
+## Auction Listings
 
 - View all active listings
 - Search through listings (even when not logged in)
@@ -22,7 +22,7 @@ BidLeaf is an auction platform where users can list items for auction and bid on
 - Set auction deadlines
 - View listing details and bid history
 
-# Bidding System
+## Bidding System
 
 - Place bids on active listings
 - Track your active bids
@@ -38,7 +38,7 @@ BidLeaf is an auction platform where users can list items for auction and bid on
 - Prettier - Code formatter
 - Noroff Auction API - Backend API services
 
-# screenshots 
+## screenshots 
 **User Interface** 
 <img width="940" alt="image" src="https://github.com/user-attachments/assets/b813ed83-a656-4516-9bcf-6dc521043148" />
 
@@ -57,7 +57,7 @@ Detailed view of an auction with bidding history
 - npm
 - Git
 
-# Installation
+## Installation
 
 1. Clone the repository
 bashCopygit clone https://github.com/yourusername/bidleaf.git
@@ -90,7 +90,7 @@ To run locally:
 M. Rosario Bustillo - marbus22891@stud.noroff.no
 Project Link: https://github.com/RosarioBA/Semester-project-2
 
-# Acknowledgments
+## Acknowledgments
 
 - Noroff School of Technology
 - Tailwind CSS
