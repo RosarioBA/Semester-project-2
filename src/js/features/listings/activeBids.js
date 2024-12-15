@@ -16,7 +16,6 @@ export async function loadActiveBids() {
   try {
     // Detailed logging for authentication
     const user = getUser();
-    console.log('User retrieved:', user);
 
     if (!user) {
       console.warn('No user found, redirecting to login');
@@ -26,13 +25,9 @@ export async function loadActiveBids() {
 
     // Verify API endpoints and headers
     const authHeaders = getAuthHeaders();
-    console.log('Authentication Headers:', authHeaders);
 
     const bidsUrl = `${API_ENDPOINTS.PROFILES.BASE}/${user.name}/bids?_listings=true`;
     const winsUrl = `${API_ENDPOINTS.PROFILES.BASE}/${user.name}/wins`;
-
-    console.log('Bids URL:', bidsUrl);
-    console.log('Wins URL:', winsUrl);
 
     // Fetch bids and wins with error handling
     const [bidsResponse, winsResponse] = await Promise.all([
@@ -56,9 +51,6 @@ export async function loadActiveBids() {
     // Parse responses
     const bids = await bidsResponse.json();
     const wins = await winsResponse.json();
-
-    console.log('Bids data:', bids);
-    console.log('Wins data:', wins);
 
     // Filter and display active bids
     const activeBids = bids.data.filter((bid) => {

@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (path.includes('profile')) {
     loadProfilePage();
   } else if (path.includes('active-bids')) {
-    console.log('Active Bids Page Detected');
     loadActiveBids();
   } else if (path === '/' || path === '/index.html') {
     initializeCarousel();

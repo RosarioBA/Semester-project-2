@@ -35,7 +35,6 @@ export function initializeEditListing() {
 async function loadListing(id) {
   try {
     const response = await getSingleListing(id);
-    console.log('Listing data:', response); // Debug log
 
     // Access the listing data correctly
     const listing = response.data;

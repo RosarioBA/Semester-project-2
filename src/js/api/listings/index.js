@@ -66,19 +66,15 @@ export async function getSingleListing(id) {
     });
 
     const url = `${API_ENDPOINTS.LISTINGS.BASE}/${id}?${queryParams}`;
-    console.log('Request URL:', url);
+
 
     // Use public headers for fetching single listing
     const headers = getPublicHeaders();
-    console.log('Headers:', headers);
 
     const response = await fetch(url, {
       headers: headers,
     });
-
-    console.log('Response status:', response.status);
-    const data = await response.json();
-    console.log('Response data:', data);
+    const data = await response.json();;
 
     if (!response.ok) {
       throw new Error('Failed to fetch listing');
