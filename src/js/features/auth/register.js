@@ -19,62 +19,41 @@ import { validateRegistration } from '../../utils/validation.js';
 
 export async function handleRegister(formData) {
   try {
-    // Validate form data
     const { isValid, errors } = validateRegistration(formData);
     if (!isValid) {
       throw new Error(Object.values(errors)[0]);
     }
 
+    // Disable form submission button
+    const submitButton = document.querySelector('button[type="submit"]');
+    if (submitButton) {
+      submitButton.disabled = true;
+    }
+
     // Register user
     await register(formData);
-
-    // Set initial credits after registration
     localStorage.setItem('userCredits', '1000');
 
-    // Redirect to login page on success
+    // Hide error message if visible
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage?.classList.add('hidden');
+
+    // Show success message
+    const successMessage = document.getElementById('successMessage');
+    if (successMessage) {
+      successMessage.textContent = 'Registration successful! Redirecting to login...';
+      successMessage.classList.remove('hidden');
+
+      // Scroll to success message if needed
+      successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Wait longer before redirect
+    await new Promise(resolve => setTimeout(resolve, 2000));
     window.location.href = '/pages/login.html';
+
   } catch (error) {
     console.error('Registration handler error:', error);
     throw error;
   }
 }
-
-// Initialize form handling
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('registerForm');
-  const errorMessage = document.getElementById('errorMessage');
-  const loadingSpinner = document.getElementById('loadingSpinner');
-
-  if (form) {
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      // Reset UI state
-      errorMessage?.classList.add('hidden');
-      loadingSpinner?.classList.remove('hidden');
-
-      try {
-        const formData = {
-          name: form.name.value,
-          email: form.email.value,
-          password: form.password.value,
-          avatar: form.avatar?.value
-            ? {
-                url: form.avatar.value,
-                alt: form.avatarAlt?.value || '',
-              }
-            : undefined,
-        };
-
-        await handleRegister(formData);
-      } catch (error) {
-        if (errorMessage) {
-          errorMessage.textContent = error.message;
-          errorMessage.classList.remove('hidden');
-        }
-      } finally {
-        loadingSpinner?.classList.add('hidden');
-      }
-    });
-  }
-});
