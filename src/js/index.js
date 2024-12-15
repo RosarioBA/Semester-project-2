@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const path = window.location.pathname;
 
-  if (path === '/pages/profile.html') {
+  if (path.includes('profile')) {
     loadProfilePage();
   } else if (path.includes('active-bids')) {
     console.log('Active Bids Page Detected');
