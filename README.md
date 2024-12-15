@@ -45,9 +45,13 @@ BidLeaf is an auction platform where users can list items for auction and bid on
 <img width="937" alt="image" src="https://github.com/user-attachments/assets/08c5c9f6-a95a-4ba9-8d21-784cd4310702" />
 
 User authentication interface
+
 <img width="728" alt="image" src="https://github.com/user-attachments/assets/6010824d-f528-4e68-9984-ca99973d505f" />
+
 Creating a new auction listing
+
 <img width="739" alt="image" src="https://github.com/user-attachments/assets/d54076a5-0240-487c-830b-f8241ad2c7f6" />
+
 Detailed view of an auction with bidding history
 
 # Getting Started
