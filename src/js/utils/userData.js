@@ -3,7 +3,7 @@
 export function getUser() {
   try {
     const userJson = localStorage.getItem('user');
-    
+
     if (!userJson) {
       return null;
     }

@@ -1,6 +1,7 @@
 # Semester-project-2
 
 # BidLeaf Auction Website 🍃
+
 BidLeaf is an auction platform where users can list items for auction and bid on others' listings. Built with vanilla JavaScript and Tailwind CSS, it provides a clean, intuitive interface for auction interactions.
 
 <img width="940" alt="image" src="https://github.com/user-attachments/assets/0a1e8c87-c0c8-4def-a728-d1b3704a9b71" />
@@ -38,8 +39,9 @@ BidLeaf is an auction platform where users can list items for auction and bid on
 - Prettier - Code formatter
 - Noroff Auction API - Backend API services
 
-## screenshots 
-**User Interface** 
+## screenshots
+
+**User Interface**
 <img width="940" alt="image" src="https://github.com/user-attachments/assets/b813ed83-a656-4516-9bcf-6dc521043148" />
 
 <img width="937" alt="image" src="https://github.com/user-attachments/assets/08c5c9f6-a95a-4ba9-8d21-784cd4310702" />
@@ -55,6 +57,7 @@ Creating a new auction listing
 Detailed view of an auction with bidding history
 
 # Getting Started
+
 **Prerequisites**
 
 - Node.js (version 14 or higher)
@@ -64,18 +67,19 @@ Detailed view of an auction with bidding history
 ## Installation
 
 1. Clone the repository
-bashCopygit clone https://github.com/yourusername/bidleaf.git
+   bashCopygit clone https://github.com/yourusername/bidleaf.git
 
 2. Install NPM packages
-bashCopynpm install
+   bashCopynpm install
 
 3. Create a .env file in the root directory and add your API key:
-envCopyVITE_API_KEY=your-api-key
+   envCopyVITE_API_KEY=your-api-key
 
 4. Start the development server
-bashCopynpm run dev
+   bashCopynpm run dev
 
 # Testing
+
 To run locally:
 
 - Start the development server
@@ -91,6 +95,7 @@ To run locally:
 - Open a Pull Request
 
 # Contact
+
 M. Rosario Bustillo - marbus22891@stud.noroff.no
 Project Link: https://github.com/RosarioBA/Semester-project-2
 

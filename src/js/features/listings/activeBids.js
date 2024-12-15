@@ -32,7 +32,7 @@ export async function loadActiveBids() {
     // Fetch bids and wins with error handling
     const [bidsResponse, winsResponse] = await Promise.all([
       fetch(bidsUrl, { headers: authHeaders }).catch(handleFetchError('Bids')),
-      fetch(winsUrl, { headers: authHeaders }).catch(handleFetchError('Wins'))
+      fetch(winsUrl, { headers: authHeaders }).catch(handleFetchError('Wins')),
     ]);
 
     // Check response status
@@ -57,12 +57,11 @@ export async function loadActiveBids() {
       const endDate = new Date(bid.listing?.endsAt);
       return endDate > new Date();
     });
-    
+
     displayActiveBids(activeBids);
 
     // Display won auctions
     displayWonAuctions(wins.data);
-
   } catch (error) {
     console.error('Critical error in loadActiveBids:', error);
     displayCriticalErrorMessage();
@@ -71,13 +70,13 @@ export async function loadActiveBids() {
 
 /**
  * Displays the active bids in the specified container.
- * 
+ *
  * @function displayActiveBids
  * @param {Array<Object>} bids - The list of active bids.
  */
 function displayActiveBids(bids) {
   const container = document.getElementById('activeBids');
-  
+
   if (!container) {
     console.error('Active Bids container not found');
     return;
@@ -93,24 +92,20 @@ function displayActiveBids(bids) {
   }
 
   // Sort bids by end date, ending soonest first
-  const sortedBids = bids.sort((a, b) => 
-    new Date(a.listing.endsAt) - new Date(b.listing.endsAt)
-  );
+  const sortedBids = bids.sort((a, b) => new Date(a.listing.endsAt) - new Date(b.listing.endsAt));
 
-  container.innerHTML = sortedBids
-    .map(createActiveBidHTML)
-    .join('');
+  container.innerHTML = sortedBids.map(createActiveBidHTML).join('');
 }
 
 /**
  * Displays the won auctions in the specified container.
- * 
+ *
  * @function displayWonAuctions
  * @param {Array<Object>} wins - The list of won auctions.
  */
 function displayWonAuctions(wins) {
   const container = document.getElementById('wonAuctions');
-  
+
   if (!container) {
     console.error('Won Auctions container not found');
     return;
@@ -126,18 +121,14 @@ function displayWonAuctions(wins) {
   }
 
   // Sort wins by end date, most recent first
-  const sortedWins = wins.sort((a, b) => 
-    new Date(b.endsAt) - new Date(a.endsAt)
-  );
+  const sortedWins = wins.sort((a, b) => new Date(b.endsAt) - new Date(a.endsAt));
 
-  container.innerHTML = sortedWins
-    .map(createWonAuctionHTML)
-    .join('');
+  container.innerHTML = sortedWins.map(createWonAuctionHTML).join('');
 }
 
 /**
  * Creates HTML for an active bid
- * 
+ *
  * @function createActiveBidHTML
  * @param {Object} bid - The bid object
  * @returns {string} HTML string for the bid
@@ -189,7 +180,7 @@ function createActiveBidHTML(bid) {
 
 /**
  * Creates HTML for a won auction
- * 
+ *
  * @function createWonAuctionHTML
  * @param {Object} listing - The listing object
  * @returns {string} HTML string for the won auction
@@ -228,7 +219,7 @@ function createWonAuctionHTML(listing) {
 
 /**
  * Handle fetch errors with specific logging
- * 
+ *
  * @function handleFetchError
  * @param {string} resourceName - Name of the resource being fetched
  * @returns {Function} Error handling function
@@ -242,7 +233,7 @@ function handleFetchError(resourceName) {
 
 /**
  * Display error message in a specific container
- * 
+ *
  * @function displayErrorMessage
  * @param {string} containerId - ID of the container to display error
  * @param {string} message - Error message to display
@@ -260,7 +251,7 @@ function displayErrorMessage(containerId, message) {
 
 /**
  * Display a critical error message
- * 
+ *
  * @function displayCriticalErrorMessage
  */
 function displayCriticalErrorMessage() {

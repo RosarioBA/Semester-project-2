@@ -49,9 +49,8 @@ export async function handleRegister(formData) {
     }
 
     // Wait longer before redirect
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     window.location.href = '/pages/login.html';
-
   } catch (error) {
     console.error('Registration handler error:', error);
     throw error;
